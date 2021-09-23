@@ -1,3 +1,5 @@
+
+
 name: Django CI
 
 on:
@@ -21,9 +23,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install Dependencies
-      run: |
-        build.sh
     - name: Run Tests
       run: |
-        test.sh
+        python manage.py test
