@@ -1,10 +1,8 @@
-
-    <div class="login-form">
-    
-    <h4>Login page text</h4>
-    <div class="form_container">
-        <form action="/login/" method="POST">
-            <!-- 
+<div class="login-form">
+  <h4>Login page text</h4>
+  <div class="form_container">
+    <form action="/login/" method="POST">
+      <!-- 
                 Example 
                 {% csrf_token %}
             {% for field in form %}
@@ -12,13 +10,27 @@
                     {{ field.label_tag }}
                     {{ field }}
     
-                </p>
-            {% endfor %} -->
-    
-        <div>
-            <input type="submit" value="Submit" class="btn waves-effect waves-light">
+                </p>  {% endfor %} -->
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="username" type="text" />
+          <label for="username">Username</label>
         </div>
-        </form>
-        
-    </div>
-    </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate" />
+          <label for="password">Password</label>
+        </div>
+      </div>
+
+      <div>
+        <input
+          type="submit"
+          value="Submit"
+          class="btn waves-effect waves-light"
+        />
+      </div>
+    </form>
+  </div>
+</div>
