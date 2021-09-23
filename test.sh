@@ -1,5 +1,3 @@
-
-
 name: Django CI
 
 on:
