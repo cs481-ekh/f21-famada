@@ -6,9 +6,9 @@ from django.shortcuts import render, redirect
 # Create your views here.
 
 def user_login(request):
-    # if request.user.is_authenticated:
-    #     # redirect here to main landing page
-    #     return
+    if request.user.is_authenticated:
+        # redirect here to main landing page
+        return redirect('search')
     if request.method == 'GET':
         return render(request, 'login.html')
     # else:
@@ -22,3 +22,8 @@ def user_login(request):
     #             # check for case next is logout? else redirect to next
     #             return
     #         return  # redirect to landing page
+
+
+def crud_read(request):
+    if request.method == 'GET':
+        return render(request, 'CRUD/read_view.html')

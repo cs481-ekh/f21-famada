@@ -20,4 +20,5 @@ from CRUD import views as crud_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', crud_views.user_login, name='login'),
+    path('search/', crud_views.crud_read, name='search'),
 ]
