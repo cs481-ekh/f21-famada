@@ -6,14 +6,14 @@
         <img src="{% static 'assets/bsu-white.png' %}" alt="Boise State University" class="logo">
         <h4 class="login-title white-text">SPS Faculty Adjunct Management</h4>
         <div class="card form-container">
-          <form action="/login/" method="POST" class="card-content">
-            
+          <form action="" method="POST" class="card-content">
+            {% csrf_token %}
               <div class="input-field">
-                <input id="username" type="text" />
+                <input name="username" id="username" type="text" />
                 <label for="username">Username</label>
               </div>
               <div class="input-field">
-                <input id="password" type="password" class="validate" />
+                <input name="password" id="password" type="password" class="validate" />
                 <label for="password">Password</label>
               </div>
       
@@ -25,6 +25,11 @@
               />
             </div>
           </form>
+          {% if error %}
+      <div class="alert alert-danger" role="alert">
+          {{ error }}
+      </div>
+    {% endif %}
         </div>
       </div> 
        
