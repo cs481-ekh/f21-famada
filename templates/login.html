@@ -1,7 +1,8 @@
 <div class="login-form">
   <h4>Login page text</h4>
   <div class="form_container">
-    <form action="/login/" method="POST">
+    <form action="" method="POST">
+      {% csrf_token %}
       <!-- 
                 Example 
                 {% csrf_token %}
@@ -13,13 +14,13 @@
                 </p>  {% endfor %} -->
       <div class="row">
         <div class="input-field col s12">
-          <input id="username" type="text" />
+          <input name="username" id="username" type="text" />
           <label for="username">Username</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="password" type="password" class="validate" />
+          <input name="password" id="password" type="password" class="validate" />
           <label for="password">Password</label>
         </div>
       </div>
