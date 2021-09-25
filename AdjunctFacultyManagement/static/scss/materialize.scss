@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+
+@font-face {
+    font-family: Gotham-Black;
+    src: url("../assets/Gotham-Font/Gotham-Black.otf") format("opentype");
+}
+
 // Color
 @import "components/color-variables";
 @import "components/color-classes";
@@ -39,3 +45,5 @@
 @import "components/pulse";
 @import "components/datepicker";
 @import "components/timepicker";
+
+@import "components/custom";

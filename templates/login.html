@@ -1,36 +1,31 @@
-<div class="login-form">
-  <h4>Login page text</h4>
-  <div class="form_container">
-    <form action="/login/" method="POST">
-      <!-- 
-                Example 
-                {% csrf_token %}
-            {% for field in form %}
-                <p>
-                    {{ field.label_tag }}
-                    {{ field }}
-    
-                </p>  {% endfor %} -->
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="username" type="text" />
-          <label for="username">Username</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="password" type="password" class="validate" />
-          <label for="password">Password</label>
-        </div>
-      </div>
+{% extends "base.html" %} 
 
-      <div>
-        <input
-          type="submit"
-          value="Submit"
-          class="btn waves-effect waves-light"
-        />
-      </div>
-    </form>
-  </div>
-</div>
+{% block content %}
+{% load static %} 
+    <div class="login-form">
+        <img src="{% static 'assets/bsu-white.png' %}" alt="Boise State University" class="logo">
+        <h4 class="login-title white-text">SPS Faculty Adjunct Management</h4>
+        <div class="card form-container">
+          <form action="/login/" method="POST" class="card-content">
+            
+              <div class="input-field">
+                <input id="username" type="text" />
+                <label for="username">Username</label>
+              </div>
+              <div class="input-field">
+                <input id="password" type="password" class="validate" />
+                <label for="password">Password</label>
+              </div>
+      
+            <div class="submit">
+              <input
+                type="submit"
+                value="Submit"
+                class="btn waves-effect waves-light"
+              />
+            </div>
+          </form>
+        </div>
+      </div> 
+       
+      {% endblock%}
