@@ -1,0 +1,50 @@
+{% extends "base.html" %} 
+{% block content %}
+ <!-- Code for the side navigation bar -->
+ <ul id="slide-out" class="sidenav">
+    <li>
+      <a href="#" class="waves-effect waves-light btn-large"
+        >Search and view</a
+      >
+    </li>
+    <li>
+      <a  href="#" class="waves-effect waves-light btn-large"
+        >Search and edit</a
+      >
+    </li>
+    <li>
+      <a href="#" class="waves-effect waves-light btn-large"
+        >Add rows</i></a
+      >
+    </li>
+    <li>
+      <a href="#" class="waves-effect waves-light btn-large"
+        >Import file</i></a
+      >
+    </li>
+    <li>
+      <a href="#" class="waves-effect waves-light btn-large"
+        >Notifications</i></a
+      >
+    </li>
+  </ul>
+  <!-- Code for top menu button and title -->
+  <nav>
+  <div class="nav-wrapper">
+    <a href="#" data-target="slide-out" class="sidenav-trigger"
+    ><i class="material-icons sidenav-menu">menu</i></a
+  >
+  <span class="title">Faculty Adjunct Management Application</span>
+
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="#">Logout</a></li>
+
+    </ul>
+  </div>
+</nav>
+<main class="page-margins">
+{% block main %} {% endblock %}
+</main>
+
+
+{% endblock %}
