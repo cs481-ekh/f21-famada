@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'CRUD',
     'Notifications',
     'Import_Export',
+    'phone_field',
 ]
 
 MIDDLEWARE = [
