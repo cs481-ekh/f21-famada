@@ -40,3 +40,5 @@ class AdjunctFacultyMember(models.Model):
     secondary_phone = PhoneField(default='NA', blank=True, help_text='Secondary phone number')
     special_conditions_and_comments = models.TextField()
     semesters_taught = models.TextField()
+    archive = models.BooleanField()
+
