@@ -1,3 +1,74 @@
 {% extends "menu.html" %} 
 
 {% block main %} {% endblock %}
+
+<div class="row">
+    <!-- placeholder for future logout button -->
+    <div>
+        <a class="dropdown-item" href="{% url 'logout' %}">
+            logout
+        </a>
+    </div>
+    <!-- User selects what column they would like to search in -->
+    <div class="input-field col s12">
+        <select>
+          <option value="" disabled selected>Choose your option</option>
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+          <option value="3">Option 3</option>
+        </select>
+        <label>Column Select</label>
+      </div>
+
+      <!-- Here the user chooses the thing to search. If the field is an enum field
+        it gives the useer options to choose from.-->
+      <div class="input-field col s12">
+        <input id="lsearch_string" type="text" class="validate">
+        <label for="search_string">Search string</label>
+      </div>
+
+
+      <!-- Here the user selects what columns they would lik to view on their table -->
+      <div class="input-field col s12">
+        <select multiple>
+          <option value="" disabled selected>Choose your option</option>
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+          <option value="3">Option 3</option>
+        </select>
+        <label>Materialize Multiple Select</label>
+      </div>
+</div>
+<div class="row">
+    <!-- This is where the data shows up! -->
+    <table>
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Item Name</th>
+              <th>Item Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td>$3.76</td>
+          </tr>
+          <tr>
+            <td>Jonathan</td>
+            <td>Lollipop</td>
+            <td>$7.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+</div>
