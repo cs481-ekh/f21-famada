@@ -7,7 +7,6 @@ body {
 input[type="submit"] {
   color: color("shades", "white");
   width: 140px;
-
 }
 
 .login-form {
@@ -27,7 +26,7 @@ input[type="submit"] {
   .form-container {
     margin-top: 2rem;
     width: 600px;
-    background-color: rgba(246,247,249, .9);
+    background-color: rgba(246, 247, 249, 0.9);
   }
   .logo {
     width: 300px;
@@ -60,16 +59,16 @@ input[type="submit"] {
       height: auto;
     }
   }
-
 }
 
-.nav-wrapper{
+.nav-wrapper {
   .sidenav-menu {
     font-size: 2.75rem !important;
   }
-span {
-  font-size: 2rem;
+  span {
+    font-size: 2rem;
+  }
+  a.logout {
+    background-color: $secondary-color;
+  }
 }
-}
-
-
