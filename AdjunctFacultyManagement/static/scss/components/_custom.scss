@@ -40,6 +40,9 @@ input[type="submit"] {
 
 // *************** MENU WRAPPER STYLES ****************
 
+main {
+  margin: 40px 80px;
+}
 .blue-circle {
   display: flex;
   align-items: center;
@@ -70,5 +73,43 @@ input[type="submit"] {
   }
   a.logout {
     background-color: $secondary-color;
+  }
+}
+
+// *************** SEARCH AND VIEW STYLES ****************
+
+.search-fields {
+  display: flex;
+  flex-direction: column;
+  padding: 0 150px;
+
+  
+.input-field {
+  min-width: 320px;
+  margin: 20px;
+}
+.search-form-row {
+  display: flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.search-form-row-2 {
+  display: flex;
+  justify-content:flex-end;
+  align-items:center;
+
+  label, .submit {
+    margin: 1rem;
+  }
+}
+
+
+}
+.select-dropdown {
+  li {
+    span {
+      font-family: $secondary-font;
+    }
   }
 }
