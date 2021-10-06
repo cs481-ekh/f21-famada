@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-
+from .models import AdjunctFacultyMember
 
 # Create your views here.
 
@@ -33,4 +33,15 @@ def user_logout(request):
 @login_required
 def crud_read(request):
     if request.method == 'GET':
+        # Check if this is a page load or a search query
+        if request.GET.get("option1"):
+            option1 = request.GET['option1']+"__icontains"
+            searchString = request.GET['searchString']
+            searchFilter = {option1:searchString}
+
+            results = AdjunctFacultyMember.objects.all().filter(**searchFilter).order_by('first_name')
+            return render(request, 'CRUD/read_view.html', {'results': results})
+
         return render(request, 'CRUD/read_view.html')
+
+
