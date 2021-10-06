@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from .models import AdjunctFacultyMember
 
 # Create your views here.
-
 def user_login(request):
     # if user is already logged in the redirect to landing page
     if request.user.is_authenticated:
@@ -29,19 +28,63 @@ def user_logout(request):
     logout(request)
     return redirect('login')
 
+adjunctFields = [
+    "a_f_eaf_c_crs_list ",
+    "semester",
+    "first_name",
+    "last_name",
+    "employeeID",
+    "I9_completed",
+    "I9_greater_than_3_years",
+    "background_passed",
+    "cv_resume",
+    "masters",
+    "CTL_notified",
+    "classes",
+    "address",
+    "city",
+    "state",
+    "zip",
+    "primary_email",
+    "secondary_email",
+    "primary_phone",
+    "secondary_phone",
+    "special_conditions_and_comments",
+    "semesters_taught"
+]
+
+option1Fields = {
+    "First Name":"first_name",
+    "Last Name":"last_name",
+    "Employee ID":"employeeID",
+}
+
+option2Fields = {
+    "Select All":"all",
+    "First Name":"first_name",
+    "Last Name":"last_name",
+}
 
 @login_required
 def crud_read(request):
     if request.method == 'GET':
         # Check if this is a page load or a search query
         if request.GET.get("option1"):
-            option1 = request.GET['option1']+"__icontains"
-            searchString = request.GET['searchString']
+            option1 = request.GET.get('option1')+"__icontains"
+            searchString = request.GET.get('searchString')
+            includeArchives = request.GET.get('archive')
             searchFilter = {option1:searchString}
 
-            results = AdjunctFacultyMember.objects.all().filter(**searchFilter).order_by('first_name')
-            return render(request, 'CRUD/read_view.html', {'results': results})
+            print(request.GET.getlist('option2'))
 
-        return render(request, 'CRUD/read_view.html')
+            if includeArchives is None:
+                results = AdjunctFacultyMember.objects.all().filter(**searchFilter).filter(archived=False).order_by('first_name')
+            else:
+                results = AdjunctFacultyMember.objects.all().filter(**searchFilter).order_by('first_name')
+
+            return render(request, 'CRUD/read_view.html',
+                          {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,'option2Fields': option2Fields})
+
+        return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields,'option2Fields': option2Fields})
 
 

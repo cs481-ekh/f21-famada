@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'CRUD',
+    'phone_field',
     'Notifications',
     'Import_Export',
 ]
