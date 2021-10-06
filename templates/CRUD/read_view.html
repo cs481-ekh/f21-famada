@@ -1,36 +1,56 @@
 {% extends "menu.html" %} {% block main %}
 
-<div class="row">
+<form action="#">
+<div class="search-fields card">
+  <div class="search-form-row">
   <!-- User selects what column they would like to search in -->
-  <div class="input-field col s12">
+  <div class="input-field">
     <select>
       <option value="" disabled selected>Choose your option</option>
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
       <option value="3">Option 3</option>
     </select>
-    <label>Column Select</label>
+    <label>Column to search</label>
   </div>
 
   <!-- Here the user chooses the thing to search. If the field is an enum field
-        it gives the useer options to choose from.-->
-  <div class="input-field col s12">
-    <input id="lsearch_string" type="text" class="validate" />
-    <label for="search_string">Search string</label>
+        it gives the user options to choose from.-->
+  
+  <div class="input-field">
+    <input id="lsearch_string" type="text" class="validate" placeholder=" "/>
+    <label for="search_string">Search term</label>
   </div>
 
-  <!-- Here the user selects what columns they would lik to view on their table -->
-  <div class="input-field col s12">
+  <!-- Here the user selects what columns they would like to view on their table -->
+  <div class="input-field" id="search-view-columns">
     <select multiple>
       <option value="" disabled selected>Choose your option</option>
+      <option value="all">Select all/none</option>
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
       <option value="3">Option 3</option>
     </select>
-    <label>Materialize Multiple Select</label>
+    <label>Columns to view</label>
   </div>
 </div>
-<div class="row">
+<div class="search-form-row-2 ">
+<label>
+  <input type="checkbox" class="filled-in"/>
+  <span>Include archived faculty?</span>
+</label>
+  <div class="submit">
+    <input
+      type="submit"
+      value="Submit"
+      class="btn waves-effect waves-light"
+    />
+</div>
+</div>
+</div>
+</div>
+</form>
+<div class="row card">
   <!-- This is where the data shows up! -->
   <table>
     <thead>

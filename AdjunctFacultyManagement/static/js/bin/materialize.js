@@ -11789,6 +11789,7 @@ $jscomp.polyfill = function (e, r, p, m) {
         if (this.$selectOptions.length) {
           this.$selectOptions.each(function (el) {
             if ($(el).is('option')) {
+
               // Direct descendant option.
               var optionEl = void 0;
               if (_this71.isMultiple) {
@@ -11881,6 +11882,7 @@ $jscomp.polyfill = function (e, r, p, m) {
         obj.el = el;
         obj.optionEl = optionEl;
         this._valueDict[key] = obj;
+
       }
 
       /**
@@ -11970,10 +11972,11 @@ $jscomp.polyfill = function (e, r, p, m) {
         var options = this.$el.find('option');
 
         options.each(function (el) {
-          if ($(el).prop('selected')) {
+          if ($(el).prop('selected') && $(el).text() != 'Select all/none' &&  $(el).text() != 'Choose your option') {
             var text = $(el).text();
             values.push(text);
           }
+          console.log(values)
         });
 
         if (!values.length) {
