@@ -1,6 +1,8 @@
-from django.test import TestCase
-from django.contrib.auth import authenticate
+from django.test import TestCase, Client
+from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
+
+from CRUD.views import user_logout
 
 # Create your tests here.
 
@@ -17,3 +19,11 @@ class LoginModelTests(TestCase):
             assert False
         else: #if invalid login, test passes
             assert True
+    
+    #tests to see if a user is loggged out upon using logout
+    #expect response.status_code to be 302, and thus assert true
+    def test_logout(self):
+        c = Client() #client for testing
+        c.login(username='testuser', password='12345') #login the user
+        response = c.get('/logout/') #logout 
+        self.assertEqual(response.status_code, 302) #if status code is 302, user is logged out

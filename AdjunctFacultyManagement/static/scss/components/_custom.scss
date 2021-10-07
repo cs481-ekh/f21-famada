@@ -3,10 +3,10 @@ body {
   height: 100%;
 }
 
+// *************** LOGIN PAGE STYLES ****************
 input[type="submit"] {
   color: color("shades", "white");
   width: 140px;
-
 }
 
 .login-form {
@@ -26,7 +26,7 @@ input[type="submit"] {
   .form-container {
     margin-top: 2rem;
     width: 600px;
-    background-color: rgba(246,247,249, .9);
+    background-color: rgba(246, 247, 249, 0.9);
   }
   .logo {
     width: 300px;
@@ -35,5 +35,81 @@ input[type="submit"] {
   .submit {
     display: flex;
     justify-content: center;
+  }
+}
+
+// *************** MENU WRAPPER STYLES ****************
+
+main {
+  margin: 40px 80px;
+}
+.blue-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 180px;
+    background-color: $primary-color;
+    border-radius: 50%;
+    margin: 20px 0;
+
+    img {
+      width: 120px;
+      height: auto;
+    }
+  }
+}
+
+.nav-wrapper {
+  .sidenav-menu {
+    font-size: 2.75rem !important;
+  }
+  span {
+    font-size: 2rem;
+  }
+  a.logout {
+    background-color: $secondary-color;
+  }
+}
+
+// *************** SEARCH AND VIEW STYLES ****************
+
+.search-fields {
+  display: flex;
+  flex-direction: column;
+  padding: 0 150px;
+
+  
+.input-field {
+  min-width: 320px;
+  margin: 20px;
+}
+.search-form-row {
+  display: flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.search-form-row-2 {
+  display: flex;
+  justify-content:flex-end;
+  align-items:center;
+
+  label, .submit {
+    margin: 1rem;
+  }
+}
+
+
+}
+.select-dropdown {
+  li {
+    span {
+      font-family: $secondary-font;
+    }
   }
 }

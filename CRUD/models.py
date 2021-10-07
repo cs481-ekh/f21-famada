@@ -43,4 +43,3 @@ class AdjunctFacultyMember(models.Model):
     special_conditions_and_comments = encrypt(models.TextField())
     semesters_taught = encrypt(models.TextField())
     archive = encrypt(models.BooleanField())
-

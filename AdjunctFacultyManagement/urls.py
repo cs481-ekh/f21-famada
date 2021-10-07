@@ -20,5 +20,12 @@ from CRUD import views as crud_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', crud_views.user_login, name='login'),
-    path('search/', crud_views.crud_read, name='search'),
+    path('logout/', crud_views.user_logout, name='logout'),
+    path('search/', crud_views.crud_read, name='search'), #Search and View page
+    path('search_edit/', crud_views.crud_search_edit, name='search_edit'), #Search and Edit page
+    path('add/', crud_views.crud_add_rows, name='add_rows'), #Add Rows page
+    path('import/', crud_views.user_import, name='import'), #Import files page
+    path('notifications/', crud_views.user_notifications, name='notifications'), #Notifications page
+    
+    
 ]
