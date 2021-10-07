@@ -54,18 +54,18 @@
   <table>
     <thead>
       <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Employee ID</th>
+        {% for header in tableHeaders %}
+        <th>{{header}}</th>
+        {% endfor %}
       </tr>
     </thead>
 
     <tbody>
       {% for result in results %}
         <tr>
-          <td>{{result.first_name}}</td>
-          <td>{{result.last_name}}</td>
-          <td>{{result.employeeID}}</td>
+          {% for key,value in result.items %}
+          <td>{{value}}</td>
+          {% endfor %}
         </tr>
       {% endfor %}
     </tbody>
