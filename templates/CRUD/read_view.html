@@ -8,7 +8,7 @@
     <select name="option1">
       <option value="" disabled selected>Choose your option</option>
       {% for key,value in option1Fields.items %}
-      <option value="{{ value }}">{{key}}</option>
+        <option value="{{ value }}">{{key}}</option>
       {% endfor %}
     </select>
     <label>Column to search</label>
@@ -47,7 +47,6 @@
 </div>
 </div>
 </div>
-</div>
 </form>
 <div class="row card">
   <!-- This is where the data shows up! -->
@@ -55,7 +54,7 @@
     <thead>
       <tr>
         {% for header in tableHeaders %}
-        <th>{{header}}</th>
+          <th>{{header}}</th>
         {% endfor %}
       </tr>
     </thead>
@@ -63,8 +62,8 @@
     <tbody>
       {% for result in results %}
         <tr>
-          {% for key,value in result.items %}
-          <td>{{value}}</td>
+          {% for value in result.values %}
+            <td>{{value}}</td>
           {% endfor %}
         </tr>
       {% endfor %}

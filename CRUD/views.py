@@ -31,7 +31,7 @@ def user_logout(request):
 
 
 adjunctFields = {
-    "A_F_EAF_C_CRS_LIST": "a_f_eaf_c_crs_list",
+    "A, F, EAF, C-CRS-LIST": "a_f_eaf_c_crs_list",
     "Semester": "semester",
     "First Name": "first_name",
     "Last Name": "last_name",
@@ -53,7 +53,6 @@ adjunctFields = {
     "Secondary Phone": "secondary_phone",
     "Special Conditions and Comments": "special_conditions_and_comments",
     "Semesters Taught": "semesters_taught",
-    "Archived": "archived"
 }
 
 option1Fields = {
@@ -64,8 +63,26 @@ option1Fields = {
 
 option2Fields = {
     "Select All": "all",
+    "Semester": "semester",
     "First Name": "first_name",
     "Last Name": "last_name",
+    "Employee ID": "employeeID",
+    "I9 Completed": "I9_completed",
+    "I9 Greater Than 3 Years": "I9_greater_than_3_years",
+    "Background Passed": "background_passed",
+    "CV/Resume": "cv_resume",
+    "Masters": "masters",
+    "CTL Notified": "CTL_notified",
+    "Classes": "classes",
+    "Address": "address",
+    "City": "city",
+    "State": "state",
+    "Zip": "zip",
+    "Primary Email": "primary_email",
+    "Secondary Email": "secondary_email",
+    "Primary Phone": "primary_phone",
+    "Secondary Phone": "secondary_phone",
+    "Semesters Taught": "semesters_taught",
 }
 
 
@@ -83,10 +100,8 @@ def crud_read(request):
             # Get selected options from option 2 list
             tableHeaders = request.GET.getlist('option2')
 
-            allSelected = False
             if "Select All" in tableHeaders:
                 tableHeaders = adjunctFields.keys()
-                allSelected = True
                 retFieldsList = adjunctFields.values()
             else:
                 # Get corresponding model names for table headers
@@ -98,12 +113,14 @@ def crud_read(request):
             else:
                 results = AdjunctFacultyMember.objects.all().filter(**searchFilter).order_by('first_name')
 
-
             results = results.values(*retFieldsList)
 
             if not results:
                 tableHeaders = []
-            print(results)
+            print(tableHeaders)
+            if not tableHeaders:
+                tableHeaders = adjunctFields.keys()
+
             return render(request, 'CRUD/read_view.html',
                           {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,
                            'option2Fields': option2Fields, 'tableHeaders': tableHeaders})
