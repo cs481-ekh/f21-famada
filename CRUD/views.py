@@ -29,7 +29,7 @@ def user_logout(request):
     logout(request)
     return redirect('login')
 
-
+# List of adjunct Fields For crud_read view
 adjunctFields = {
     "A, F, EAF, C-CRS-LIST": "a_f_eaf_c_crs_list",
     "Semester": "semester",
@@ -55,12 +55,14 @@ adjunctFields = {
     "Semesters Taught": "semesters_taught",
 }
 
+# List for option field 1 in read_view
 option1Fields = {
     "First Name": "first_name",
     "Last Name": "last_name",
     "Employee ID": "employeeID",
 }
 
+# List for option field 2 in read)view
 option2Fields = {
     "Select All": "all",
     "Semester": "semester",
@@ -86,6 +88,7 @@ option2Fields = {
 }
 
 
+#Redirects to Search and View page in menu bar
 @login_required
 def crud_read(request):
     if request.method == 'GET':
@@ -126,3 +129,28 @@ def crud_read(request):
                            'option2Fields': option2Fields, 'tableHeaders': tableHeaders})
 
         return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields})
+
+#Redirects to Search and Edit page in menu bar
+@login_required
+def crud_search_edit(request):
+    if request.method == 'GET':
+            return render(request, 'CRUD/edit_view.html')
+
+#Redirects to add rows page in menu bar
+@login_required
+def crud_add_rows(request):
+    if request.method == 'GET':
+            return render(request, 'CRUD/add_rows.html')
+
+
+#Redirects to import page in menu bar
+@login_required
+def user_import(request):
+    if request.method == 'GET':
+            return render(request, 'Import_Export/import.html')
+
+#Redirects to Notifications page in menu bar
+@login_required
+def user_notifications(request):
+    if request.method == 'GET':
+            return render(request, 'Notifications/notifications.html')
