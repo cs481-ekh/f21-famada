@@ -1,15 +1,15 @@
 {% extends "menu.html" %} {% block main %}
 
-<form action="#">
+<form action="{% url 'search' %}" method="get">
 <div class="search-fields card">
   <div class="search-form-row">
   <!-- User selects what column they would like to search in -->
-  <div class="input-field">
-    <select>
+  <div class="input-field" >
+    <select name="option1">
       <option value="" disabled selected>Choose your option</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
+      {% for key,value in option1Fields.items %}
+        <option value="{{ value }}">{{key}}</option>
+      {% endfor %}
     </select>
     <label>Column to search</label>
   </div>
@@ -18,25 +18,24 @@
         it gives the user options to choose from.-->
   
   <div class="input-field">
-    <input id="lsearch_string" type="text" class="validate" placeholder=" "/>
-    <label for="search_string">Search term</label>
+    <input id="lsearch_string" name="searchString" type="text" class="validate" placeholder=" "/>
+    <label>Search term</label>
   </div>
 
   <!-- Here the user selects what columns they would like to view on their table -->
   <div class="input-field" id="search-view-columns">
-    <select multiple>
+    <select multiple name="option2">
       <option value="" disabled selected>Choose your option</option>
-      <option value="all">Select all/none</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
+      {% for key in option2Fields %}
+        <option >{{key}}</option>
+      {% endfor %}
     </select>
     <label>Columns to view</label>
   </div>
 </div>
 <div class="search-form-row-2 ">
 <label>
-  <input type="checkbox" class="filled-in"/>
+  <input type="checkbox" name="archive" class="filled-in"/>
   <span>Include archived faculty?</span>
 </label>
   <div class="submit">
@@ -48,35 +47,26 @@
 </div>
 </div>
 </div>
-</div>
 </form>
 <div class="row card">
   <!-- This is where the data shows up! -->
   <table>
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Item Name</th>
-        <th>Item Price</th>
+        {% for header in tableHeaders %}
+          <th>{{header}}</th>
+        {% endfor %}
       </tr>
     </thead>
 
     <tbody>
-      <tr>
-        <td>Alvin</td>
-        <td>Eclair</td>
-        <td>$0.87</td>
-      </tr>
-      <tr>
-        <td>Alan</td>
-        <td>Jellybean</td>
-        <td>$3.76</td>
-      </tr>
-      <tr>
-        <td>Jonathan</td>
-        <td>Lollipop</td>
-        <td>$7.00</td>
-      </tr>
+      {% for result in results %}
+        <tr>
+          {% for value in result.values %}
+            <td>{{value}}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

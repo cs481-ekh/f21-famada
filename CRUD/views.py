@@ -1,10 +1,10 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from .models import AdjunctFacultyMember
 
 
 # Create your views here.
-
 def user_login(request):
     # if user is already logged in the redirect to landing page
     if request.user.is_authenticated:
@@ -29,11 +29,106 @@ def user_logout(request):
     logout(request)
     return redirect('login')
 
+# List of adjunct Fields For crud_read view
+adjunctFields = {
+    "A, F, EAF, C-CRS-LIST": "a_f_eaf_c_crs_list",
+    "Semester": "semester",
+    "First Name": "first_name",
+    "Last Name": "last_name",
+    "Employee ID": "employeeID",
+    "I9 Completed": "I9_completed",
+    "I9 Greater Than 3 Years": "I9_greater_than_3_years",
+    "Background Passed": "background_passed",
+    "CV/Resume": "cv_resume",
+    "Masters": "masters",
+    "CTL Notified": "CTL_notified",
+    "Classes": "classes",
+    "Address": "address",
+    "City": "city",
+    "State": "state",
+    "Zip": "zip",
+    "Primary Email": "primary_email",
+    "Secondary Email": "secondary_email",
+    "Primary Phone": "primary_phone",
+    "Secondary Phone": "secondary_phone",
+    "Special Conditions and Comments": "special_conditions_and_comments",
+    "Semesters Taught": "semesters_taught",
+}
+
+# List for option field 1 in read_view
+option1Fields = {
+    "First Name": "first_name",
+    "Last Name": "last_name",
+    "Employee ID": "employeeID",
+}
+
+# List for option field 2 in read)view
+option2Fields = {
+    "Select All": "all",
+    "Semester": "semester",
+    "First Name": "first_name",
+    "Last Name": "last_name",
+    "Employee ID": "employeeID",
+    "I9 Completed": "I9_completed",
+    "I9 Greater Than 3 Years": "I9_greater_than_3_years",
+    "Background Passed": "background_passed",
+    "CV/Resume": "cv_resume",
+    "Masters": "masters",
+    "CTL Notified": "CTL_notified",
+    "Classes": "classes",
+    "Address": "address",
+    "City": "city",
+    "State": "state",
+    "Zip": "zip",
+    "Primary Email": "primary_email",
+    "Secondary Email": "secondary_email",
+    "Primary Phone": "primary_phone",
+    "Secondary Phone": "secondary_phone",
+    "Semesters Taught": "semesters_taught",
+}
+
+
 #Redirects to Search and View page in menu bar
 @login_required
 def crud_read(request):
     if request.method == 'GET':
-        return render(request, 'CRUD/read_view.html')
+        # Check if this is a page load or a search query
+        if request.GET.get("option1"):
+            # Take in arguments from the GET
+            option1 = request.GET.get('option1') + "__icontains"
+            searchString = request.GET.get('searchString')
+            searchFilter = {option1: searchString}
+            includeArchives = request.GET.get('archive')
+
+            # Get selected options from option 2 list
+            tableHeaders = request.GET.getlist('option2')
+
+            if "Select All" in tableHeaders:
+                tableHeaders = adjunctFields.keys()
+                retFieldsList = adjunctFields.values()
+            else:
+                # Get corresponding model names for table headers
+                retFieldsList = [option2Fields.get(key) for key in tableHeaders]
+
+            if includeArchives is None:
+                results = AdjunctFacultyMember.objects.all().filter(**searchFilter).filter(archived=False).order_by(
+                    'first_name')
+            else:
+                results = AdjunctFacultyMember.objects.all().filter(**searchFilter).order_by('first_name')
+
+            results = results.values(*retFieldsList)
+
+            if not results:
+                tableHeaders = []
+            print(tableHeaders)
+            if not tableHeaders:
+                tableHeaders = adjunctFields.keys()
+
+            return render(request, 'CRUD/read_view.html',
+                          {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,
+                           'option2Fields': option2Fields, 'tableHeaders': tableHeaders})
+
+        return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields})
 
 #Redirects to Search and Edit page in menu bar
 @login_required
@@ -59,7 +154,3 @@ def user_import(request):
 def user_notifications(request):
     if request.method == 'GET':
             return render(request, 'Notifications/notifications.html')
-
-
-
-        
