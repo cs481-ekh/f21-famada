@@ -1,3 +1,33 @@
-{% extends "menu.html" %} {% block main %}
-    Made it to add_rows.html
+{% extends "menu.html" %} 
+{% block main %}
+<div>
+    <form>
+        {% csrf_token %}
+        {% for field in form %}
+            <p>
+                {{ field.label_tag }}
+                {{ field }}
+
+                {% if field.help_text %}
+                    {% comment %} <p class="help_text"> {{ field.help_text }} </p> {% endcomment %}
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <p class="help_text" style="color:red;"> {{ error }} </p>
+                {% endfor %}
+
+                <!-- Non specific errors -->
+                {% if form.non_field_errors %}
+                    <p class="help_text" style="color:red;"> {{ form.non_field_errors }} </p>
+                {% endif %}
+            </p>
+        {% endfor %}
+
+    <div>
+        <input type="submit" value="Submit" class="btn waves-effect waves-light">
+    </div>
+    </form>
+
+</div>
+    
 {% endblock %}
