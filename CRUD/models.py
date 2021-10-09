@@ -42,4 +42,4 @@ class AdjunctFacultyMember(models.Model):
     secondary_phone = encrypt(PhoneField(default='000-000-0000', blank=True, help_text='Secondary phone number'))
     special_conditions_and_comments = encrypt(models.TextField())
     semesters_taught = encrypt(models.TextField())
-    archive = encrypt(models.BooleanField(Default = False))
+    archive = encrypt(models.BooleanField(default=False))
