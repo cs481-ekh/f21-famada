@@ -22,7 +22,7 @@ class AdjunctFacultyMember(models.Model):
     semester = encrypt(models.CharField(default='--', max_length=4))
     first_name = encrypt(models.CharField(null=False, blank=False, max_length=30))
     last_name = encrypt(models.CharField(null=False, blank=False, max_length=30))
-    date_of_birth = encrypt(models.DateField(null=False, blank=False))
+    #date_of_birth = encrypt(models.DateField(null=False, blank=False))
     employeeID = encrypt(models.IntegerField(null=False, blank=False, unique=True))
     step_rate_dept = encrypt(models.CharField(null=False, blank=False, max_length=10))
     I9_completed = encrypt(models.DateField(null=False, blank=False, default='NA'))
