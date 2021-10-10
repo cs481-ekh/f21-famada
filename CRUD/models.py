@@ -24,7 +24,7 @@ class AdjunctFacultyMember(models.Model):
     last_name = encrypt(models.CharField(null=False, blank=False, max_length=30))
     #date_of_birth = encrypt(models.DateField(null=False, blank=False))
     employeeID = encrypt(models.IntegerField(null=False, blank=False, unique=True))
-    step_rate_dept = encrypt(models.CharField(null=False, blank=False, max_length=10))
+    step_rate_dept = encrypt(models.CharField(default="NA", null=False, blank=False, max_length=10))
     I9_completed = encrypt(models.DateField(null=False, blank=False, default='NA'))
     I9_greater_than_3_years = encrypt(models.IntegerField(null=False, blank=False, default='NA'))
     background_passed = encrypt(models.CharField(null=False, blank=False, default='NA', choices=bg_choices, max_length=2))
