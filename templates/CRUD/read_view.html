@@ -56,25 +56,6 @@
 </form>
 <div class="row card">
   <!-- This is where the data shows up! -->
-  <table>
-    <thead>
-      <tr>
-        {% for header in tableHeaders %}
-        <th>{{header}}</th>
-        {% endfor %}
-      </tr>
-    </thead>
-
-    <tbody>
-      {% for result in results %}
-      <tr>
-        {% for value in result.values %}
-        <td>{{value}}</td>
-        {% endfor %}
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
   <div id="myGrid" style="height: 200px; width:500px;" class="ag-theme-alpine"></div>
 </div>
 {% block javascript %}
