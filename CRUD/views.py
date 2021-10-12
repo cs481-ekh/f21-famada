@@ -2,6 +2,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import AdjunctFacultyMember
+from .forms import AdjunctForm
 
 
 # Create your views here.
@@ -139,8 +140,9 @@ def crud_search_edit(request):
 #Redirects to add rows page in menu bar
 @login_required
 def crud_add_rows(request):
+    form = AdjunctForm()
     if request.method == 'GET':
-            return render(request, 'CRUD/add_rows.html')
+            return render(request, 'CRUD/add_rows.html', {'form': form})
 
 
 #Redirects to import page in menu bar
