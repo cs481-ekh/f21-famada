@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import AdjunctFacultyMember
+from .forms import AdjunctForm
 
 
 # Create your views here.
@@ -102,15 +103,17 @@ def crud_read(request):
             includeArchives = request.GET.get('archive')
 
             # Get selected options from option 2 list
-            tableHeaders = request.GET.getlist('option2')
+            option2 = request.GET.getlist('option2')
+            tableHeaders = {}
+            for option in option2:
+                tableHeaders[option] = adjunctFields[option]
 
             if "Select All" in tableHeaders:
-                tableHeaders = adjunctFields.keys()
+                tableHeaders = adjunctFields
                 retFieldsList = adjunctFields.values()
             else:
                 # Get corresponding model names for table headers
-                retFieldsList = [option2Fields.get(key) for key in tableHeaders]
-                print(retFieldsList)
+                retFieldsList = tableHeaders.values()
 
             if includeArchives is None:
                 results = AdjunctFacultyMember.objects.all().filter(**searchFilter).filter(archived=False).order_by(
@@ -121,12 +124,10 @@ def crud_read(request):
             results = results.values(*retFieldsList)
 
             if not results:
-                tableHeaders = []
-            
-            if not tableHeaders:
-                tableHeaders = adjunctFields.keys()
+                tableHeaders = {}
             print(tableHeaders)
-            print(results)
+            if not tableHeaders:
+                tableHeaders = adjunctFields
 
             # return render(request, 'CRUD/read_view.html',
             #               {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,
@@ -146,8 +147,9 @@ def crud_search_edit(request):
 #Redirects to add rows page in menu bar
 @login_required
 def crud_add_rows(request):
+    form = AdjunctForm()
     if request.method == 'GET':
-            return render(request, 'CRUD/add_rows.html')
+            return render(request, 'CRUD/add_rows.html', {'form': form})
 
 
 #Redirects to import page in menu bar

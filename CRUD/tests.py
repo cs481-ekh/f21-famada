@@ -1,8 +1,9 @@
 from django.test import TestCase, Client
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
+from django.test.client import RequestFactory
 
-from CRUD.views import user_logout
+from CRUD.views import crud_read, user_logout
 
 # Create your tests here.
 
@@ -27,3 +28,29 @@ class LoginModelTests(TestCase):
         c.login(username='testuser', password='12345') #login the user
         response = c.get('/logout/') #logout 
         self.assertEqual(response.status_code, 302) #if status code is 302, user is logged out
+
+class ViewModelTests(TestCase):
+
+    def setUp(self):
+        #creates a user that is required to be logged in
+        #to test the database functions
+        user = User.objects.create(username='testuser')
+        user.set_password('12345')
+        user.save()
+        user = authenticate(username = 'testuser', password='1245')
+
+    def test_add_to_database(self):
+        print("todo")
+
+
+    def test_view_database(self):
+        
+        c = Client() #client for testing
+        c.login(username='testuser', password='12345') #login the user
+
+        #create a GET request
+        response = c.get('/search/')
+        #get request from the search method
+        request = response.wsgi_request
+        request = crud_read(request)
+        self.assertEqual(request.status_code, 200) #if status code is 200, the view worked as intended
