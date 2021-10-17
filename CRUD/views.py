@@ -102,14 +102,17 @@ def crud_read(request):
             includeArchives = request.GET.get('archive')
 
             # Get selected options from option 2 list
-            tableHeaders = request.GET.getlist('option2')
+            option2 = request.GET.getlist('option2')
+            tableHeaders = {}
+            for option in option2:
+                tableHeaders[option] = adjunctFields[option]
 
             if "Select All" in tableHeaders:
-                tableHeaders = adjunctFields.keys()
+                tableHeaders = adjunctFields
                 retFieldsList = adjunctFields.values()
             else:
                 # Get corresponding model names for table headers
-                retFieldsList = [option2Fields.get(key) for key in tableHeaders]
+                retFieldsList = tableHeaders.values()
 
             if includeArchives is None:
                 results = AdjunctFacultyMember.objects.all().filter(**searchFilter).filter(archived=False).order_by(
@@ -120,10 +123,10 @@ def crud_read(request):
             results = results.values(*retFieldsList)
 
             if not results:
-                tableHeaders = []
+                tableHeaders = {}
             print(tableHeaders)
             if not tableHeaders:
-                tableHeaders = adjunctFields.keys()
+                tableHeaders = adjunctFields
 
             return render(request, 'CRUD/read_view.html',
                           {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,

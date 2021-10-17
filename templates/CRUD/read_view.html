@@ -53,7 +53,7 @@
   <table>
     <thead>
       <tr>
-        {% for header in tableHeaders %}
+        {% for header, modelName in tableHeaders %}
           <th>{{header}}</th>
         {% endfor %}
       </tr>
