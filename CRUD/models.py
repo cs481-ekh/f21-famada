@@ -1,9 +1,13 @@
+from datetime import datetime
+
 from django.db import models
 from phone_field import PhoneField
 from django_cryptography.fields import encrypt
 
 
 # Create your models here.
+
+
 class AdjunctFacultyMember(models.Model):
     a_f_eaf_c_crs_choices = {
         ('A', 'A'),
@@ -17,8 +21,8 @@ class AdjunctFacultyMember(models.Model):
         ('N', 'No')
     }
     bg_choices = {  # background choices
-        ('P', 'pass'),
         ('NA', 'NA'),
+        ('P', 'pass'),
         ('F', 'fail')
     }
     sr_choices = {  # step rate choices
@@ -27,34 +31,32 @@ class AdjunctFacultyMember(models.Model):
         ('3', 'step 3'),
         ('F', 'faculty')
     }
-    a_f_eaf_c_crs_list = encrypt(models.CharField(null=False, blank=False, choices=a_f_eaf_c_crs_choices, max_length=3))
-    semester = encrypt(models.CharField(default='--', max_length=4))
-    first_name = encrypt(models.CharField(null=False, blank=False, max_length=30))
-    last_name = encrypt(models.CharField(null=False, blank=False, max_length=30))
-    date_of_birth = encrypt(models.DateField(null=False, blank=False))
-    employeeID = encrypt(models.IntegerField(null=False, blank=False, unique=True))
-    step_rate = encrypt(models.CharField(default="NA", null=False, blank=False, choices=sr_choices, max_length=10))
-    I9_completed = encrypt(models.DateField(null=False, blank=False, default='NA'))
-    I9_greater_than_3_years = encrypt(models.IntegerField(null=False, blank=False, default='NA'))
-    background_passed = encrypt(
-        models.CharField(null=False, blank=False, choices=bg_choices, max_length=2))
-    cv_resume = encrypt(models.IntegerField(default='NA', help_text="please enter a year"))
-    masters = encrypt(models.CharField(choices=masters_choices, max_length=3))
-    CTL_notified = encrypt(models.DateField(null=False, blank=False, default='NA'))
-    classes = encrypt(models.TextField(null=False, blank=False, ))
-    address = encrypt(models.CharField(null=False, blank=False, max_length=50))
-    city = encrypt(models.CharField(null=False, blank=False, max_length=20))
-    state = encrypt(models.CharField(null=False, blank=False, max_length=2))
-    zip = encrypt(models.IntegerField(null=False, blank=False, ))
-    primary_email = encrypt(models.EmailField(null=False, blank=False))
-    secondary_email = encrypt(models.EmailField(default="NA"))
-    primary_phone = encrypt(PhoneField(null=False, blank=False, help_text='Primary phone number'))
-    secondary_phone = encrypt(PhoneField(default='NA', blank=True, help_text='Secondary phone number'))
-    special_conditions_and_comments = encrypt(models.TextField())
-    # semesters_taught = encrypt(models.TextField()) remove possible
-    archived = encrypt(models.BooleanField(default=False))
+    a_f_eaf_c_crs_list = models.CharField(null=False, blank=False, choices=a_f_eaf_c_crs_choices, max_length=3)
+    semester = models.CharField(max_length=4)
+    first_name = models.CharField(null=False, blank=False, max_length=30)
+    last_name = models.CharField(null=False, blank=False, max_length=30)
+    date_of_birth = models.DateField(null=False, blank=False, default=datetime.now)
+    employeeID = models.IntegerField(null=False, blank=False, unique=True)
+    step_rate = models.CharField(null=False, blank=False, choices=sr_choices, max_length=10, default='step 1')
+    I9_completed = models.DateField(null=False, blank=False)
+    I9_greater_than_3_years = models.IntegerField(null=False, blank=False)
+    background_passed = models.CharField(null=False, blank=False, choices=bg_choices, max_length=2)
+    cv_resume = models.IntegerField(help_text="please enter a year")
+    masters = models.CharField(choices=masters_choices, max_length=3)
+    CTL_notified = models.DateField(null=False, blank=False)
+    address = models.CharField(null=False, blank=False, max_length=50)
+    city = models.CharField(null=False, blank=False, max_length=20)
+    state = models.CharField(null=False, blank=False, max_length=2)
+    zip = models.IntegerField(null=False, blank=False, )
+    primary_email = models.EmailField(null=False, blank=False)
+    secondary_email = models.EmailField()
+    primary_phone = PhoneField(null=False, blank=False, help_text='Primary phone number')
+    secondary_phone = PhoneField(blank=True, help_text='Secondary phone number')
+    special_conditions_and_comments = models.TextField()
+    # semesters_taught = encrypt(models.TextField()) remove possibly
+    archived = models.BooleanField()
 
 
 class Classes(models.Model):
-    class_name = encrypt(models.CharField(max_length=10, help_text="Chem"))
-    class_number = encrypt(models.CharField(max_length=10, help_text="101"))
+    adjunct_faculty_member = models.ForeignKey(AdjunctFacultyMember, on_delete=models.CASCADE)
+    adj_class = models.CharField(max_length=10)

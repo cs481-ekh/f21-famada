@@ -9,7 +9,7 @@ class AdjunctForm(forms.ModelForm):
         fields = (
             'a_f_eaf_c_crs_list', 'semester', 'first_name', 'last_name', 'employeeID', 'step_rate',
             'I9_completed', 'I9_greater_than_3_years', 'background_passed', 'cv_resume',
-            'masters', 'CTL_notified', 'classes', 'address', 'city', 'state', 'zip',
+            'masters', 'CTL_notified', 'address', 'city', 'state', 'zip',
             'primary_email', 'secondary_email', 'primary_phone', 'secondary_phone',
             'special_conditions_and_comments', 'archived'
         )
@@ -17,4 +17,4 @@ class AdjunctForm(forms.ModelForm):
 
 class ClassForm(forms.ModelForm):
     model = Classes
-    fields = ('class_name', 'class_number')
+    fields = 'class_name'
