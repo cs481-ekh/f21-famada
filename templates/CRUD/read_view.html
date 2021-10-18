@@ -56,27 +56,41 @@
 </form>
 <div class="row card">
   <!-- This is where the data shows up! -->
-  <div id="myGrid" style="height: 200px; width:500px;" class="ag-theme-alpine"></div>
+  <div id="myGrid" style="width: 100%" class="ag-theme-material"></div>
 </div>
-{% block javascript %}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
   $(document).ready(function () {
     // define table vars
+    var grid = "";
     var column = [];
-    var row= [];
+    var row = [];
+    var gridOptions = "";
 
     function buildTable(column, row) {
-      var gridOptions = {
+      if (grid != "") {
+        gridOptions.api.destroy();
+      }
+      gridOptions = {
         columnDefs: column,
+        defaultColDef: {
+          sortable: true,
+          filter: true,
+          resizable: true,
+        },
         rowData: row,
+        enableRangeSelection: true,
+        domLayout: "autoHeight",
+        animateRows: true,
       };
 
       // setup the grid after the page has finished loading
-        const gridDiv = document.querySelector("#myGrid");
-        new agGrid.Grid(gridDiv, gridOptions);
-    };
+      const gridDiv = document.querySelector("#myGrid");
+
+      grid = new agGrid.Grid(gridDiv, gridOptions);
+    }
 
     // catch the form's submit event
     $("#search-form").submit(function (e) {
@@ -88,13 +102,13 @@
         url: "{% url 'search' %}",
         // on success
         success: function (response) {
-          console.log(response.tableHeaders)
+          column = [];
+          row = [];
+
           for (h in response.tableHeaders) {
-            column.push({"field": response.tableHeaders[h]})
+            column.push({ headerName: h, field: response.tableHeaders[h] });
           }
-          console.log(column)
           row = response.results;
-          console.log(row)
 
           buildTable(column, row);
         },
@@ -110,4 +124,4 @@
     });
   });
 </script>
-{% endblock javascript %} {% endblock %}
+{% endblock %}
