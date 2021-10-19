@@ -59,14 +59,21 @@
   <div id="myGrid" style="width: 100%" class="ag-theme-material"></div>
 </div>
 
+{% load static %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+  type="text/javascript"
+  src="{% static 'js/bin/intEditor.js' %}"
+></script>
+<script
+  type="text/javascript"
+  src="{% static 'js/bin/dateEditor.js' %}"
+></script>
 
 <script>
   $(document).ready(function () {
     // define table vars
     var grid = "";
-    var column = [];
-    var row = [];
     var gridOptions = "";
 
     function buildTable(column, row) {
@@ -79,17 +86,30 @@
           sortable: true,
           filter: true,
           resizable: true,
+          editable: true,
         },
         rowData: row,
         enableRangeSelection: true,
         domLayout: "autoHeight",
         animateRows: true,
+        components: {
+          intEditor: IntEditor,
+          dateEditor: DateEditor,
+        },
       };
 
       // setup the grid after the page has finished loading
       const gridDiv = document.querySelector("#myGrid");
 
       grid = new agGrid.Grid(gridDiv, gridOptions);
+    }
+
+    function parse_choices(list) {
+      var newList = []
+      for (l in list) {
+        newList.push(list[l][1]);
+      }
+      return newList
     }
 
     // catch the form's submit event
@@ -102,12 +122,45 @@
         url: "{% url 'search' %}",
         // on success
         success: function (response) {
-          column = [];
-          row = [];
+          console.log(response);
+          var column = [];
+          var row = [];
+          var a_f_eaf_c_crs_choices = [];
+          var masters_choices = [];
+          var bg_choices = [];
+          var sr_choices = [];
 
+          // get choices for editing the table
+          a_f_eaf_c_crs_choices = parse_choices(response.a_f_eaf_c_crs_choices);
+          masters_choices = parse_choices(response.masters_choices);
+          bg_choices = parse_choices(response.bg_choices);
+          sr_choices = parse_choices(response.sr_choices);
           for (h in response.tableHeaders) {
-            column.push({ headerName: h, field: response.tableHeaders[h] });
+            var c = { headerName: h, field: response.tableHeaders[h] };
+            if (h == "A, F, EAF, C-CRS-LIST") {
+              c["cellEditor"] = "agSelectCellEditor";
+              c["cellEditorParams"] = {
+                values: a_f_eaf_c_crs_choices,
+              };
+            }
+            if (h == "Masters") {
+              c["cellEditor"] = "agSelectCellEditor";
+              c["cellEditorParams"] = {
+                values: masters_choices,
+              };
+            }
+            if (h == "Employee ID" || h == "Zip") {
+              c["cellEditor"] = "intEditor";
+            }
+            if (h == "I9 Completed") {
+              c["cellEditor"] = "dateEditor";
+            }
+
+            // cell editors needed: date, integer, email, telephone
+
+            column.push(c);
           }
+          console.log(column);
           row = response.results;
 
           buildTable(column, row);

@@ -122,6 +122,7 @@ def crud_read(request):
                 results = AdjunctFacultyMember.objects.all().filter(**searchFilter).order_by('first_name')
 
             results = results.values(*retFieldsList)
+            
 
             if not results:
                 tableHeaders = {}
@@ -133,7 +134,7 @@ def crud_read(request):
             #               {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,
             #                'option2Fields': option2Fields, 'tableHeaders': tableHeaders})
             return JsonResponse({'results': list(results), 'fields': list(adjunctFields), 'option1Fields': list(option1Fields),
-                           'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders}, status=200)
+                           'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders, 'sr_choices': list(AdjunctFacultyMember.sr_choices), 'bg_choices': list(AdjunctFacultyMember.bg_choices), 'masters_choices': list(AdjunctFacultyMember.masters_choices), 'a_f_eaf_c_crs_choices': list(AdjunctFacultyMember.a_f_eaf_c_crs_choices)}, status=200)
 
         return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields})
         
