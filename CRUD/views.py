@@ -1,6 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from .models import AdjunctFacultyMember
 from .forms import AdjunctForm
 
@@ -128,11 +129,14 @@ def crud_read(request):
             if not tableHeaders:
                 tableHeaders = adjunctFields
 
-            return render(request, 'CRUD/read_view.html',
-                          {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,
-                           'option2Fields': option2Fields, 'tableHeaders': tableHeaders})
+            # return render(request, 'CRUD/read_view.html',
+            #               {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,
+            #                'option2Fields': option2Fields, 'tableHeaders': tableHeaders})
+            return JsonResponse({'results': list(results), 'fields': list(adjunctFields), 'option1Fields': list(option1Fields),
+                           'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders}, status=200)
 
         return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields})
+        
 
 #Redirects to Search and Edit page in menu bar
 @login_required

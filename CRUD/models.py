@@ -45,7 +45,7 @@ class AdjunctFacultyMember(models.Model):
     first_name = models.CharField(null=False, blank=False, max_length=30)
     last_name = models.CharField(null=False, blank=False, max_length=30)
     date_of_birth = models.DateField(null=False, blank=False)
-    employeeID = models.IntegerField(null=False, blank=False, unique=True)
+    employeeID = models.IntegerField(null=False, blank=False, unique=True, primary_key=True)
     step_rate = models.CharField(null=False, blank=False, choices=sr_choices, max_length=10, default='step 1')
     I9_completed = models.DateField(null=False, blank=False, help_text="Please enter a date.")
     I9_greater_than_3_years = models.IntegerField(null=False, blank=False, help_text="Please enter a number of years.")

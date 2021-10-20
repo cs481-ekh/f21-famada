@@ -180,7 +180,6 @@
       // Create dropdown structure.
       if (this.$selectOptions.length) {
         this.$selectOptions.each((el) => {
-          console.log($(el))
           if ($(el).is('option')) {
             // Direct descendant option.
             let optionEl;
