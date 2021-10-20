@@ -60,8 +60,8 @@ class AdjunctFacultyMember(models.Model):
     primary_email = models.EmailField(null=False, blank=False)
     secondary_email = models.EmailField()
     primary_phone = PhoneField(null=False, blank=False)
-    secondary_phone = PhoneField(blank=True, help_text='Optional')
-    special_conditions_and_comments = models.TextField()
+    secondary_phone = PhoneField(blank=True)
+    special_conditions_and_comments = models.TextField(blank=True)
     # semesters_taught = encrypt(models.TextField()) remove possibly
     archived = models.BooleanField()
 

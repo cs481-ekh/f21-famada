@@ -18,11 +18,11 @@ class AdjunctForm(forms.ModelForm):
             'primary_email', 'secondary_email', 'primary_phone', 'secondary_phone',
             'special_conditions_and_comments', 'archived'
         )
-        widgets = {
-            'date_of_birth' : DateInput(),
-            'I9_completed'  : DateInput(),
-            'CTL_notified'  : DateInput(),
-        }
+        # widgets = {
+        #     'date_of_birth' : DateInput(),
+        #     'I9_completed'  : DateInput(),
+        #     'CTL_notified'  : DateInput(),
+        # }
 
 
 class ClassForm(forms.ModelForm):
