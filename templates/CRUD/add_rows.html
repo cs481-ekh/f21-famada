@@ -6,11 +6,13 @@
         {% for field in form %}
             <p>
                 {{ field.label_tag }}
+                {% if field.help_text %}
+                    <button class="help_text" title= " {{ field.help_text }} ">?</button>
+                    <!-- <p class="help_text"> {{ field.help_text }} </p>  -->
+                {% endif %}
                 {{ field }}
 
-                {% if field.help_text %}
-                    {% comment %} <p class="help_text"> {{ field.help_text }} </p> {% endcomment %}
-                {% endif %}
+                
 
                 {% for error in field.errors %}
                     <p class="help_text" style="color:red;"> {{ error }} </p>
