@@ -1,48 +1,46 @@
-class DateEditor {
-    init(params) {
-        this.value = params.value;
- 
-        this.input = document.createElement('input');
-        this.input.id = 'input';
-        this.input.type = 'text';
-        this.input.classList = ['datepicker']
-        this.input.value = this.value;
- 
-        this.input.addEventListener('input', (event) => {
-            this.value = event.target.value;
-        });
 
-        this.input.datepicker();
-    }
- 
-    /* Component Editor Lifecycle methods */
+ function getDatePicker() {
+    // function to act as a class
+    function Datepicker() {}
+  
+    // gets called once before the renderer is used
+    Datepicker.prototype.init = function (params) {
+      // create the cell
+      this.eInput = document.createElement('input');
+      this.eInput.value = params.value;
+      this.eInput.classList.add('datepicker');
+
+    };
+  
     // gets called once when grid ready to insert the element
-    getGui() {
-        return this.input;
-    }
- 
-    // the final value to send to the grid, on completion of editing
-    getValue() {
-        // this simple editor doubles any value entered into the input
-        return this.value;
-    }
- 
-    // Gets called once before editing starts, to give editor a chance to
-    // cancel the editing before it even starts.
-    isCancelBeforeStart() {
-        return false;
-    }
- 
-    // Gets called once when editing is finished (eg if Enter is pressed).
-    // If you return true, then the result of the edit will be ignored.
-    isCancelAfterEnd() {
-        // our editor will reject any value greater than 1000
-        return false;
-    }
- 
-    // after this component has been created and inserted into the grid
-    afterGuiAttached() {
-        this.input.focus();
-        this.input.select();
-    }
- }
+    Datepicker.prototype.getGui = function () {
+
+      return this.eInput;
+    };
+  
+    // focus and select can be done after the gui is attached
+    Datepicker.prototype.afterGuiAttached = function () {
+        $(this.eInput).datepicker({"container": $('main')});
+      this.eInput.focus();
+      this.eInput.select();
+    };
+  
+    // returns the new value after editing
+    Datepicker.prototype.getValue = function () {
+      return this.eInput.value;
+    };
+  
+    // any cleanup we need to be done here
+    Datepicker.prototype.destroy = function () {
+      // but this example is simple, no cleanup, we could
+      // even leave this method out as it's optional
+    };
+  
+    // if true, then this editor will appear in a popup
+    Datepicker.prototype.isPopup = function () {
+      // and we could leave this method out also, false is the default
+      return false;
+    };
+  
+    return Datepicker;
+  }

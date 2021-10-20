@@ -60,7 +60,7 @@
 </div>
 
 {% load static %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 <script
   type="text/javascript"
   src="{% static 'js/bin/intEditor.js' %}"
@@ -69,12 +69,18 @@
   type="text/javascript"
   src="{% static 'js/bin/dateEditor.js' %}"
 ></script>
+<script
+  type="text/javascript"
+  src="{% static 'js/bin/phoneEditor.js' %}"
+></script>
 
 <script>
   $(document).ready(function () {
     // define table vars
     var grid = "";
     var gridOptions = "";
+ 
+
 
     function buildTable(column, row) {
       if (grid != "") {
@@ -94,7 +100,8 @@
         animateRows: true,
         components: {
           intEditor: IntEditor,
-          dateEditor: DateEditor,
+          phoneEditor: PhoneEditor,
+          dateEditor: getDatePicker(),
         },
       };
 
@@ -149,18 +156,33 @@
                 values: masters_choices,
               };
             }
-            if (h == "Employee ID" || h == "Zip") {
-              c["cellEditor"] = "intEditor";
+            if (h == "Background Passed") {
+              c["cellEditor"] = "agSelectCellEditor";
+              c["cellEditorParams"] = {
+                values: bg_choices,
+              };
             }
-            if (h == "I9 Completed") {
-              c["cellEditor"] = "dateEditor";
+            if (h == "Step Rate") {
+              c["cellEditor"] = "agSelectCellEditor";
+              c["cellEditorParams"] = {
+                values: sr_choices,
+              };
             }
 
-            // cell editors needed: date, integer, email, telephone
+            if (h == "Employee ID" || h == "Zip" || h == "I9 Greater Than 3 Years" || h == "CV/Resume") {
+              c["cellEditor"] = "intEditor";
+            }
+            if (h == "I9 Completed" || h == "CTL Notified" || h == "Date of Birth") {
+              c["cellEditor"] = "dateEditor";
+            }
+            if (h == "Primary Phone" || h == "Secondary Phone") {
+              c["cellEditor"] = "phoneEditor";
+            }
+
+            // cell editors needed: email, telephone, boolean
 
             column.push(c);
           }
-          console.log(column);
           row = response.results;
 
           buildTable(column, row);
