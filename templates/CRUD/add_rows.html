@@ -3,11 +3,11 @@
 <div>
     <form>
         {% csrf_token %}
-        <p>*Required</p>
+        <p><span class="required" style="color:red">*</span>Required</p>
         {% for field in form %}
             <p>
                 {% if field.field.required %}
-                    <span class="required">*</span>
+                    <span class="required" style="color:red">*</span>
                 {% endif %}
                 
                 {{ field.label_tag }}
