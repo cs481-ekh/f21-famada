@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.db import models
+from django.core.validators import RegexValidator
 from django.forms.widgets import SelectDateWidget
 from phone_field import PhoneField
 from django_cryptography.fields import encrypt
@@ -59,8 +60,11 @@ class AdjunctFacultyMember(models.Model):
     zip = models.IntegerField(null=False, blank=False, )
     primary_email = models.EmailField(null=False, blank=False)
     secondary_email = models.EmailField()
-    primary_phone = PhoneField(null=False, blank=False)
-    secondary_phone = PhoneField(blank=True)
+    #primary_phone = PhoneField(null=False, blank=False)
+    #secondary_phone = PhoneField(blank=True)
+    phoneNumberRegex = RegexValidator(regex=r"[\d]{3}[\d]{3}[\d]{3}")
+    primary_phone = models.CharField(null=False, blank=False, validators=[phoneNumberRegex], max_length=16)
+    secondary_phone = models.CharField(validators=[phoneNumberRegex], max_length=16)
     special_conditions_and_comments = models.TextField(blank=True)
     # semesters_taught = encrypt(models.TextField()) remove possibly
     archived = models.BooleanField()
