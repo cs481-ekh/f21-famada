@@ -1,7 +1,7 @@
 {% extends "menu.html" %} 
 {% block main %}
 <div>
-    <form>
+    <form method="post" action="{% url 'add_rows' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
             <p>
@@ -22,6 +22,16 @@
                 {% endif %}
             </p>
         {% endfor %}
+
+        <div class="input-field" id="search-view-columns">
+        <select multiple name="option2">
+          <option value="" disabled selected>Choose your option</option>
+          {% for key in option2Fields %}
+          <option>{{key}}</option>
+          {% endfor %}
+        </select>
+        <label>Classes</label>
+      </div>
 
     <div>
         <input type="submit" value="Submit" class="btn waves-effect waves-light">

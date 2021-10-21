@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import AdjunctFacultyMember
 from .forms import AdjunctForm
+from django_cryptography.fields import *
 
 
 # Create your views here.
@@ -30,6 +31,7 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
 
 # List of adjunct Fields For crud_read view
 adjunctFields = {
@@ -90,7 +92,7 @@ option2Fields = {
 }
 
 
-#Redirects to Search and View page in menu bar
+# Redirects to Search and View page in menu bar
 @login_required
 def crud_read(request):
     if request.method == 'GET':
@@ -132,34 +134,47 @@ def crud_read(request):
             # return render(request, 'CRUD/read_view.html',
             #               {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,
             #                'option2Fields': option2Fields, 'tableHeaders': tableHeaders})
-            return JsonResponse({'results': list(results), 'fields': list(adjunctFields), 'option1Fields': list(option1Fields),
-                           'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders}, status=200)
+            return JsonResponse(
+                {'results': list(results), 'fields': list(adjunctFields), 'option1Fields': list(option1Fields),
+                 'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders}, status=200)
 
         return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields})
-        
 
-#Redirects to Search and Edit page in menu bar
+
+# Redirects to Search and Edit page in menu bar
 @login_required
 def crud_search_edit(request):
     if request.method == 'GET':
-            return render(request, 'CRUD/edit_view.html')
+        return render(request, 'CRUD/edit_view.html')
 
-#Redirects to add rows page in menu bar
+
+# Redirects to add rows page in menu bar
 @login_required
 def crud_add_rows(request):
-    form = AdjunctForm()
+    if request.method == 'POST':
+        print("request was post")
+        form = AdjunctForm(request.POST, request.FILES)
+        if form.is_valid():
+            print("Form was valid")
+            form.save()
+            return redirect('add_rows')
+        else:
+            print("Form wasnt valid")
+            return render(request, 'CRUD/add_rows.html', {'form': form, 'error': "unable to add"})
     if request.method == 'GET':
-            return render(request, 'CRUD/add_rows.html', {'form': form})
+        form = AdjunctForm()
+        return render(request, 'CRUD/add_rows.html', {'form': form})
 
 
-#Redirects to import page in menu bar
+# Redirects to import page in menu bar
 @login_required
 def user_import(request):
     if request.method == 'GET':
-            return render(request, 'Import_Export/import.html')
+        return render(request, 'Import_Export/import.html')
 
-#Redirects to Notifications page in menu bar
+
+# Redirects to Notifications page in menu bar
 @login_required
 def user_notifications(request):
     if request.method == 'GET':
-            return render(request, 'Notifications/notifications.html')
+        return render(request, 'Notifications/notifications.html')
