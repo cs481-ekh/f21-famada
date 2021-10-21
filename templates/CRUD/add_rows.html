@@ -3,14 +3,29 @@
 <div>
     <form>
         {% csrf_token %}
+        <p><span class="required" style="color:red">*</span>Required</p>
         {% for field in form %}
             <p>
-                {{ field.label_tag }}
-                {{ field }}
-
-                {% if field.help_text %}
-                    {% comment %} <p class="help_text"> {{ field.help_text }} </p> {% endcomment %}
+                {% if field.field.required %}
+                    <span class="required" style="color:red">*</span>
                 {% endif %}
+                
+                {{ field.label_tag }}
+                
+                
+                {% if field.help_text %}
+                    <button class="btn tooltipped" data-position="bottom" data-tooltip=" {{ field.help_text }} ">?</button>
+                    <!-- <p class="help_text"> {{ field.help_text }} </p>  -->
+                {% endif %}
+
+                <!-- if else prevents duplicate fields from appearing on the date fields-->
+                {% if field.html_name == "date_of_birth" or field.html_name == "I9_completed" or field.html_name == "CTL_notified" %} 
+                    <input type="text" class="datepicker">
+                {% else %}
+                    {{ field }}
+                {% endif %}
+
+                
 
                 {% for error in field.errors %}
                     <p class="help_text" style="color:red;"> {{ error }} </p>

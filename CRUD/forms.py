@@ -1,7 +1,12 @@
 from django import forms
+from django.forms.models import ModelForm
 from .models import AdjunctFacultyMember
 from .models import Classes
 
+
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class AdjunctForm(forms.ModelForm):
     class Meta:
@@ -13,8 +18,16 @@ class AdjunctForm(forms.ModelForm):
             'primary_email', 'secondary_email', 'primary_phone', 'secondary_phone',
             'special_conditions_and_comments', 'archived'
         )
+        # widgets = {
+        #     'date_of_birth' : DateInput(),
+        #     'I9_completed'  : DateInput(),
+        #     'CTL_notified'  : DateInput(),
+        # }
 
 
 class ClassForm(forms.ModelForm):
     model = Classes
     fields = 'class_name'
+
+
+        
