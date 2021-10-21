@@ -23,6 +23,9 @@
             </p>
         {% endfor %}
 
+  <!--I'm the modal trigger button!! -->
+  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+
         <div class="input-field" id="search-view-columns">
         <select multiple name="option2">
           <option value="" disabled selected>Choose your option</option>
@@ -39,5 +42,17 @@
     </form>
 
 </div>
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <label for="first_name">Class Name</label>
+        <input placeholder="Placeholder" id="first_name" type="text" class="validate">      
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Save</a>
+    </div>
+  </div>
     
 {% endblock %}
