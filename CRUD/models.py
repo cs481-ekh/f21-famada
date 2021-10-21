@@ -8,7 +8,6 @@ from django_cryptography.fields import encrypt
 from django import forms
 
 
-
 # Create your models here.
 
 
@@ -36,16 +35,16 @@ class AdjunctFacultyMember(models.Model):
         ('F', 'faculty')
     }
     DOY = ('1980', '1981', '1982', '1983', '1984', '1985', '1986', '1987',
-       '1988', '1989', '1990', '1991', '1992', '1993', '1994', '1995',
-       '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003',
-       '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011',
-       '2012', '2013', '2014', '2015')
+           '1988', '1989', '1990', '1991', '1992', '1993', '1994', '1995',
+           '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003',
+           '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011',
+           '2012', '2013', '2014', '2015')
 
     a_f_eaf_c_crs_list = models.CharField(null=False, blank=False, choices=a_f_eaf_c_crs_choices, max_length=3)
     semester = models.CharField(max_length=4, help_text="Please enter in format: semester year (ex: FA19)")
     first_name = models.CharField(null=False, blank=False, max_length=30)
     last_name = models.CharField(null=False, blank=False, max_length=30)
-    date_of_birth = models.DateField(null=False, blank=False)
+    date_of_birth = models.DateField(null=False, blank=False, default=datetime.now)
     employeeID = models.IntegerField(null=False, blank=False, unique=True, primary_key=True)
     step_rate = models.CharField(null=False, blank=False, choices=sr_choices, max_length=10, default='step 1')
     I9_completed = models.DateField(null=False, blank=False, help_text="Please enter a date.")
@@ -60,8 +59,8 @@ class AdjunctFacultyMember(models.Model):
     zip = models.IntegerField(null=False, blank=False, )
     primary_email = models.EmailField(null=False, blank=False)
     secondary_email = models.EmailField()
-    #primary_phone = PhoneField(null=False, blank=False)
-    #secondary_phone = PhoneField(blank=True)
+    # primary_phone = PhoneField(null=False, blank=False)
+    # secondary_phone = PhoneField(blank=True)
     phoneNumberRegex = RegexValidator(regex=r"[\d]{3}[\d]{3}[\d]{3}")
     primary_phone = models.CharField(null=False, blank=False, validators=[phoneNumberRegex], max_length=16)
     secondary_phone = models.CharField(validators=[phoneNumberRegex], max_length=16)
