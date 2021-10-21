@@ -37,14 +37,15 @@ adjunctFields = {
     "Semester": "semester",
     "First Name": "first_name",
     "Last Name": "last_name",
+    "Date of Birth": "date_of_birth",
     "Employee ID": "employeeID",
+    "Step Rate": "step_rate",
     "I9 Completed": "I9_completed",
     "I9 Greater Than 3 Years": "I9_greater_than_3_years",
     "Background Passed": "background_passed",
     "CV/Resume": "cv_resume",
     "Masters": "masters",
     "CTL Notified": "CTL_notified",
-    "Classes": "classes",
     "Address": "address",
     "City": "city",
     "State": "state",
@@ -54,7 +55,6 @@ adjunctFields = {
     "Primary Phone": "primary_phone",
     "Secondary Phone": "secondary_phone",
     "Special Conditions and Comments": "special_conditions_and_comments",
-    "Semesters Taught": "semesters_taught",
 }
 
 # List for option field 1 in read_view
@@ -71,13 +71,13 @@ option2Fields = {
     "First Name": "first_name",
     "Last Name": "last_name",
     "Employee ID": "employeeID",
+    "Step Rate": "step_rate",
     "I9 Completed": "I9_completed",
     "I9 Greater Than 3 Years": "I9_greater_than_3_years",
     "Background Passed": "background_passed",
     "CV/Resume": "cv_resume",
     "Masters": "masters",
     "CTL Notified": "CTL_notified",
-    "Classes": "classes",
     "Address": "address",
     "City": "city",
     "State": "state",
@@ -85,8 +85,7 @@ option2Fields = {
     "Primary Email": "primary_email",
     "Secondary Email": "secondary_email",
     "Primary Phone": "primary_phone",
-    "Secondary Phone": "secondary_phone",
-    "Semesters Taught": "semesters_taught",
+    "Secondary Phone": "secondary_phone"
 }
 
 
