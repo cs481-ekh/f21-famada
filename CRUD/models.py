@@ -1,5 +1,7 @@
 from datetime import datetime
+import re
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.core.validators import RegexValidator
 from django.forms.widgets import SelectDateWidget
@@ -9,8 +11,6 @@ from django import forms
 
 
 # Create your models here.
-
-
 class AdjunctFacultyMember(models.Model):
     a_f_eaf_c_crs_choices = {
         ('A', 'A'),
@@ -40,6 +40,11 @@ class AdjunctFacultyMember(models.Model):
            '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011',
            '2012', '2013', '2014', '2015')
 
+    phone_regex = RegexValidator(
+        regex=r'^d{10}$',
+        message="Phone number must be entered in the format: 1112223333"
+    )
+
     a_f_eaf_c_crs_list = models.CharField(null=False, blank=False, choices=a_f_eaf_c_crs_choices, max_length=3)
     semester = models.CharField(max_length=4, help_text="Please enter in format: semester year (ex: FA19)")
     first_name = models.CharField(null=False, blank=False, max_length=30)
@@ -59,13 +64,9 @@ class AdjunctFacultyMember(models.Model):
     zip = models.IntegerField(null=False, blank=False, )
     primary_email = models.EmailField(null=False, blank=False)
     secondary_email = models.EmailField()
-    # primary_phone = PhoneField(null=False, blank=False)
-    # secondary_phone = PhoneField(blank=True)
-    phoneNumberRegex = RegexValidator(regex=r"[\d]{3}[\d]{3}[\d]{3}")
-    primary_phone = models.CharField(null=False, blank=False, validators=[phoneNumberRegex], max_length=16)
-    secondary_phone = models.CharField(validators=[phoneNumberRegex], max_length=16)
+    primary_phone = models.CharField(null=False, blank=False, max_length=12, validators=[phone_regex])
+    secondary_phone = models.CharField(validators=[phone_regex], max_length=12)
     special_conditions_and_comments = models.TextField(blank=True)
-    # semesters_taught = encrypt(models.TextField()) remove possibly
     archived = models.BooleanField()
 
 
