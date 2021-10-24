@@ -4,9 +4,9 @@ from .models import AdjunctFacultyMember
 from .models import Classes
 
 
-
 class DateInput(forms.DateInput):
     input_type = 'date'
+
 
 class AdjunctForm(forms.ModelForm):
     class Meta:
@@ -28,6 +28,3 @@ class AdjunctForm(forms.ModelForm):
 class ClassForm(forms.ModelForm):
     model = Classes
     fields = 'class_name'
-
-
-        
