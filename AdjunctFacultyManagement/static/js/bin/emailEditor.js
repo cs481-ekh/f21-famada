@@ -1,10 +1,9 @@
-class IntEditor {
+class EmailEditor {
     init(params) {
         this.value = params.value;
  
         this.input = document.createElement('input');
-        this.input.type = 'number';
-        this.input.min = 0;
+        this.input.type = 'email';
         this.input.value = this.value;
  
         this.input.addEventListener('input', (event) => {

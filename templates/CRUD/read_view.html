@@ -74,6 +74,10 @@
   type="text/javascript"
   src="{% static 'js/bin/phoneEditor.js' %}"
 ></script>
+<script
+  type="text/javascript"
+  src="{% static 'js/bin/emailEditor.js' %}"
+></script>
 
 <script>
   $(document).ready(function () {
@@ -102,6 +106,7 @@
         components: {
           intEditor: IntEditor,
           phoneEditor: PhoneEditor,
+          emailEditor: EmailEditor,
           dateEditor: getDatePicker(),
         },
       };
@@ -182,6 +187,10 @@
             }
             if (h == "Primary Phone" || h == "Secondary Phone") {
               c["cellEditor"] = "phoneEditor";
+            }
+
+            if (h == "Primary Email" || h == "Secondary Email") {
+              c["cellEditor"] = "emailEditor";
             }
 
             // cell editors needed: email, telephone, boolean

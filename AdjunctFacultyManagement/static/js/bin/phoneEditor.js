@@ -3,7 +3,6 @@ class PhoneEditor {
         this.value = params.value;
  
         this.input = document.createElement('input');
-        this.input.id = 'input';
         this.input.type = 'text';
         this.input.name = 'phone-number';
         this.input.value = this.value;
@@ -16,7 +15,7 @@ class PhoneEditor {
     /* Component Editor Lifecycle methods */
     // gets called once when grid ready to insert the element
     getGui() {
-        $('input[name="phone-number"]').mask('(000) 000-0000');
+        
         return this.input;
     }
  
@@ -41,6 +40,7 @@ class PhoneEditor {
  
     // after this component has been created and inserted into the grid
     afterGuiAttached() {
+        $('input[name="phone-number"]').mask('(000) 000-0000');
         this.input.focus();
     }
  }
