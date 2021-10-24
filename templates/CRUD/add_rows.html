@@ -6,7 +6,7 @@
         {% for field in form %}
             <p>
                 {{ field.label_tag }}
-                {{ field }}
+                <div id="{ field }">{{ field }}</div>
 
                 {% if field.help_text %}
                     {% comment %} <p class="help_text"> {{ field.help_text }} </p> {% endcomment %}
@@ -27,7 +27,7 @@
   <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
 
         <div class="input-field" id="search-view-columns">
-        <select multiple name="option2">
+        <select multiple name="option2" id="option2">
           <option value="" disabled selected>Choose your option</option>
           {% for key in option2Fields %}
           <option>{{key}}</option>
@@ -47,12 +47,123 @@
   <!-- Modal Structure -->
   <div id="modal1" class="modal">
     <div class="modal-content">
-      <label for="first_name">Class Name</label>
-        <input placeholder="Placeholder" id="first_name" type="text" class="validate">      
+      <label for="class_name">Class Name</label>
+        <input placeholder="Placeholder" id="class_name" type="text" class="validate" ref="class_ref">      
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Save</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="saveFunction();" value="save" id="save">Save</a>
     </div>
   </div>
     
+<script>
+
+window.onload = function() {
+
+    //prevents defaults
+    if (sessionStorage.getItem('first_name') == "undefined"){
+        return;
+    }
+
+    // If values are not blank, restore them to the fields
+    var semester = sessionStorage.getItem('semester');
+    if (semester !== null) $('#id_semester').val(semester);
+
+    var first_name = sessionStorage.getItem('first_name');
+    if (first_name !== null) $('#id_first_name').val(first_name);
+
+    var last_name = sessionStorage.getItem('last_name');
+    if (last_name !== null) $('#id_last_name').val(last_name);
+
+    var date_of_birth = sessionStorage.getItem('date_of_birth');
+    if (date_of_birth !== null) $('#id_date_of_birth').val(date_of_birth);
+
+    var employee_id = sessionStorage.getItem('employee_id');
+    if (employee_id !== null) $('#id_employeeID').val(employee_id);
+
+    //step rate not included
+
+    var i9_completed = sessionStorage.getItem('i9_completed');
+    if (i9_completed !== null) $('#id_I9_completed').val(i9_completed);
+
+    var i9_greater_than_3_years = sessionStorage.getItem('i9_greater_than_3_years');
+    if (i9_greater_than_3_years !== null) $('#id_I9_greater_than_3_years').val(i9_greater_than_3_years);
+
+    //background passed not included
+
+    var cv_resume = sessionStorage.getItem('cv_resume');
+    if (cv_resume !== null) $('#id_cv_resume').val(cv_resume);
+
+    var ctl_notified = sessionStorage.getItem('ctl_notified');
+    if (ctl_notified !== null) $('#id_CTL_notified').val(ctl_notified);
+
+    var address = sessionStorage.getItem('address');
+    if (address !== null) $('#id_address').val(address);
+
+    var city = sessionStorage.getItem('city');
+    if (city !== null) $('#id_city').val(city);
+
+    var state = sessionStorage.getItem('state');
+    if (state !== null) $('#id_state').val(state);
+
+    var zip = sessionStorage.getItem('zip');
+    if (zip !== null) $('#id_zip').val(zip);
+
+    var primary_email = sessionStorage.getItem('primary_email');
+    if (primary_email !== null) $('#id_primary_email').val(primary_email);
+
+    var secondary_email = sessionStorage.getItem('secondary_email');
+    if (secondary_email !== null) $('#id_secondary_email').val(secondary_email);
+
+    var primary_phone = sessionStorage.getItem('primary_phone');
+    if (primary_phone !== null) $('#id_primary_phone_0').val(primary_phone);
+
+    var secondary_phone = sessionStorage.getItem('secondary_phone');
+    if (secondary_phone !== null) $('#id_secondary_phone_0').val(secondary_phone);
+
+    var comments = sessionStorage.getItem('comments');
+    if (comments !== null) $('#id_special_conditions_and_comments').val(comments);
+
+    var classes_select = sessionStorage.getItem('classes');
+    if (classes_select !== null) $('#option2').val(classes_select);
+
+    
+
+}
+function saveFunction() {
+    value = document.getElementById('class_name').value;
+    //console.log(value);
+    select = document.getElementById('option2');
+    option = document.createElement("option");
+    option.text = "test";
+    select.add(option);
+    // var content = select.innerHTML;
+    // select.innerHTML = content;
+    console.log(select);
+    
+    //store values for all entries in the form
+    sessionStorage.setItem("semester", $('#id_semester').val());
+    sessionStorage.setItem("first_name", $('#id_first_name').val());
+    sessionStorage.setItem("last_name", $('#id_last_name').val());
+    sessionStorage.setItem("date_of_birth", $('#id_date_of_birth').val());
+    sessionStorage.setItem("employee_id", $('#id_employeeID').val());
+    sessionStorage.setItem("i9_completed", $('#id_I9_completed').val());
+    sessionStorage.setItem("i9_greater_than_3_years", $('#id_I9_greater_than_3_years').val());
+    sessionStorage.setItem("cv_resume", $('#id_cv_resume').val());
+    sessionStorage.setItem("ctl_notified", $('#id_CTL_notified').val());
+    sessionStorage.setItem("address", $('#id_address').val());
+    sessionStorage.setItem("city", $('#id_city').val());
+    sessionStorage.setItem("state", $('#id_state').val());
+    sessionStorage.setItem("zip", $('#id_zip').val());
+    sessionStorage.setItem("primary_email", $('#id_primary_email').val());
+    sessionStorage.setItem("secondary_email", $('#id_secondary_email').val());
+    sessionStorage.setItem("primary_phone", $('#id_primary_phone_0').val());
+    sessionStorage.setItem("secondary_phone", $('#id_secondary_phone_0').val());
+    sessionStorage.setItem("comments", $('#id_special_conditions_and_comments').val());
+    sessionStorage.setItem("classes", $('#option2'));
+    
+    //window.location.reload();
+    
+}
+    
+</script>
 {% endblock %}
