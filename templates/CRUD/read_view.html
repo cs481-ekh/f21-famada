@@ -19,7 +19,7 @@
 
       <div class="input-field">
         <input
-          id="lsearch_string"
+          id="search_string"
           name="searchString"
           type="text"
           class="validate"
@@ -58,6 +58,7 @@
   <!-- This is where the data shows up! -->
   <div id="myGrid" style="width: 100%" class="ag-theme-material"></div>
 </div>
+<div class="right-align"><button class="exportCSV btn waves-effect waves-light hide">Export CSV</button></div>
 
 {% load static %}
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
@@ -104,11 +105,11 @@
           dateEditor: getDatePicker(),
         },
       };
-
       // setup the grid after the page has finished loading
       const gridDiv = document.querySelector("#myGrid");
 
       grid = new agGrid.Grid(gridDiv, gridOptions);
+      $(".exportCSV").removeClass('hide');
     }
 
     function parse_choices(list) {
@@ -118,6 +119,10 @@
       }
       return newList
     }
+
+    $(".exportCSV").click(function (e) {
+        gridOptions.api.exportDataAsCsv({fileName: "adjunctFacultyManagement.csv"});
+      });
 
     // catch the form's submit event
     $("#search-form").submit(function (e) {
