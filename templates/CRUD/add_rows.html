@@ -123,23 +123,35 @@ window.onload = function() {
     var comments = sessionStorage.getItem('comments');
     if (comments !== null) $('#id_special_conditions_and_comments').val(comments);
 
-    var classes_select = sessionStorage.getItem('classes');
-    if (classes_select !== null) $('#option2').val(classes_select);
-
+    var select = document.getElementById('option2');
     
+    //adds all classes to classes dropdown
+    for (var i = 0; i < localStorage.length; i++){
+      if (localStorage.getItem(localStorage.key(i)).includes("Choose your option")) continue;
+      var option = document.createElement("option");
+      option.innerHTML = localStorage.getItem(localStorage.key(i));
+      select.append(option);
+    }
+
+    //clears the list
+    // for (var i = select.options.length; i >= 0; i--){
+    //   // if (localStorage.getItem(localStorage.key(i)).includes("Choose your option"))
+    //     select.remove(i);
+    // }
+    // localStorage.clear();
+
 
 }
 function saveFunction() {
-    value = document.getElementById('class_name').value;
-    //console.log(value);
-    select = document.getElementById('option2');
-    option = document.createElement("option");
-    option.text = "test";
-    select.add(option);
-    // var content = select.innerHTML;
-    // select.innerHTML = content;
-    console.log(select);
+    //takes value in the class modal and saves it to list
+    var value = document.getElementById('class_name').value;
+    var select = document.getElementById('option2');
+    var option = document.createElement("option");
+    option.innerHTML = value;
+    select.append(option);
     
+    var options = document.querySelectorAll('option2');
+   
     //store values for all entries in the form
     sessionStorage.setItem("semester", $('#id_semester').val());
     sessionStorage.setItem("first_name", $('#id_first_name').val());
@@ -159,9 +171,13 @@ function saveFunction() {
     sessionStorage.setItem("primary_phone", $('#id_primary_phone_0').val());
     sessionStorage.setItem("secondary_phone", $('#id_secondary_phone_0').val());
     sessionStorage.setItem("comments", $('#id_special_conditions_and_comments').val());
-    sessionStorage.setItem("classes", $('#option2'));
+    //saves all options of the dropdown
+    for (var i = 0; i <select.options.length; ++i){
+      localStorage.setItem("value" + i, select.options[i].innerHTML);
+    }
     
-    //window.location.reload();
+    
+    window.location.reload();
     
 }
     
