@@ -112,7 +112,9 @@ def crud_read(request):
                 retFieldsList = adjunctFields.values()
             else:
                 # Get corresponding model names for table headers
-                retFieldsList = tableHeaders.values()
+                retFieldsList = list(tableHeaders.values())
+                retFieldsList.append("employeeID")
+                print(retFieldsList)
 
             if includeArchives is None:
                 results = AdjunctFacultyMember.objects.all().filter(**searchFilter).filter(archived=False).order_by(

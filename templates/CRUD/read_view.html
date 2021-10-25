@@ -58,17 +58,79 @@
   <!-- This is where the data shows up! -->
   <div id="myGrid" style="width: 100%" class="ag-theme-material"></div>
 </div>
-<div class="right-align"><button class="exportCSV btn waves-effect waves-light hide">Export CSV</button></div>
+<div class="right-align">
+  <button class="exportCSV btn waves-effect waves-light hide">
+    Export CSV
+  </button>
+</div>
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>Delete record</h4>
+    <p>Are you sure you want to delete this record?</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat"
+      >Delete</a
+    >
+  </div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% load static %}
+<script
+  type="text/javascript"
+  src="{% static 'js/bin/deleteRenderer.js' %}"
+></script>
 
 <script>
+  var nodeToDelete = "";
+  var deleteID = "";
+  var grid = "";
+  var column = [];
+  var row = [];
+  var gridOptions = "";
+
+  function modalOpenFunction(node, recordID) {
+    var modal = M.Modal.getInstance($("#modal1"));
+    $("#modal1")
+      .find("p")
+      .text(
+        "Are you sure you want to delete the record of employee number " +
+          recordID +
+          "?"
+      );
+    nodeToDelete = [node];
+    console.log(nodeToDelete);
+    deleteID = recordID;
+
+    modal.open();
+  }
+
+  $(".modal-close").click(function () {
+    success = true;
+    //add th ajax call there to the api to remove a record. Pass in the delete ID (Employee ID) as a primary key to know what record to remove
+    $.ajax({
+      data: {}, // put the ID here in whatever form you need
+      type: 'POST', // GET or POST
+      url: "{% url 'search' %}", // URL of the post request
+      // on success
+      success: function (response) {
+        success = true
+      },
+      // on error
+      error: function (response) {
+        // alert the error if any error occured
+        console.log(response.responseJSON.errors);
+      },
+    });
+
+//if post successful remove front-end row and refresh data-- no api call required.
+    if (success) {
+      gridOptions.api.applyTransaction({remove: nodeToDelete});
+    }
+  });
   $(document).ready(function () {
     // define table vars
-    var grid = "";
-    var column = [];
-    var row = [];
-    var gridOptions = "";
 
     function buildTable(column, row) {
       if (grid != "") {
@@ -76,6 +138,9 @@
       }
       gridOptions = {
         columnDefs: column,
+        components: {
+          deleteRenderer: DeleteRenderer,
+        },
         defaultColDef: {
           sortable: true,
           filter: true,
@@ -83,6 +148,7 @@
         },
         rowData: row,
         enableRangeSelection: true,
+        rowSelection: "single",
         domLayout: "autoHeight",
         animateRows: true,
       };
@@ -90,13 +156,14 @@
       const gridDiv = document.querySelector("#myGrid");
 
       grid = new agGrid.Grid(gridDiv, gridOptions);
-      $(".exportCSV").removeClass('hide');
+      $(".exportCSV").removeClass("hide");
     }
 
-
     $(".exportCSV").click(function (e) {
-        gridOptions.api.exportDataAsCsv({fileName: "adjunctFacultyManagement.csv"});
+      gridOptions.api.exportDataAsCsv({
+        fileName: "adjunctFacultyManagement.csv",
       });
+    });
 
     // catch the form's submit event
     $("#search-form").submit(function (e) {
@@ -114,6 +181,11 @@
           for (h in response.tableHeaders) {
             column.push({ headerName: h, field: response.tableHeaders[h] });
           }
+          column.push({
+            headerName: "Delete Row",
+            field: "employeeID",
+            cellRenderer: "deleteRenderer",
+          });
           row = response.results;
 
           buildTable(column, row);
