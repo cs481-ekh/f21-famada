@@ -23,22 +23,21 @@
             </p>
         {% endfor %}
 
-  <!--I'm the modal trigger button!! -->
-  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+        <!--I'm the modal trigger button!! -->
+        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
 
         <div class="input-field" id="search-view-columns">
-        <select multiple name="option2" id="option2">
-          <option value="" disabled selected>Choose your option</option>
-          {% for key in option2Fields %}
-          <option>{{key}}</option>
-          {% endfor %}
-        </select>
-        <label>Classes</label>
-      </div>
-
-    <div>
-        <input type="submit" value="Submit" class="btn waves-effect waves-light">
-    </div>
+            <select multiple name="option2" id="option2">
+              <option value="" disabled selected>Choose your option</option>
+              {% for value in uniqClasses %}
+              <option>{{value}}</option>
+              {% endfor %}
+            </select>
+            <label>Classes</label>
+        </div>
+        <div>
+            <input type="submit" value="Submit" class="btn waves-effect waves-light">
+        </div>
     </form>
 
 </div>

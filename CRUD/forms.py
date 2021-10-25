@@ -17,4 +17,6 @@ class AdjunctForm(forms.ModelForm):
 
 class ClassForm(forms.ModelForm):
     model = Classes
-    fields = 'class_name'
+    fields = (
+        'adjunct_faculty_member', 'adj_class'
+    )

@@ -2,7 +2,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import AdjunctFacultyMember
+from .models import AdjunctFacultyMember, Classes
 from .forms import AdjunctForm
 from django_cryptography.fields import *
 
@@ -151,19 +151,30 @@ def crud_search_edit(request):
 # Redirects to add rows page in menu bar
 @login_required
 def crud_add_rows(request):
+    uniqClasses = set()
+
+    for c in list(Classes.objects.all().values("adj_class")):
+        values = c.values()
+        for value in values:
+            uniqClasses.add(value)
+
     if request.method == 'POST':
-        print("request was post")
         form = AdjunctForm(request.POST, request.FILES)
+
         if form.is_valid():
-            print("Form was valid")
-            form.save()
+            adj = form.save()
+            classes = request.POST.getlist('option2')
+            for c in classes:
+                newClass = Classes(adjunct_faculty_member=adj, adj_class=c)
+                newClass.save()
+
             return redirect('add_rows')
         else:
             print("Form wasnt valid")
-            return render(request, 'CRUD/add_rows.html', {'form': form, 'error': "unable to add"})
+            return render(request, 'CRUD/add_rows.html', {'form': form, 'error': "unable to add", 'classes': uniqClasses})
     if request.method == 'GET':
         form = AdjunctForm()
-        return render(request, 'CRUD/add_rows.html', {'form': form})
+        return render(request, 'CRUD/add_rows.html', {'form': form, 'uniqClasses': uniqClasses})
 
 
 # Redirects to import page in menu bar
