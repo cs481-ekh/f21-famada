@@ -110,7 +110,7 @@
     success = true;
     //add th ajax call there to the api to remove a record. Pass in the delete ID (Employee ID) as a primary key to know what record to remove
     $.ajax({
-      data: {}, // put the ID here in whatever form you need
+      data: {'rowID': deleteID}, // put the ID here in whatever form you need
       type: 'POST', // GET or POST
       url: "{% url 'search' %}", // URL of the post request
       // on success
