@@ -6,7 +6,7 @@
         {% for field in form %}
             <p>
                 {{ field.label_tag }}
-                <div id="{ field }">{{ field }}</div>
+                {{ field }}
 
                 {% if field.help_text %}
                     {% comment %} <p class="help_text"> {{ field.help_text }} </p> {% endcomment %}
@@ -64,6 +64,9 @@ window.onload = function() {
     }
 
     // If values are not blank, restore them to the fields
+    var a_f_eaf_c_crs_list = sessionStorage.getItem('a_f_eaf_c_crs_list');
+    if (a_f_eaf_c_crs_list !== null) $('#id_a_f_eaf_c_crs_list').val(a_f_eaf_c_crs_list);
+
     var semester = sessionStorage.getItem('semester');
     if (semester !== null) $('#id_semester').val(semester);
 
@@ -79,7 +82,8 @@ window.onload = function() {
     var employee_id = sessionStorage.getItem('employee_id');
     if (employee_id !== null) $('#id_employeeID').val(employee_id);
 
-    //step rate not included
+    var step_rate = sessionStorage.getItem('step_rate');
+    if (step_rate !== null) $('#id_step-rate').val(step_rate);
 
     var i9_completed = sessionStorage.getItem('i9_completed');
     if (i9_completed !== null) $('#id_I9_completed').val(i9_completed);
@@ -87,13 +91,17 @@ window.onload = function() {
     var i9_greater_than_3_years = sessionStorage.getItem('i9_greater_than_3_years');
     if (i9_greater_than_3_years !== null) $('#id_I9_greater_than_3_years').val(i9_greater_than_3_years);
 
-    //background passed not included
+    var background_passed = sessionStorage.getItem('background_passed');
+    if (background_passed !== null) $('#id_background_passed').val(background_passed);
 
     var cv_resume = sessionStorage.getItem('cv_resume');
     if (cv_resume !== null) $('#id_cv_resume').val(cv_resume);
 
     var ctl_notified = sessionStorage.getItem('ctl_notified');
     if (ctl_notified !== null) $('#id_CTL_notified').val(ctl_notified);
+
+    var masters = sessionStorage.getItem('masters');
+    if (masters !== null) $('#id_masters').val(masters);
 
     var address = sessionStorage.getItem('address');
     if (address !== null) $('#id_address').val(address);
@@ -170,14 +178,18 @@ function saveFunction() {
     var options = document.querySelectorAll('option2');
    
     //store values for all entries in the form
+    sessionStorage.setItem("a_f_eaf_c_crs_list", $('#id_a_f_eaf_c_crs_list').val());
     sessionStorage.setItem("semester", $('#id_semester').val());
     sessionStorage.setItem("first_name", $('#id_first_name').val());
     sessionStorage.setItem("last_name", $('#id_last_name').val());
     sessionStorage.setItem("date_of_birth", $('#id_date_of_birth').val());
     sessionStorage.setItem("employee_id", $('#id_employeeID').val());
+    sessionStorage.setItem("step_rate", $('#id_step_rate').val());
     sessionStorage.setItem("i9_completed", $('#id_I9_completed').val());
     sessionStorage.setItem("i9_greater_than_3_years", $('#id_I9_greater_than_3_years').val());
+    sessionStorage.setItem("background_passed", $('#id_background_passed').val());
     sessionStorage.setItem("cv_resume", $('#id_cv_resume').val());
+    sessionStorage.setItem("masters", $('#id_masters').val());
     sessionStorage.setItem("ctl_notified", $('#id_CTL_notified').val());
     sessionStorage.setItem("address", $('#id_address').val());
     sessionStorage.setItem("city", $('#id_city').val());
