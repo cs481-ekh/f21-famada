@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import AdjunctFacultyMember
 from .forms import AdjunctForm
-
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def user_login(request):
@@ -91,6 +91,7 @@ option2Fields = {
 
 #Redirects to Search and View page in menu bar
 @login_required
+@csrf_exempt
 def crud_read(request):
     if request.method == 'GET':
         # Check if this is a page load or a search query
@@ -103,9 +104,11 @@ def crud_read(request):
 
             # Get selected options from option 2 list
             option2 = request.GET.getlist('option2')
+            if "Select All" in option2:
+                option2.remove("Select All")
             tableHeaders = {}
             for option in option2:
-                tableHeaders[option] = adjunctFields[option]
+                    tableHeaders[option] = adjunctFields[option]
 
             if "Select All" in tableHeaders:
                 tableHeaders = adjunctFields
@@ -137,8 +140,11 @@ def crud_read(request):
                            'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders}, status=200)
 
         return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields})
-        
-
+    else:
+        adjunct_ID = request.POST.get('rowID')
+        adjunct = AdjunctFacultyMember.objects.get(employeeID=adjunct_ID)
+        adjunct.delete()
+        return redirect('search')
 #Redirects to Search and Edit page in menu bar
 @login_required
 def crud_search_edit(request):
