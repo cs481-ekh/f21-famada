@@ -36,7 +36,7 @@
             <label>Classes</label>
         </div>
         <div>
-            <input type="submit" value="Submit" class="btn waves-effect waves-light">
+            <input type="submit" value="Submit" class="btn waves-effect waves-light" onclick="clearForms();">
         </div>
     </form>
 
@@ -122,29 +122,47 @@ window.onload = function() {
     var comments = sessionStorage.getItem('comments');
     if (comments !== null) $('#id_special_conditions_and_comments').val(comments);
 
-    var select = document.getElementById('option2');
-    
+    select = document.getElementById('option2');
+    var unique_array = [];
+
     //adds all classes to classes dropdown
     for (var i = 0; i < localStorage.length; i++){
       if (localStorage.getItem(localStorage.key(i)).includes("Choose your option")) continue;
-      var option = document.createElement("option");
-      option.innerHTML = localStorage.getItem(localStorage.key(i));
-      select.append(option);
+      // var option = document.createElement("option");
+      // option.innerHTML = localStorage.getItem(localStorage.key(i));
+      text = localStorage.getItem(localStorage.key(i));
+      unique_array.push(text.toUpperCase());
     }
+    console.log(unique_array);
+    var unique = unique_array.filter(onlyUnique);
+    console.log(unique);
 
     //clears the list
-    // for (var i = select.options.length; i >= 0; i--){
-    //   // if (localStorage.getItem(localStorage.key(i)).includes("Choose your option"))
-    //     select.remove(i);
-    // }
+    for (var i = select.options.length; i >= 0; i--){
+      // if (localStorage.getItem(localStorage.key(i)).includes("Choose your option"))
+        select.remove(i);
+    }
     // localStorage.clear();
 
+    unique.forEach(addToSelect)
 
+    
+
+
+}
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
+}
+function addToSelect(element){
+  
+  var option = document.createElement("option");
+  option.innerHTML = element;
+  select.append(option);
 }
 function saveFunction() {
     //takes value in the class modal and saves it to list
     var value = document.getElementById('class_name').value;
-    var select = document.getElementById('option2');
+    // var select = document.getElementById('option2');
     var option = document.createElement("option");
     option.innerHTML = value;
     select.append(option);
@@ -179,6 +197,9 @@ function saveFunction() {
     window.location.reload();
     
 }
-    
+
+function clearForms(){
+  sessionStorage.clear();
+}
 </script>
 {% endblock %}
