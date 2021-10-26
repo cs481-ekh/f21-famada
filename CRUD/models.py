@@ -41,7 +41,7 @@ class AdjunctFacultyMember(models.Model):
            '2012', '2013', '2014', '2015')
 
     phone_regex = RegexValidator(
-        regex=r'^d{10}$',
+        regex=r'^\d{10}$',
         message="Phone number must be entered in the format: 1112223333"
     )
 
