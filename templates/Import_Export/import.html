@@ -1,6 +1,6 @@
 {% extends "menu.html" %} {% block main %}
     <h4>Import CSV file</h4>
-    <form action=""  method="POST">
+    <form action=""  enctype="multipart/form-data" method="POST">
         {% csrf_token %}
         {% for field in form %}
             <p>
@@ -12,6 +12,13 @@
             
             </p>
         {% endfor %}
+        <div class="submit">
+            <input
+              type="submit"
+              value="Submit"
+              class="btn waves-effect waves-light"
+            />
+          </div>
       </form>
 <style>
 #op{

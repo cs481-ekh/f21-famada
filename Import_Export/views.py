@@ -9,8 +9,11 @@ from .forms import UploadFileForm
 
 def upload_file(request):
     if request.method == 'POST':
+        print("posted!!!")
+        print(request.FILES)
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
+            print("Valid form")
             handle_uploaded_file(request.FILES['file'])
             return HttpResponseRedirect('/success/url/')
     else:
