@@ -14,8 +14,8 @@ def upload_file(request):
             handle_uploaded_file(request.FILES['file'])
             return HttpResponseRedirect('/success/url/')
     else:
-        form = UploadFileForm()
-    return render(request, 'Import_Export/import.html', {'form': form})
+        UploadFileForm()
+        return render(request, 'Import_Export/import.html', {'form': UploadFileForm()})
 
 def handle_uploaded_file(f):
     with open('some/file/name.txt', 'wb+') as destination:
