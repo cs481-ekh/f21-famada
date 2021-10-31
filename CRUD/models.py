@@ -73,3 +73,9 @@ class AdjunctFacultyMember(models.Model):
 class Classes(models.Model):
     adjunct_faculty_member = models.ForeignKey(AdjunctFacultyMember, on_delete=models.CASCADE)
     adj_class = models.CharField(max_length=10)
+
+
+class Notification(models.Model):
+    message = models.TextField()
+    date = models.DateField(default=datetime.now)
+    isRead = models.BooleanField()
