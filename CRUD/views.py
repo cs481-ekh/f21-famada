@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import AdjunctFacultyMember
 from .forms import AdjunctForm
+# from .forms import NotificationForm
 
 
 # Create your views here.
@@ -158,8 +159,4 @@ def user_import(request):
     if request.method == 'GET':
             return render(request, 'Import_Export/import.html')
 
-#Redirects to Notifications page in menu bar
-@login_required
-def user_notifications(request):
-    if request.method == 'GET':
-            return render(request, 'Notifications/notifications.html')
+
