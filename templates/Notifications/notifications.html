@@ -1,3 +1,19 @@
-{% extends "menu.html" %} {% block main %}
-    Made it to notifications.html
+{% extends "menu.html" %} 
+{% block main %}
+<div>
+ <p>
+    {% for field in notifications %}
+        <div>
+            {{ field.message }}
+            {{ field.date }}
+            {{ field.isRead }}
+        </div>
+    {% endfor %}
+
+    {% if notifications.fields|length == 0 %}
+        <p>No notifications! </p>
+    {% endif %}
+</p>
+ 
+</div>
 {% endblock %}
