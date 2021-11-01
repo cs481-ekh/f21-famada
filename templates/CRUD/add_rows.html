@@ -136,6 +136,7 @@ window.onload = function() {
     //adds all classes to classes dropdown
     for (var i = 0; i < localStorage.length; i++){
       if (localStorage.getItem(localStorage.key(i)).includes("Choose your option")) continue;
+      if (localStorage.getItem(localStorage.key(i)) === "") continue;
       // var option = document.createElement("option");
       // option.innerHTML = localStorage.getItem(localStorage.key(i));
       text = localStorage.getItem(localStorage.key(i));
@@ -143,7 +144,7 @@ window.onload = function() {
     }
     console.log(unique_array);
     var unique = unique_array.filter(onlyUnique);
-    console.log(unique);
+    console.log(unique.sort());
 
     //clears the list
     for (var i = select.options.length; i >= 0; i--){
@@ -151,7 +152,7 @@ window.onload = function() {
         select.remove(i);
     }
     // localStorage.clear();
-
+    arrayindex = 0;
     unique.forEach(addToSelect)
 
     
@@ -162,10 +163,20 @@ function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
 function addToSelect(element){
-  
+  if (arrayindex == 0) {
+    var option = document.createElement("option");
+    option.innerHTML = "Choose Your Option";
+    option.disabled = true;
+    select.append(option);
+
+    var option = document.createElement("option");
+    option.innerHTML = "Select All";
+    select.append(option);
+  }
   var option = document.createElement("option");
   option.innerHTML = element;
   select.append(option);
+  arrayindex++;
 }
 function saveFunction() {
     //takes value in the class modal and saves it to list
