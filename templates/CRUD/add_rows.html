@@ -5,9 +5,55 @@
         {% csrf_token %}
         {% for field in form %}
             <p>
-                {{ field.label_tag }}
+                <!-- if statements to start a div in a row-->
+                {% if field.html_name == "a_f_eaf_c_crs_list" %}
+                  <div id = "afeaf_sem_empl_row" > 
+                {% elif field.html_name == "first_name" %}
+                    <div id = "first_last_dob_row">
+                {% elif field.html_name == "step_rate" %}
+                      <hr style="height:2px;border:none;color:#333;background-color:rgb(0, 0, 0);">
+                      <div id = "step_I9_background_row">
+                {% elif field.html_name == "cv_resume" %}
+                      <div id = "cv_masters_CTLI_row">
+                {% elif field.html_name == "address" %}
+                      <hr style="height:2px;border:none;color:#333;background-color:rgb(0, 0, 0);">
+                      <div id = "address_row">
+                {% elif field.html_name == "city" %}
+                      <div id = "city_state_zip_row">
+                {% elif field.html_name == "primary_email" %}
+                      <div id = "pemail_semail_row">
+                {% elif field.html_name == "primary_phone" %}
+                      <div id = "pphone_sphone_row">
+                {% elif field.html_name == "special_conditions_and_comments" %}
+                      <hr style="height:2px;border:none;color:#333;background-color:rgb(0, 0, 0);">
+                      <div id = "classes_row">
+                        <!--I'm the modal trigger button!! -->
+                        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+
+                        <div class="input-field" id="search-view-columns">
+                            <select multiple name="option2" id="option2">
+                              <option value="" disabled selected>Choose your option</option>
+                              {% for value in uniqClasses %}
+                              <option>{{value}}</option>
+                              {% endfor %}
+                            </select>
+                            <label>Classes</label>
+                        </div>
+                      </div>
+                      
+                      <div id = "comments_row">
+                {% elif field.html_name == "archived" %}
+                      <div id = "archived_row">
+                        
+                {% endif %}
+
+                <!-- creates the field name and the interactable field-->
+                {% if field.html_name != "archived" %}
+                  {{ field.label_tag }}
+                {% endif %}
                 {{ field }}
 
+                <!-- Shows help text if a field has help text. -->
                 {% if field.help_text %}
                     {% comment %} <p class="help_text"> {{ field.help_text }} </p> {% endcomment %}
                 {% endif %}
@@ -20,21 +66,56 @@
                 {% if form.non_field_errors %}
                     <p class="help_text" style="color:red;"> {{ form.non_field_errors }} </p>
                 {% endif %}
+
+                <!-- if statements to end a div in a row-->
+                <!-- unforunately django does not allow multiple line statements in if condition, so the if statements have to be seperate-->
+                {% if field.html_name == "employeeID" %}
+                    </div>
+                {% endif %}
+
+                {% if field.html_name == "date_of_birth" %}
+                    </div>
+                {% endif %}
+
+                {% if field.html_name == "background_passed" %}
+                    </div>
+                {% endif %}
+
+                {% if field.html_name == "CTL_notified" %}
+                    </div>
+                {% endif %}
+
+                {% if field.html_name == "address" %}
+                    </div>
+                {% endif %}
+
+                {% if field.html_name == "zip" %}
+                    </div>
+                {% endif %}
+
+                {% if field.html_name == "secondary_email" %}
+                    </div>
+                {% endif %}
+
+                {% if field.html_name == "secondary_phone" %}
+                    </div>
+                {% endif %}
+
+                {% if field.html_name == "special_conditions_and_comments" %}
+                    </div>
+                {% endif %}
+
+                {% if field.html_name == "archived" %}
+                    <label>
+                      <input type="checkbox" name="archive" class="filled-in" />
+                      <span>Archived?</span>
+                    </label>
+                  </div>
+                {% endif %}
             </p>
         {% endfor %}
 
-        <!--I'm the modal trigger button!! -->
-        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
-        <div class="input-field" id="search-view-columns">
-            <select multiple name="option2" id="option2">
-              <option value="" disabled selected>Choose your option</option>
-              {% for value in uniqClasses %}
-              <option>{{value}}</option>
-              {% endfor %}
-            </select>
-            <label>Classes</label>
-        </div>
+        
         <div>
             <input type="submit" value="Submit" class="btn waves-effect waves-light" onclick="clearForms();">
         </div>
@@ -50,7 +131,7 @@
         <input placeholder="Placeholder" id="class_name" type="text" class="validate" ref="class_ref">      
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="saveFunction();" value="save" id="save">Save</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="saveFunction();" value="save" id="save">Add Class</a>
     </div>
   </div>
     
