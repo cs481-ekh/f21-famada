@@ -75,7 +75,3 @@ class Classes(models.Model):
     adj_class = models.CharField(max_length=10)
 
 
-# class Notification(models.Model):
-#     message = models.TextField()
-#     date = models.DateField(default=datetime.now)
-#     isRead = models.BooleanField()
