@@ -31,7 +31,3 @@ class ClassForm(forms.ModelForm):
     fields = 'class_name'
 
 
-# class NotificationForm(forms.ModelForm):
-#     class Meta:
-#         model = Notification
-#         fields = 'message', 'date'
