@@ -131,6 +131,7 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CRON_JOBS = [
-    # ('1 * * * *', 'myapp.cron.my_cron_job') example of getting cron to run at 12:01am every day
+CRONJOBS = [
+    ('* * * * *', 'CRUD.cron.timeOfDay', '>> /Users/jalennall/PycharmProjects/pythonProject/f21-famada/CRUD/file.log')
+    #  ('1 * * * *', 'CRUD.cron.i9check')
 ]
