@@ -1,3 +1,8 @@
+import csv
+import os
+import datetime
+
+from datetime import date
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -15,55 +20,89 @@ def upload_file(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             print("Valid form")
+            print(os.listdir())
             handle_uploaded_file(request.FILES['file'])
+            user_import()
             return HttpResponseRedirect('/success/url/')
     else:
-        UploadFileForm()
         return render(request, 'Import_Export/import.html', {'form': UploadFileForm()})
 
 
 def handle_uploaded_file(f):
-    with open('some/file/name.txt', 'wb+') as destination:
+    with open('AdjunctFacultyManagement/static/file.csv', 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+        f.close()
 
 
 # Redirects to import page in menu bar
-def user_import(f):
-    with open('../Test Dataset for COEN project.csv') as f:
+def user_import():
+    with open('AdjunctFacultyManagement/static/file.csv') as f:
         reader = csv.reader(f)
+        try:
+            first_row = True
+            for row in reader:
+                if first_row:
+                    first_row = False
+                    continue
+                i9_days_left(row[7])
+                # print(row)
+                # adj = AdjunctFacultyMember.objects.create(
+                #     a_f_eaf_c_crs_list=row[1],
+                #     semester=row[2] if contains_num(row[2]) else "--",
+                #     first_name=get_first_name(row[3]),
+                #     last_name=get_last_name(row[3]),
+                #     date_of_birth="2021-10-25",  # FIXME: will csv have DOB?
+                #     employeeID=row[4],
+                #     step_rate=get_step_rate([5]),
+                #     I9_completed=row[6],
+                #     I9_greater_than_3_years=i9_days_left(row[7]),
+                #     background_passed=get_I9_Pass_Fail(row[8]),
+                #     cv_resume=row[9] if row[9].isdigit() else "0000",
+                #     masters=has_Masters(row[10]),
+                #     CTL_notified=row[11],  # TODO: Add date parser
+                #     address=row[13],
+                #     city=get_city(row[14]),
+                #     state=get_state(row[14]),
+                #     zip=get_zip(row[14]),
+                #     primary_email=row[15],
+                #     secondary_email=row[16] if len(row[16]) != 0 else None,
+                #     primary_phone=get_phone_number(row[17]),
+                #     secondary_phone=get_phone_number(row[18]),
+                #     special_conditions_and_comments=row[19]
+                # )
+                #
+                # for c in get_classes(row[12]):
+                #     Classes.objects.create(
+                #         adjunct_faculty_member=adj,
+                #         adj_class=c
+                #     )
+        #  Always delete the sensitive data file
+        finally:
+            f.close()
+            os.remove('AdjunctFacultyManagement/static/file.csv')
 
-        for row in reader:
-            adj = AdjunctFacultyMember.objects.create(
-                a_f_eaf_c_crs_list=row[1],
-                semester=row[2] if contains_num(row[2]) else "--",
-                first_name=get_first_name(row[3]),
-                last_name=get_last_name(row[3]),
-                date_of_birth=None,  # TODO: add valid birth date
-                employeeID=row[4],
-                step_rate=get_step_rate([5]),
-                I9_completed=row[6],
-                I9_greater_than_3_years=1095,  # TODO: add valid greater than based on I9 completed
-                background_passed=get_I9_Pass_Fail(row[8]),
-                cv_resume=row[9] if row[9].isdigit() else "0000",
-                masters=has_Masters(row[10]),
-                CTL_notified=row[11],  # TODO: Add date parser
-                address=row[13],
-                city=get_city(row[14]),
-                state=get_state(row[14]),
-                zip=get_zip(row[14]),
-                primary_email=row[15],
-                secondary_email=row[16] if len(row[16]) != 0 else None,
-                primary_phone=get_phone_number(row[17]),
-                secondary_phone=get_phone_number(row[18]),
-                special_conditions_and_comments=row[19]
-            )
 
-            for c in row[12].split(","):  # TODO: Fix this
-                Classes.objects.create(
-                    adjunct_faculty_member=adj,
-                    adj_class=c
-                )
+def i9_days_left(s):  # TODO: add valid greater than based on I9 completed
+    print(s)
+
+    try:
+        user_date = datetime.datetime.strptime(s, "%m/%d/%Y").date()
+        today = datetime.datetime.now().date()
+        delta = today-user_date
+        print("Delta: ", delta.days, "\n")
+        print(user_date)
+        days = datetime.timedelta(days=1095)
+        ret = user_date + days
+        print(ret)
+    except ValueError:
+        return None
+
+    return 0
+
+
+def get_classes(s):  # TODO: Separate classes
+    return []
 
 
 def get_phone_number(s):  # TODO: Make sure this works properly
