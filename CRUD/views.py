@@ -6,6 +6,7 @@ from .models import AdjunctFacultyMember
 from .forms import AdjunctForm
 
 
+
 # Create your views here.
 def user_login(request):
     # if user is already logged in the redirect to landing page
@@ -158,8 +159,4 @@ def user_import(request):
     if request.method == 'GET':
             return render(request, 'Import_Export/import.html')
 
-#Redirects to Notifications page in menu bar
-@login_required
-def user_notifications(request):
-    if request.method == 'GET':
-            return render(request, 'Notifications/notifications.html')
+

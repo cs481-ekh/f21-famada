@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from CRUD import views as crud_views
+from Notifications import views as notif_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,7 +26,7 @@ urlpatterns = [
     path('search_edit/', crud_views.crud_search_edit, name='search_edit'), #Search and Edit page
     path('add/', crud_views.crud_add_rows, name='add_rows'), #Add Rows page
     path('import/', crud_views.user_import, name='import'), #Import files page
-    path('notifications/', crud_views.user_notifications, name='notifications'), #Notifications page
+    path('notifications/', notif_views.user_notifications, name='notifications'), #Notifications page
     
     
 ]

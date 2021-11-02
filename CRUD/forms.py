@@ -2,7 +2,7 @@ from django import forms
 from django.forms.models import ModelForm
 from .models import AdjunctFacultyMember
 from .models import Classes
-from .models import Notification
+
 
 
 class DateInput(forms.DateInput):
@@ -31,6 +31,3 @@ class ClassForm(forms.ModelForm):
     fields = 'class_name'
 
 
-class NotificationForm(forms.ModelForm):
-    model = Notification
-    fields = 'message', 'date'
