@@ -81,6 +81,22 @@
 
 <script>
   $(document).ready(function () {
+
+
+    /////// TOAST AND NOTIFICATION LOGIC ////////
+    var newNotifications = 2;
+    // toast appears if there are new notifications
+    if(newNotifications > 0) {
+      var toastHTML = '<div class="toast-content"><span>You have ' + newNotifications + ' unread notifications.</span> <a>Click here to view</a></div> <a class="toast-action toast-button toast-close" onclick="closeToast()"><i class="material-icons toast-close">close</i></a>';
+      var notificationToast = M.toast({html: toastHTML, displayLength: "Infinity"});
+    }
+
+    // remove toast by clicking the x
+    $(document).on('click', '#toast-container .toast-button', function() {
+      notificationToast.dismiss();
+  });
+
+  ///////////////////////////////////////////////
     // define table vars
     var grid = "";
     var gridOptions = "";

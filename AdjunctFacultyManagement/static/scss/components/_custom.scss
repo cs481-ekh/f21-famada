@@ -117,3 +117,17 @@ main {
 .ag-center-cols-container {
   min-width: 100% !important;
 }
+
+.toast-content {
+  display: flex;
+  flex-direction: column;
+  a {
+    color: $secondary-color;
+    text-decoration: underline;
+  }
+}
+.toast-close {
+  margin-top: -20px;
+  margin-right: 5px;
+  color: whitesmoke;
+}
