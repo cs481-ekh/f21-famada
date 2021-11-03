@@ -5,11 +5,16 @@ from datetime import datetime
 
 
 def timeOfDay():
-    print('today is' : {}'.format(datetime.now()))
+    print('hello')
+
 
 def i9check():
     model = AdjunctFacultyMember
-    for f in model._meta.fields:
-         i9 = f.i9_greater_than_3_years
-         model.objects.filter(i9_greater_than_3_years < 1095).update(f.i9_greater_than_3_years = i9+1)
+    for f in model.I9_greater_than_3_years:
+        i9 = f.I9_greater_than_3_years
+        if i9 != 'NA':
+            if i9 >= 0:
+                i9 = i9 - 1
+                i9.save()
 
+        # model.objects.filter(I9_greater_than_3_years < 1095).update(f.I9_greater_than_3_years = i9-1)
