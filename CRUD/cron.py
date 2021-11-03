@@ -13,8 +13,8 @@ def i9check():
     for f in model.I9_greater_than_3_years:
         i9 = f.I9_greater_than_3_years
         if i9 != 'NA':
-            if i9 >= 0:
-                i9 = i9 - 1
-                i9.save()
-
+            i9 = i9 - 1
+            i9.save()
+        #  if(i9 <= 0):
+        # notify()
         # model.objects.filter(I9_greater_than_3_years < 1095).update(f.I9_greater_than_3_years = i9-1)
