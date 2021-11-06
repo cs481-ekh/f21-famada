@@ -117,3 +117,9 @@ main {
 .ag-center-cols-container {
   min-width: 100% !important;
 }
+
+// *************** ADD ROW STYLES ****************
+.add-row div {
+  display: flex;
+  flex-direction: row;
+}
