@@ -1,222 +1,203 @@
-{% extends "menu.html" %} 
-{% block main %}
+{% extends "menu.html" %} {% block main %}
 <div>
-    <form method="post" action="{% url 'add_rows' %}" enctype="multipart/form-data" class="add-row">
-        {% csrf_token %}
-        {% for field in form %}
-          <p>
-                <!-- if statements to start a div in a row-->
-                {% if field.html_name == "a_f_eaf_c_crs_list" %}
-                  <div id = "afeaf_sem_empl_row" > 
-                {% elif field.html_name == "first_name" %}
-                    <div id = "first_last_dob_row">
-                {% elif field.html_name == "step_rate" %}
-                      <hr style="height:2px;border:none;color:#333;background-color:rgb(0, 0, 0);">
-                      <div id = "step_I9_background_row">
-                {% elif field.html_name == "cv_resume" %}
-                      <div id = "cv_masters_CTLI_row">
-                {% elif field.html_name == "address" %}
-                      <hr style="height:2px;border:none;color:#333;background-color:rgb(0, 0, 0);">
-                      <div id = "address_row">
-                {% elif field.html_name == "city" %}
-                      <div id = "city_state_zip_row">
-                {% elif field.html_name == "primary_email" %}
-                      <div id = "pemail_semail_row">
-                {% elif field.html_name == "primary_phone" %}
-                      <div id = "pphone_sphone_row">
-                {% elif field.html_name == "special_conditions_and_comments" %}
-                      <hr style="height:2px;border:none;color:#333;background-color:rgb(0, 0, 0);">
-                      <div id = "classes_row">
-                        <!--I'm the modal trigger button!! -->
-                        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+  <form
+    method="post"
+    action="{% url 'add_rows' %}"
+    enctype="multipart/form-data"
+    class="add-row"
+  >
+    {% csrf_token %}
+    <div id="afeaf_sem_empl_row">
+      <div>
+        {{ form.a_f_eaf_c_crs_list.label_tag }}{{form.a_f_eaf_c_crs_list}}
+      </div>
+      <div>
+        <label for="id_semester" class=""
+          >{{ form.semester.label }}:<span>?</span></label
+        >{{form.semester}}
+      </div>
+      <div>{{ form.employeeID.label_tag}}{{form.employeeID}}</div>
+    </div>
+    <!-- <div id="first_last_dob_row"> -->
+      <div>{{ form.first_name.label_tag }}{{form.first_name}}</div>
+      <div>{{ form.last_name.label_tag }}{{form.last_name}}</div>
+      <div>{{ form.date_of_birth.label_tag}}{{form.date_of_birth}}</div>
+    </div>
+    <div class="divider"></div>
+    <div id="step_I9_background_row">
+      <div>{{ form.step_rate.label_tag }}{{form.step_rate}}</div>
+      <div>{{ form.I9_completed.label_tag }}{{form.I9_completed}}</div>
+      <div>
+        {{ form.background_passed.label_tag }}{{form.background_passed}}
+      </div>
+    </div>
+    <div id="cv_masters_CTLI_row">
+      <div>{{ form.cv_resume.label_tag }}{{form.cv_resume}}</div>
+      <div>{{ form.masters.label_tag }}{{form.masters}}</div>
+      <div>{{ form.CTL_notified.label_tag }}{{form.CTL_notified}}</div>
+    </div>
+    <div class="divider"></div>
+    <div id="address_row">
+      <div>{{ form.address.label_tag }}{{form.address}}</div>
+    </div>
+    <div id="city_state_zip_row">
+      <div>{{ form.city.label_tag }}{{form.city}}</div>
+      <div>{{ form.state.label_tag }}{{form.state}}</div>
+      <div>{{ form.zip.label_tag }}{{form.zip}}</div>
+    </div>
+    <div id="pemail_semail_row">
+      <div>{{ form.primary_email.label_tag }}{{form.primary_email}}</div>
+      <div>{{ form.secondary_email.label_tag }}{{form.secondary_email}}</div>
+    </div>
+    <div id="pphone_sphone_row">
+      <div>{{ form.primary_phone.label_tag }}{{form.primary_phone}}</div>
+      <div>{{ form.secondary_phone.label_tag }}{{form.secondary_phone}}</div>
+    </div>
+    <div class="divider"></div>
+    <div id="classes_row">
+      <div class="input-field" id="search-view-columns">
+        <select multiple name="option2" id="option2" class="addClass">
+          <option value="" disabled selected>Choose your option</option>
+          {% for value in uniqClasses %}
+          <option>{{value}}</option>
+          {% endfor %}
+        </select>
+        <label>Classes</label>
+      </div>
+    </div>
 
-                        <div class="input-field" id="search-view-columns">
-                            <select multiple name="option2" id="option2">
-                              <option value="" disabled selected>Choose your option</option>
-                              {% for value in uniqClasses %}
-                              <option>{{value}}</option>
-                              {% endfor %}
-                            </select>
-                            <label>Classes</label>
-                        </div>
-                      </div>
-                      
-                      <div id = "comments_row">
-                {% elif field.html_name == "archived" %}
-                      <div id = "archived_row">
-                        
-                {% endif %}
 
-                <!-- creates the field name and the interactable field-->
-                <!-- {% if field.html_name != "archived" %} -->
-                  {{ field.label_tag }}
-                <!-- {% endif %} -->
-                {{ field }}
 
-                <!-- Shows help text if a field has help text. -->
-                {% if field.help_text %}
-                    {% comment %} <p class="help_text"> {{ field.help_text }} </p> {% endcomment %}
-                {% endif %}
-
-                {% for error in field.errors %}
-                    <p class="help_text" style="color:red;"> {{ error }} </p>
-                {% endfor %}
-
-                <!-- Non specific errors -->
-                {% if form.non_field_errors %}
-                    <p class="help_text" style="color:red;"> {{ form.non_field_errors }} </p>
-                {% endif %}
-
-                <!-- if statements to end a div in a row-->
-                <!-- unforunately django does not allow multiple line statements in if condition, so the if statements have to be seperate-->
-                {% if field.html_name == "employeeID" %}
-                    </div>
-                {% endif %}
-
-                {% if field.html_name == "date_of_birth" %}
-                    </div>
-                {% endif %}
-
-                {% if field.html_name == "background_passed" %}
-                    </div>
-                {% endif %}
-
-                {% if field.html_name == "CTL_notified" %}
-                    </div>
-                {% endif %}
-
-                {% if field.html_name == "address" %}
-                    </div>
-                {% endif %}
-
-                {% if field.html_name == "zip" %}
-                    </div>
-                {% endif %}
-
-                {% if field.html_name == "secondary_email" %}
-                    </div>
-                {% endif %}
-
-                {% if field.html_name == "secondary_phone" %}
-                    </div>
-                {% endif %}
-
-                {% if field.html_name == "special_conditions_and_comments" %}
-                    </div>
-                {% endif %}
-
-                {% if field.html_name == "archived" %}
-                    <label>
-                      <input type="checkbox" name="archive" class="filled-in" />
-                      <span>Archived?</span>
-                    </label>
-                  </div>
-                {% endif %}
-            </p>
-        {% endfor %}
-
-        
-        <div>
-            <input type="submit" value="Submit" class="btn waves-effect waves-light" onclick="clearForms();">
-        </div>
-    </form>
-
+    <div>
+      <input
+        type="submit"
+        value="Submit"
+        class="btn waves-effect waves-light"
+        onclick="clearForms();"
+      />
+    </div>
+  </form>
 </div>
 
-
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <label for="class_name">Class Name</label>
-        <input placeholder="Placeholder" id="class_name" type="text" class="validate" ref="class_ref">      
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="saveFunction();" value="save" id="save">Add Class</a>
-    </div>
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <label for="class_name">Class Name</label>
+    <input
+      placeholder="Placeholder"
+      id="class_name"
+      type="text"
+      class="validate"
+      ref="class_ref"
+    />
   </div>
-    
+  <div class="modal-footer">
+    <a
+      href="#!"
+      class="modal-close waves-effect waves-green btn-flat"
+      onclick="saveFunction();"
+      value="save"
+      id="save"
+      >Add Class</a
+    >
+  </div>
+</div>
+
 <script>
-
-window.onload = function() {
-
+  window.onload = function () {
+    var elems = document.querySelectorAll('.datepicker');
+    options = {continer: $('main')};
+    var instances = M.Datepicker.init(elems, options);
+    // add modal button to the dropdown
+    $('select.addClass').siblings('ul').prepend('<li id=sm_select_all class="modal-trigger" href="#modal1"><span>Add new class...</span></li>');
     //prevents defaults
-    if (sessionStorage.getItem('first_name') == "undefined"){
-        return;
+    if (sessionStorage.getItem("first_name") == "undefined") {
+      return;
     }
 
     // If values are not blank, restore them to the fields
-    var a_f_eaf_c_crs_list = sessionStorage.getItem('a_f_eaf_c_crs_list');
-    if (a_f_eaf_c_crs_list !== null) $('#id_a_f_eaf_c_crs_list').val(a_f_eaf_c_crs_list);
+    var a_f_eaf_c_crs_list = sessionStorage.getItem("a_f_eaf_c_crs_list");
+    if (a_f_eaf_c_crs_list !== null)
+      $("#id_a_f_eaf_c_crs_list").val(a_f_eaf_c_crs_list);
 
-    var semester = sessionStorage.getItem('semester');
-    if (semester !== null) $('#id_semester').val(semester);
+    var semester = sessionStorage.getItem("semester");
+    if (semester !== null) $("#id_semester").val(semester);
 
-    var first_name = sessionStorage.getItem('first_name');
-    if (first_name !== null) $('#id_first_name').val(first_name);
+    var first_name = sessionStorage.getItem("first_name");
+    if (first_name !== null) $("#id_first_name").val(first_name);
 
-    var last_name = sessionStorage.getItem('last_name');
-    if (last_name !== null) $('#id_last_name').val(last_name);
+    var last_name = sessionStorage.getItem("last_name");
+    if (last_name !== null) $("#id_last_name").val(last_name);
 
-    var date_of_birth = sessionStorage.getItem('date_of_birth');
-    if (date_of_birth !== null) $('#id_date_of_birth').val(date_of_birth);
+    var date_of_birth = sessionStorage.getItem("date_of_birth");
+    if (date_of_birth !== null) $("#id_date_of_birth").val(date_of_birth);
 
-    var employee_id = sessionStorage.getItem('employee_id');
-    if (employee_id !== null) $('#id_employeeID').val(employee_id);
+    var employee_id = sessionStorage.getItem("employee_id");
+    if (employee_id !== null) $("#id_employeeID").val(employee_id);
 
-    var step_rate = sessionStorage.getItem('step_rate');
-    if (step_rate !== null) $('#id_step-rate').val(step_rate);
+    var step_rate = sessionStorage.getItem("step_rate");
+    if (step_rate !== null) $("#id_step-rate").val(step_rate);
 
-    var i9_completed = sessionStorage.getItem('i9_completed');
-    if (i9_completed !== null) $('#id_I9_completed').val(i9_completed);
+    var i9_completed = sessionStorage.getItem("i9_completed");
+    if (i9_completed !== null) $("#id_I9_completed").val(i9_completed);
 
-    var i9_greater_than_3_years = sessionStorage.getItem('i9_greater_than_3_years');
-    if (i9_greater_than_3_years !== null) $('#id_I9_greater_than_3_years').val(i9_greater_than_3_years);
+    var i9_greater_than_3_years = sessionStorage.getItem(
+      "i9_greater_than_3_years"
+    );
+    if (i9_greater_than_3_years !== null)
+      $("#id_I9_greater_than_3_years").val(i9_greater_than_3_years);
 
-    var background_passed = sessionStorage.getItem('background_passed');
-    if (background_passed !== null) $('#id_background_passed').val(background_passed);
+    var background_passed = sessionStorage.getItem("background_passed");
+    if (background_passed !== null)
+      $("#id_background_passed").val(background_passed);
 
-    var cv_resume = sessionStorage.getItem('cv_resume');
-    if (cv_resume !== null) $('#id_cv_resume').val(cv_resume);
+    var cv_resume = sessionStorage.getItem("cv_resume");
+    if (cv_resume !== null) $("#id_cv_resume").val(cv_resume);
 
-    var ctl_notified = sessionStorage.getItem('ctl_notified');
-    if (ctl_notified !== null) $('#id_CTL_notified').val(ctl_notified);
+    var ctl_notified = sessionStorage.getItem("ctl_notified");
+    if (ctl_notified !== null) $("#id_CTL_notified").val(ctl_notified);
 
-    var masters = sessionStorage.getItem('masters');
-    if (masters !== null) $('#id_masters').val(masters);
+    var masters = sessionStorage.getItem("masters");
+    if (masters !== null) $("#id_masters").val(masters);
 
-    var address = sessionStorage.getItem('address');
-    if (address !== null) $('#id_address').val(address);
+    var address = sessionStorage.getItem("address");
+    if (address !== null) $("#id_address").val(address);
 
-    var city = sessionStorage.getItem('city');
-    if (city !== null) $('#id_city').val(city);
+    var city = sessionStorage.getItem("city");
+    if (city !== null) $("#id_city").val(city);
 
-    var state = sessionStorage.getItem('state');
-    if (state !== null) $('#id_state').val(state);
+    var state = sessionStorage.getItem("state");
+    if (state !== null) $("#id_state").val(state);
 
-    var zip = sessionStorage.getItem('zip');
-    if (zip !== null) $('#id_zip').val(zip);
+    var zip = sessionStorage.getItem("zip");
+    if (zip !== null) $("#id_zip").val(zip);
 
-    var primary_email = sessionStorage.getItem('primary_email');
-    if (primary_email !== null) $('#id_primary_email').val(primary_email);
+    var primary_email = sessionStorage.getItem("primary_email");
+    if (primary_email !== null) $("#id_primary_email").val(primary_email);
 
-    var secondary_email = sessionStorage.getItem('secondary_email');
-    if (secondary_email !== null) $('#id_secondary_email').val(secondary_email);
+    var secondary_email = sessionStorage.getItem("secondary_email");
+    if (secondary_email !== null) $("#id_secondary_email").val(secondary_email);
 
-    var primary_phone = sessionStorage.getItem('primary_phone');
-    if (primary_phone !== null) $('#id_primary_phone_0').val(primary_phone);
+    var primary_phone = sessionStorage.getItem("primary_phone");
+    if (primary_phone !== null) $("#id_primary_phone_0").val(primary_phone);
 
-    var secondary_phone = sessionStorage.getItem('secondary_phone');
-    if (secondary_phone !== null) $('#id_secondary_phone_0').val(secondary_phone);
+    var secondary_phone = sessionStorage.getItem("secondary_phone");
+    if (secondary_phone !== null)
+      $("#id_secondary_phone_0").val(secondary_phone);
 
-    var comments = sessionStorage.getItem('comments');
-    if (comments !== null) $('#id_special_conditions_and_comments').val(comments);
+    var comments = sessionStorage.getItem("comments");
+    if (comments !== null)
+      $("#id_special_conditions_and_comments").val(comments);
 
-    select = document.getElementById('option2');
+    select = document.getElementById("option2");
     var unique_array = [];
 
     //adds all classes to classes dropdown
-    for (var i = 0; i < localStorage.length; i++){
-      if (localStorage.getItem(localStorage.key(i)).includes("Choose your option")) continue;
+    for (var i = 0; i < localStorage.length; i++) {
+      if (
+        localStorage.getItem(localStorage.key(i)).includes("Choose your option")
+      )
+        continue;
       if (localStorage.getItem(localStorage.key(i)) === "") continue;
       // var option = document.createElement("option");
       // option.innerHTML = localStorage.getItem(localStorage.key(i));
@@ -228,82 +209,88 @@ window.onload = function() {
     console.log(unique.sort());
 
     //clears the list
-    for (var i = select.options.length; i >= 0; i--){
+    for (var i = select.options.length; i >= 0; i--) {
       // if (localStorage.getItem(localStorage.key(i)).includes("Choose your option"))
-        select.remove(i);
+      select.remove(i);
     }
     // localStorage.clear();
     arrayindex = 0;
-    unique.forEach(addToSelect)
-
-    
-
-
-}
-function onlyUnique(value, index, self) {
-  return self.indexOf(value) === index;
-}
-function addToSelect(element){
-  if (arrayindex == 0) {
-    var option = document.createElement("option");
-    option.innerHTML = "Choose Your Option";
-    option.disabled = true;
-    select.append(option);
-
-    var option = document.createElement("option");
-    option.innerHTML = "Select All";
-    select.append(option);
+    unique.forEach(addToSelect);
+  };
+  function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
   }
-  var option = document.createElement("option");
-  option.innerHTML = element;
-  select.append(option);
-  arrayindex++;
-}
-function saveFunction() {
+  function addToSelect(element) {
+    if (arrayindex == 0) {
+      var option = document.createElement("option");
+      option.innerHTML = "Choose Your Option";
+      option.disabled = true;
+      select.append(option);
+
+      var option = document.createElement("option");
+      option.innerHTML = "Select All";
+      select.append(option);
+    }
+    var option = document.createElement("option");
+    option.innerHTML = element;
+    select.append(option);
+    arrayindex++;
+  }
+  function saveFunction() {
     //takes value in the class modal and saves it to list
-    var value = document.getElementById('class_name').value;
+    var value = document.getElementById("class_name").value;
     // var select = document.getElementById('option2');
     var option = document.createElement("option");
     option.innerHTML = value;
     select.append(option);
-    
-    var options = document.querySelectorAll('option2');
-   
+
+    var options = document.querySelectorAll("option2");
+
     //store values for all entries in the form
-    sessionStorage.setItem("a_f_eaf_c_crs_list", $('#id_a_f_eaf_c_crs_list').val());
-    sessionStorage.setItem("semester", $('#id_semester').val());
-    sessionStorage.setItem("first_name", $('#id_first_name').val());
-    sessionStorage.setItem("last_name", $('#id_last_name').val());
-    sessionStorage.setItem("date_of_birth", $('#id_date_of_birth').val());
-    sessionStorage.setItem("employee_id", $('#id_employeeID').val());
-    sessionStorage.setItem("step_rate", $('#id_step_rate').val());
-    sessionStorage.setItem("i9_completed", $('#id_I9_completed').val());
-    sessionStorage.setItem("i9_greater_than_3_years", $('#id_I9_greater_than_3_years').val());
-    sessionStorage.setItem("background_passed", $('#id_background_passed').val());
-    sessionStorage.setItem("cv_resume", $('#id_cv_resume').val());
-    sessionStorage.setItem("masters", $('#id_masters').val());
-    sessionStorage.setItem("ctl_notified", $('#id_CTL_notified').val());
-    sessionStorage.setItem("address", $('#id_address').val());
-    sessionStorage.setItem("city", $('#id_city').val());
-    sessionStorage.setItem("state", $('#id_state').val());
-    sessionStorage.setItem("zip", $('#id_zip').val());
-    sessionStorage.setItem("primary_email", $('#id_primary_email').val());
-    sessionStorage.setItem("secondary_email", $('#id_secondary_email').val());
-    sessionStorage.setItem("primary_phone", $('#id_primary_phone_0').val());
-    sessionStorage.setItem("secondary_phone", $('#id_secondary_phone_0').val());
-    sessionStorage.setItem("comments", $('#id_special_conditions_and_comments').val());
+    sessionStorage.setItem(
+      "a_f_eaf_c_crs_list",
+      $("#id_a_f_eaf_c_crs_list").val()
+    );
+    sessionStorage.setItem("semester", $("#id_semester").val());
+    sessionStorage.setItem("first_name", $("#id_first_name").val());
+    sessionStorage.setItem("last_name", $("#id_last_name").val());
+    sessionStorage.setItem("date_of_birth", $("#id_date_of_birth").val());
+    sessionStorage.setItem("employee_id", $("#id_employeeID").val());
+    sessionStorage.setItem("step_rate", $("#id_step_rate").val());
+    sessionStorage.setItem("i9_completed", $("#id_I9_completed").val());
+    sessionStorage.setItem(
+      "i9_greater_than_3_years",
+      $("#id_I9_greater_than_3_years").val()
+    );
+    sessionStorage.setItem(
+      "background_passed",
+      $("#id_background_passed").val()
+    );
+    sessionStorage.setItem("cv_resume", $("#id_cv_resume").val());
+    sessionStorage.setItem("masters", $("#id_masters").val());
+    sessionStorage.setItem("ctl_notified", $("#id_CTL_notified").val());
+    sessionStorage.setItem("address", $("#id_address").val());
+    sessionStorage.setItem("city", $("#id_city").val());
+    sessionStorage.setItem("state", $("#id_state").val());
+    sessionStorage.setItem("zip", $("#id_zip").val());
+    sessionStorage.setItem("primary_email", $("#id_primary_email").val());
+    sessionStorage.setItem("secondary_email", $("#id_secondary_email").val());
+    sessionStorage.setItem("primary_phone", $("#id_primary_phone_0").val());
+    sessionStorage.setItem("secondary_phone", $("#id_secondary_phone_0").val());
+    sessionStorage.setItem(
+      "comments",
+      $("#id_special_conditions_and_comments").val()
+    );
     //saves all options of the dropdown
-    for (var i = 0; i <select.options.length; ++i){
+    for (var i = 0; i < select.options.length; ++i) {
       localStorage.setItem("value" + i, select.options[i].innerHTML);
     }
-    
-    
-    window.location.reload();
-    
-}
 
-function clearForms(){
-  sessionStorage.clear();
-}
+    window.location.reload();
+  }
+
+  function clearForms() {
+    sessionStorage.clear();
+  }
 </script>
 {% endblock %}
