@@ -4,7 +4,7 @@
     <form method="post" action="{% url 'add_rows' %}" enctype="multipart/form-data" class="add-row">
         {% csrf_token %}
         {% for field in form %}
-        
+          <p>
                 <!-- if statements to start a div in a row-->
                 {% if field.html_name == "a_f_eaf_c_crs_list" %}
                   <div id = "afeaf_sem_empl_row" > 
@@ -112,7 +112,7 @@
                     </label>
                   </div>
                 {% endif %}
-            
+            </p>
         {% endfor %}
 
         
