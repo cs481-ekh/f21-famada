@@ -1,5 +1,8 @@
 {% extends "menu.html" %} {% block main %}
 <div>
+  <h4>Add a record</h4>
+  <h6 class="add_form_subtitle">Enter the following fields to add a record to the faculty adjunct management database</h6>
+  <div class="divider"></div>
   <form
     method="post"
     action="{% url 'add_rows' %}"
@@ -7,54 +10,81 @@
     class="add-row"
   >
     {% csrf_token %}
-    <div id="afeaf_sem_empl_row">
+    <div id="afeaf_sem_empl_row" class="add_form_row">
       <div>
         {{ form.a_f_eaf_c_crs_list.label_tag }}{{form.a_f_eaf_c_crs_list}}
       </div>
       <div>
-        <label for="id_semester" class=""
-          >{{ form.semester.label }}:<span>?</span></label
+        <label for="id_semester"
+          >{{ form.semester.label }}:
+          <a
+            class="tooltipped"
+            data-position="bottom"
+            data-tooltip=" {{ form.semester.help_text }} "
+            >?</a
+          > </label
         >{{form.semester}}
       </div>
-      <div>{{ form.employeeID.label_tag}}{{form.employeeID}}</div>
+      <div><label for="employeeID">Employee ID:</label>{{form.employeeID}}</div>
     </div>
-    <!-- <div id="first_last_dob_row"> -->
+    <div class="add_form_row" id="first_last_dob_row">
       <div>{{ form.first_name.label_tag }}{{form.first_name}}</div>
       <div>{{ form.last_name.label_tag }}{{form.last_name}}</div>
       <div>{{ form.date_of_birth.label_tag}}{{form.date_of_birth}}</div>
     </div>
     <div class="divider"></div>
-    <div id="step_I9_background_row">
+    <div class="add_form_row" id="step_I9_background_row">
       <div>{{ form.step_rate.label_tag }}{{form.step_rate}}</div>
       <div>{{ form.I9_completed.label_tag }}{{form.I9_completed}}</div>
       <div>
         {{ form.background_passed.label_tag }}{{form.background_passed}}
       </div>
     </div>
-    <div id="cv_masters_CTLI_row">
-      <div>{{ form.cv_resume.label_tag }}{{form.cv_resume}}</div>
+    <div class="add_form_row" id="cv_masters_CTLI_row">
+      <div>
+        <label for="id_semester"
+          >{{ form.cv_resume.label }}:
+          <a
+            class="tooltipped"
+            data-position="bottom"
+            data-tooltip=" {{ form.cv_resume.help_text }} "
+            >?</a
+          > </label
+        >{{form.cv_resume}}
+      </div>
       <div>{{ form.masters.label_tag }}{{form.masters}}</div>
       <div>{{ form.CTL_notified.label_tag }}{{form.CTL_notified}}</div>
     </div>
     <div class="divider"></div>
-    <div id="address_row">
+    <div class="add_form_row" id="address_row">
       <div>{{ form.address.label_tag }}{{form.address}}</div>
     </div>
-    <div id="city_state_zip_row">
+    <div class="add_form_row" id="city_state_zip_row">
       <div>{{ form.city.label_tag }}{{form.city}}</div>
       <div>{{ form.state.label_tag }}{{form.state}}</div>
-      <div>{{ form.zip.label_tag }}{{form.zip}}</div>
+      <div>
+        <label for="id_semester"
+          >{{ form.zip.label }}:
+          <a
+            class="tooltipped"
+            data-position="bottom"
+            data-tooltip=" {{ form.zip.help_text }} "
+            >?</a
+          > </label
+        >{{form.zip}}
+      </div>
     </div>
-    <div id="pemail_semail_row">
+    <div class="add_form_row" id="pemail_semail_row">
       <div>{{ form.primary_email.label_tag }}{{form.primary_email}}</div>
       <div>{{ form.secondary_email.label_tag }}{{form.secondary_email}}</div>
     </div>
-    <div id="pphone_sphone_row">
+    <div class="add_form_row" id="pphone_sphone_row">
       <div>{{ form.primary_phone.label_tag }}{{form.primary_phone}}</div>
       <div>{{ form.secondary_phone.label_tag }}{{form.secondary_phone}}</div>
     </div>
     <div class="divider"></div>
-    <div id="classes_row">
+    <div class="add_form_row" id="classes_row">
+      <label>Classes:</label>
       <div class="input-field" id="search-view-columns">
         <select multiple name="option2" id="option2" class="addClass">
           <option value="" disabled selected>Choose your option</option>
@@ -62,17 +92,29 @@
           <option>{{value}}</option>
           {% endfor %}
         </select>
-        <label>Classes</label>
       </div>
     </div>
 
-
+    <div class="add_form_row" id="comments_row">
+      <div>
+        <label for="id_semester"
+        >{{ form.special_conditions_and_comments.label }}:
+        </label
+      >{{form.special_conditions_and_comments}}
+      </div>
+    </div>
+    <div class="add_form_row" id="archived_row">
+      <label class="left">
+        <input type="checkbox" name="archive" class="filled-in" />
+        <span>Archived?</span>
+      </label>
+    </div>
 
     <div>
       <input
         type="submit"
         value="Submit"
-        class="btn waves-effect waves-light"
+        class="btn waves-effect waves-light left"
         onclick="clearForms();"
       />
     </div>
@@ -105,11 +147,20 @@
 
 <script>
   window.onload = function () {
-    var elems = document.querySelectorAll('.datepicker');
-    options = {continer: $('main')};
-    var instances = M.Datepicker.init(elems, options);
+    // Get calender formatting correctly
+    $(".datepicker").datepicker({ container: $("main") });
+    //masks for telephone numbers
+    $(".phone").mask("000-000-0000");
+    $("#id_cv_resume").mask("0000");
+    $("#id_zip").mask("00000");
+    $("#id_semester").mask("SS00");
+
     // add modal button to the dropdown
-    $('select.addClass').siblings('ul').prepend('<li id=sm_select_all class="modal-trigger" href="#modal1"><span>Add new class...</span></li>');
+    $("select.addClass")
+      .siblings("ul")
+      .prepend(
+        '<li id=sm_select_all class="modal-trigger" href="#modal1"><span>Add new class...</span></li>'
+      );
     //prevents defaults
     if (sessionStorage.getItem("first_name") == "undefined") {
       return;
@@ -179,11 +230,10 @@
     if (secondary_email !== null) $("#id_secondary_email").val(secondary_email);
 
     var primary_phone = sessionStorage.getItem("primary_phone");
-    if (primary_phone !== null) $("#id_primary_phone_0").val(primary_phone);
+    if (primary_phone !== null) $("#id_primary_phone").val(primary_phone);
 
     var secondary_phone = sessionStorage.getItem("secondary_phone");
-    if (secondary_phone !== null)
-      $("#id_secondary_phone_0").val(secondary_phone);
+    if (secondary_phone !== null) $("#id_secondary_phone").val(secondary_phone);
 
     var comments = sessionStorage.getItem("comments");
     if (comments !== null)

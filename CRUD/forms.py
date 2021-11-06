@@ -7,6 +7,9 @@ class AdjunctForm(forms.ModelForm):
     date_of_birth = forms.CharField(widget=forms.TextInput(attrs={'class': 'datepicker'}))
     I9_completed = forms.CharField(widget=forms.TextInput(attrs={'class': 'datepicker'}))
     CTL_notified = forms.CharField(widget=forms.TextInput(attrs={'class': 'datepicker'}))
+    primary_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'phone'}))
+    secondary_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'phone'}))
+
     class Meta:
         model = AdjunctFacultyMember
         fields = (

@@ -123,10 +123,36 @@ main {
   display: flex;
   flex-direction: row;
   align-items:center;
-  justify-content:center;
+  justify-content:start;
   label {
     padding: 0 15px;
     min-width: 100px;
     max-width: max-content;
+    font-size: .95rem;
   }
+  input {
+    font-family: $secondary-font;
+  }
+}
+
+.add_form_row {
+  div {
+    flex-grow: 1;
+    margin: 5px 0;
+    a.tooltipped {
+      color: $off-black;
+      font-size: larger;
+    }
+  }
+
+}
+.divider {
+  margin: 40px 0;
+}
+.left {
+  margin: 10px 0;
+  justify-self: left;
+}
+.add_form_subtitle {
+  margin-bottom: 2rem;
 }
