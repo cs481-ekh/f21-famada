@@ -148,7 +148,7 @@
 <script>
   window.onload = function () {
     // Get calender formatting correctly
-    $(".datepicker").datepicker({ container: $("main") });
+    $(".datepicker").datepicker({ container: $("main"), format: "yyyy-mm-dd" });
     //masks for telephone numbers
     $(".phone").mask("000-000-0000");
     $("#id_cv_resume").mask("0000");
