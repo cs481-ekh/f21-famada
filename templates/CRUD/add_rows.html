@@ -161,6 +161,10 @@
       .prepend(
         '<li id=sm_select_all class="modal-trigger" href="#modal1"><span>Add new class...</span></li>'
       );
+    $("#option2").material_select();
+    $("#option2").on('contentChanged', function() {
+      $(this).material_select();
+    });
     //prevents defaults
     if (sessionStorage.getItem("first_name") == "undefined") {
       return;
@@ -326,9 +330,10 @@
     // // var select = document.getElementById('option2');
     // var option = document.createElement("option");
     // option.innerHTML = value;
+    
     var $newOpt = $("<option>").attr("value", value).text(value);
     $("#option2").append(option);
-
+    $("#option2").trigger('contentChanged');
     var options = document.querySelectorAll("option2");
   }
 
