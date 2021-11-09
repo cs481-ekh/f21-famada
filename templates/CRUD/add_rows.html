@@ -271,16 +271,7 @@
     return self.indexOf(value) === index;
   }
   function addToSelect(element) {
-    if (arrayindex == 0) {
-      var option = document.createElement("option");
-      option.innerHTML = "Choose Your Option";
-      option.disabled = true;
-      select.append(option);
-
-      var option = document.createElement("option");
-      option.innerHTML = "Select All";
-      select.append(option);
-    }
+    
     var option = document.createElement("option");
     option.innerHTML = element;
     select.append(option);
