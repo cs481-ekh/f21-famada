@@ -132,6 +132,6 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRONJOBS = [
-    ('* * * * *', 'CRUD.cron.timeOfDay', '>> /Users/jalennall/PycharmProjects/pythonProject/f21-famada/CRUD/file.log')
-    #  ('1 * * * *', 'CRUD.cron.i9check')
+  #  ('* * * * *', 'CRUD.cron.timeOfDay', '>> /Users/jalennall/PycharmProjects/pythonProject/f21-famada/CRUD/file.log')
+     ('* * * * *', 'CRUD.cron.i9check','>> /Users/jalennall/PycharmProjects/pythonProject/f21-famada/CRUD/file.log')
 ]
