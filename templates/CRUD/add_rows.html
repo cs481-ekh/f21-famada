@@ -161,10 +161,13 @@
       .prepend(
         '<li id=sm_select_all class="modal-trigger" href="#modal1"><span>Add new class...</span></li>'
       );
-    $("#option2").material_select();
-    $("#option2").on('contentChanged', function() {
+    
+    // init the select so that it can be refreshed
+    $(".addClass").material_select();
+    $(".addClass").on('contentChanged', function() {
       $(this).material_select();
     });
+    
     //prevents defaults
     if (sessionStorage.getItem("first_name") == "undefined") {
       return;
@@ -282,7 +285,7 @@
     arrayindex++;
   }
   function saveFunction() {
-    //takes value in the class modal and saves it to list
+    
     
 
     //store values for all entries in the form
@@ -320,21 +323,13 @@
       "comments",
       $("#id_special_conditions_and_comments").val()
     );
-    // //saves all options of the dropdown
-    // for (var i = 0; i < select.options.length; ++i) {
-    //   localStorage.setItem("value" + i, select.options[i].innerHTML);
-    // }
-
-    // window.location.reload();
-    var value = document.getElementById("class_name").value;
-    // // var select = document.getElementById('option2');
-    // var option = document.createElement("option");
-    // option.innerHTML = value;
     
-    var $newOpt = $("<option>").attr("value", value).text(value);
+    // gets the value from the modal box, and adds it to the classes list
+    var newValue = document.getElementById("class_name").value;
+    var $newOpt = $("<option>").attr("value", newValue).text(newValue);
     $("#option2").append(option);
     $("#option2").trigger('contentChanged');
-    var options = document.querySelectorAll("option2");
+    
   }
 
   function clearForms() {
