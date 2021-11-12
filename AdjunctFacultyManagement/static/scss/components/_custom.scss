@@ -155,4 +155,19 @@ main {
 }
 .add_form_subtitle {
   margin-bottom: 2rem;
+
+  // *************** TOAST STYLES ****************
+  
+.toast-content {
+  display: flex;
+  flex-direction: column;
+  a {
+    color: $secondary-color;
+    text-decoration: underline;
+  }
+}
+.toast-close {
+  margin-top: -20px;
+  margin-right: 5px;
+  color: whitesmoke;
 }

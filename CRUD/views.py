@@ -7,6 +7,7 @@ from .forms import AdjunctForm
 from django_cryptography.fields import *
 
 
+
 # Create your views here.
 def user_login(request):
     # if user is already logged in the redirect to landing page
@@ -39,14 +40,15 @@ adjunctFields = {
     "Semester": "semester",
     "First Name": "first_name",
     "Last Name": "last_name",
+    "Date of Birth": "date_of_birth",
     "Employee ID": "employeeID",
+    "Step Rate": "step_rate",
     "I9 Completed": "I9_completed",
     "I9 Greater Than 3 Years": "I9_greater_than_3_years",
     "Background Passed": "background_passed",
     "CV/Resume": "cv_resume",
     "Masters": "masters",
     "CTL Notified": "CTL_notified",
-    "Classes": "classes",
     "Address": "address",
     "City": "city",
     "State": "state",
@@ -56,7 +58,6 @@ adjunctFields = {
     "Primary Phone": "primary_phone",
     "Secondary Phone": "secondary_phone",
     "Special Conditions and Comments": "special_conditions_and_comments",
-    "Semesters Taught": "semesters_taught",
 }
 
 # List for option field 1 in read_view
@@ -73,13 +74,13 @@ option2Fields = {
     "First Name": "first_name",
     "Last Name": "last_name",
     "Employee ID": "employeeID",
+    "Step Rate": "step_rate",
     "I9 Completed": "I9_completed",
     "I9 Greater Than 3 Years": "I9_greater_than_3_years",
     "Background Passed": "background_passed",
     "CV/Resume": "cv_resume",
     "Masters": "masters",
     "CTL Notified": "CTL_notified",
-    "Classes": "classes",
     "Address": "address",
     "City": "city",
     "State": "state",
@@ -87,8 +88,7 @@ option2Fields = {
     "Primary Email": "primary_email",
     "Secondary Email": "secondary_email",
     "Primary Phone": "primary_phone",
-    "Secondary Phone": "secondary_phone",
-    "Semesters Taught": "semesters_taught",
+    "Secondary Phone": "secondary_phone"
 }
 
 
@@ -124,6 +124,7 @@ def crud_read(request):
                 results = AdjunctFacultyMember.objects.all().filter(**searchFilter).order_by('first_name')
 
             results = results.values(*retFieldsList)
+            
 
             if not results:
                 tableHeaders = {}
@@ -134,9 +135,9 @@ def crud_read(request):
             # return render(request, 'CRUD/read_view.html',
             #               {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,
             #                'option2Fields': option2Fields, 'tableHeaders': tableHeaders})
-            return JsonResponse(
-                {'results': list(results), 'fields': list(adjunctFields), 'option1Fields': list(option1Fields),
-                 'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders}, status=200)
+
+            return JsonResponse({'results': list(results), 'fields': list(adjunctFields), 'option1Fields': list(option1Fields),
+                           'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders, 'sr_choices': list(AdjunctFacultyMember.sr_choices), 'bg_choices': list(AdjunctFacultyMember.bg_choices), 'masters_choices': list(AdjunctFacultyMember.masters_choices), 'a_f_eaf_c_crs_choices': list(AdjunctFacultyMember.a_f_eaf_c_crs_choices)}, status=200)
 
         return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields})
 
@@ -184,8 +185,10 @@ def user_import(request):
         return render(request, 'Import_Export/import.html')
 
 
+
 # Redirects to Notifications page in menu bar
 @login_required
 def user_notifications(request):
     if request.method == 'GET':
         return render(request, 'Notifications/notifications.html')
+
