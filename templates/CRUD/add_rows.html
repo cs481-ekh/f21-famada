@@ -156,184 +156,35 @@
     $("#id_semester").mask("SS00");
 
     // add modal button to the dropdown
+    $(".addClass").formSelect();
     $("select.addClass")
       .siblings("ul")
       .prepend(
         '<li id=sm_select_all class="modal-trigger" href="#modal1"><span>Add new class...</span></li>'
       );
-    
-    // init the select so that it can be refreshed
-    $(".addClass").material_select();
-    $(".addClass").on('contentChanged', function() {
-      $(this).material_select();
+
+    $(".modal-trigger").on("click", function () {
+      $(".dropdown-trigger").dropdown("close");
     });
-    
-    //prevents defaults
-    if (sessionStorage.getItem("first_name") == "undefined") {
-      return;
-    }
-
-    // If values are not blank, restore them to the fields
-    var a_f_eaf_c_crs_list = sessionStorage.getItem("a_f_eaf_c_crs_list");
-    if (a_f_eaf_c_crs_list !== null)
-      $("#id_a_f_eaf_c_crs_list").val(a_f_eaf_c_crs_list);
-
-    var semester = sessionStorage.getItem("semester");
-    if (semester !== null) $("#id_semester").val(semester);
-
-    var first_name = sessionStorage.getItem("first_name");
-    if (first_name !== null) $("#id_first_name").val(first_name);
-
-    var last_name = sessionStorage.getItem("last_name");
-    if (last_name !== null) $("#id_last_name").val(last_name);
-
-    var date_of_birth = sessionStorage.getItem("date_of_birth");
-    if (date_of_birth !== null) $("#id_date_of_birth").val(date_of_birth);
-
-    var employee_id = sessionStorage.getItem("employee_id");
-    if (employee_id !== null) $("#id_employeeID").val(employee_id);
-
-    var step_rate = sessionStorage.getItem("step_rate");
-    if (step_rate !== null) $("#id_step-rate").val(step_rate);
-
-    var i9_completed = sessionStorage.getItem("i9_completed");
-    if (i9_completed !== null) $("#id_I9_completed").val(i9_completed);
-
-    var i9_greater_than_3_years = sessionStorage.getItem(
-      "i9_greater_than_3_years"
-    );
-    if (i9_greater_than_3_years !== null)
-      $("#id_I9_greater_than_3_years").val(i9_greater_than_3_years);
-
-    var background_passed = sessionStorage.getItem("background_passed");
-    if (background_passed !== null)
-      $("#id_background_passed").val(background_passed);
-
-    var cv_resume = sessionStorage.getItem("cv_resume");
-    if (cv_resume !== null) $("#id_cv_resume").val(cv_resume);
-
-    var ctl_notified = sessionStorage.getItem("ctl_notified");
-    if (ctl_notified !== null) $("#id_CTL_notified").val(ctl_notified);
-
-    var masters = sessionStorage.getItem("masters");
-    if (masters !== null) $("#id_masters").val(masters);
-
-    var address = sessionStorage.getItem("address");
-    if (address !== null) $("#id_address").val(address);
-
-    var city = sessionStorage.getItem("city");
-    if (city !== null) $("#id_city").val(city);
-
-    var state = sessionStorage.getItem("state");
-    if (state !== null) $("#id_state").val(state);
-
-    var zip = sessionStorage.getItem("zip");
-    if (zip !== null) $("#id_zip").val(zip);
-
-    var primary_email = sessionStorage.getItem("primary_email");
-    if (primary_email !== null) $("#id_primary_email").val(primary_email);
-
-    var secondary_email = sessionStorage.getItem("secondary_email");
-    if (secondary_email !== null) $("#id_secondary_email").val(secondary_email);
-
-    var primary_phone = sessionStorage.getItem("primary_phone");
-    if (primary_phone !== null) $("#id_primary_phone").val(primary_phone);
-
-    var secondary_phone = sessionStorage.getItem("secondary_phone");
-    if (secondary_phone !== null) $("#id_secondary_phone").val(secondary_phone);
-
-    var comments = sessionStorage.getItem("comments");
-    if (comments !== null)
-      $("#id_special_conditions_and_comments").val(comments);
-
-    // select = document.getElementById("option2");
-    // var unique_array = [];
-
-    // //adds all classes to classes dropdown
-    // for (var i = 0; i < localStorage.length; i++) {
-    //   if (
-    //     localStorage.getItem(localStorage.key(i)).includes("Choose your option")
-    //   )
-    //     continue;
-    //   if (localStorage.getItem(localStorage.key(i)) === "") continue;
-    //   // var option = document.createElement("option");
-    //   // option.innerHTML = localStorage.getItem(localStorage.key(i));
-    //   text = localStorage.getItem(localStorage.key(i));
-    //   unique_array.push(text.toUpperCase());
-    // }
-    // console.log(unique_array);
-    // var unique = unique_array.filter(onlyUnique);
-    // console.log(unique.sort());
-
-    // //clears the list
-    // for (var i = select.options.length; i >= 0; i--) {
-    //   // if (localStorage.getItem(localStorage.key(i)).includes("Choose your option"))
-    //   select.remove(i);
-    // }
-    // // localStorage.clear();
-    // arrayindex = 0;
-    // unique.forEach(addToSelect);
-  };
-  function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
+    $(".addClass").on("contentChanged", function () {
+      $(this).formSelect();
+      $("select.addClass")
+        .siblings("ul")
+        .prepend(
+          '<li id=sm_select_all class="modal-trigger" href="#modal1"><span>Add new class...</span></li>'
+        );
+        $(".modal-trigger").on("click", function () {
+      $(".dropdown-trigger").dropdown("close");
+    });
+    });
   }
-  function addToSelect(element) {
     
-    var option = document.createElement("option");
-    option.innerHTML = element;
-    select.append(option);
-    arrayindex++;
-  }
+
   function saveFunction() {
-    
-    
-
-    //store values for all entries in the form
-    sessionStorage.setItem(
-      "a_f_eaf_c_crs_list",
-      $("#id_a_f_eaf_c_crs_list").val()
-    );
-    sessionStorage.setItem("semester", $("#id_semester").val());
-    sessionStorage.setItem("first_name", $("#id_first_name").val());
-    sessionStorage.setItem("last_name", $("#id_last_name").val());
-    sessionStorage.setItem("date_of_birth", $("#id_date_of_birth").val());
-    sessionStorage.setItem("employee_id", $("#id_employeeID").val());
-    sessionStorage.setItem("step_rate", $("#id_step_rate").val());
-    sessionStorage.setItem("i9_completed", $("#id_I9_completed").val());
-    sessionStorage.setItem(
-      "i9_greater_than_3_years",
-      $("#id_I9_greater_than_3_years").val()
-    );
-    sessionStorage.setItem(
-      "background_passed",
-      $("#id_background_passed").val()
-    );
-    sessionStorage.setItem("cv_resume", $("#id_cv_resume").val());
-    sessionStorage.setItem("masters", $("#id_masters").val());
-    sessionStorage.setItem("ctl_notified", $("#id_CTL_notified").val());
-    sessionStorage.setItem("address", $("#id_address").val());
-    sessionStorage.setItem("city", $("#id_city").val());
-    sessionStorage.setItem("state", $("#id_state").val());
-    sessionStorage.setItem("zip", $("#id_zip").val());
-    sessionStorage.setItem("primary_email", $("#id_primary_email").val());
-    sessionStorage.setItem("secondary_email", $("#id_secondary_email").val());
-    sessionStorage.setItem("primary_phone", $("#id_primary_phone_0").val());
-    sessionStorage.setItem("secondary_phone", $("#id_secondary_phone_0").val());
-    sessionStorage.setItem(
-      "comments",
-      $("#id_special_conditions_and_comments").val()
-    );
-    
-    // gets the value from the modal box, and adds it to the classes list
     var newValue = document.getElementById("class_name").value;
     var $newOpt = $("<option>").attr("value", newValue).text(newValue);
-    $("#option2").append(option);
-    $("#option2").trigger('contentChanged');
-    
-  }
-
-  function clearForms() {
-    sessionStorage.clear();
+    $("#option2").append($newOpt);
+    $("#option2").trigger("contentChanged");
   }
 </script>
 {% endblock %}
