@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 
-from Notifications.models import Notification
+from .models import Notification
 from .forms import NotificationForm
 
 # Create your views here.
