@@ -1016,6 +1016,7 @@ var Component = function () {
 
     // Display error if el is valid HTML Element
     if (!(el instanceof Element)) {
+      console.error(Error(el + ' is not an HTML Element'));
     }
 
     // If exists, destroy and reinitialize in child
@@ -6958,6 +6959,7 @@ $jscomp.polyfill = function (e, r, p, m) {
     }
 
     if (!$textarea.length) {
+      console.error('No textarea element found');
       return;
     }
 
@@ -11787,7 +11789,6 @@ $jscomp.polyfill = function (e, r, p, m) {
         if (this.$selectOptions.length) {
           this.$selectOptions.each(function (el) {
             if ($(el).is('option')) {
-
               // Direct descendant option.
               var optionEl = void 0;
               if (_this71.isMultiple) {
@@ -11880,7 +11881,6 @@ $jscomp.polyfill = function (e, r, p, m) {
         obj.el = el;
         obj.optionEl = optionEl;
         this._valueDict[key] = obj;
-
       }
 
       /**
@@ -11970,7 +11970,7 @@ $jscomp.polyfill = function (e, r, p, m) {
         var options = this.$el.find('option');
 
         options.each(function (el) {
-          if ($(el).prop('selected') && $(el).text() != 'Select all/none' &&  $(el).text() != 'Choose your option') {
+          if ($(el).prop('selected')) {
             var text = $(el).text();
             values.push(text);
           }

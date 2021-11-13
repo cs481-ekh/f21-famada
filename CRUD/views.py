@@ -67,7 +67,6 @@ option1Fields = {
 
 # List for option field 2 in read)view
 option2Fields = {
-    "Select All": "all",
     "Semester": "semester",
     "First Name": "first_name",
     "Last Name": "last_name",
@@ -108,12 +107,8 @@ def crud_read(request):
             for option in option2:
                 tableHeaders[option] = adjunctFields[option]
 
-            if "Select All" in tableHeaders:
-                tableHeaders = adjunctFields
-                retFieldsList = adjunctFields.values()
-            else:
                 # Get corresponding model names for table headers
-                retFieldsList = tableHeaders.values()
+            retFieldsList = tableHeaders.values()
 
             if includeArchives is None:
                 results = AdjunctFacultyMember.objects.all().filter(**searchFilter).filter(archived=False).order_by(

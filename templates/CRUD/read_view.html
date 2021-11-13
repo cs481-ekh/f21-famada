@@ -30,8 +30,7 @@
 
       <!-- Here the user selects what columns they would like to view on their table -->
       <div class="input-field" id="search-view-columns">
-        <select multiple name="option2">
-          <option value="" disabled selected>Choose your option</option>
+        <select multiple name="option2" class="grid-columns">
           {% for key in option2Fields %}
           <option>{{key}}</option>
           {% endfor %}
