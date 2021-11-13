@@ -131,3 +131,16 @@ main {
   margin-right: 5px;
   color: whitesmoke;
 }
+
+.ag-row {
+  font-family: $secondary-font;
+  font-size: 15px;
+
+  input {
+    font-family: $secondary-font;
+  }
+}
+.ag-header-row {
+  font-family: $font-stack;
+  font-size: 15px;
+}
