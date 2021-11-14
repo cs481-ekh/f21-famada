@@ -130,6 +130,126 @@ class ViewModelTests(TestCase):
         # response = crud_add_rows(request)
         # #if adding failed, should have response code of 406 which means a mistake was made
         # self.assertEqual(response.status_code, 406)
+    
+    # similar to add, but one input is incorrect
+    def test_invalid_input_date(self):
+        c = Client()
+        c.login(username='testuser', password='12345')
+
+        response = c.get('/add/')
+        #checking to see if response went to proper page
+        self.assertEqual(response.status_code, 200)
+
+        #create a test data entry to be entered into database
+        #use implemetation of adding to database
+        #check to see if that entry is in database
+        #assert true if so else assert false
+        a_f_eaf_c_crs_list = ""
+        semester = "fa19"
+        first_name = "Test"
+        last_name = "Tester"
+        date_of_birth = "Nov 20 2021"
+        employeeID = 123456789
+        step_rate = "step 1"
+        I9_completed = "Nov 20 2021"
+        I9_greater_than_3_years = 1
+        background_passed = "Y"
+        cv_resume = 2021
+        masters = "Yes"
+        CTL_notified = "Nov 20 2021"
+        address = "Test address"
+        city = "Test city"
+        state = "Test state"
+        zip = 123456
+        primary_email = "test@test.com"
+        primary_phone = "555-555-5555"
+
+        request = [a_f_eaf_c_crs_list, semester, first_name, last_name, date_of_birth, employeeID, step_rate, I9_completed, I9_greater_than_3_years, background_passed,
+            cv_resume, masters, CTL_notified, address, city, state, zip, primary_email, primary_phone]
+
+        # response = crud_add_rows(request)
+        # #if adding failed, should have response code of 406 which means a mistake was made
+        # self.assertEqual(response.status_code, 406)
+
+    # similar to add, but one input is incorrect
+    def test_invalid_input_phone(self):
+        c = Client()
+        c.login(username='testuser', password='12345')
+
+        response = c.get('/add/')
+        #checking to see if response went to proper page
+        self.assertEqual(response.status_code, 200)
+
+        #create a test data entry to be entered into database
+        #use implemetation of adding to database
+        #check to see if that entry is in database
+        #assert true if so else assert false
+        a_f_eaf_c_crs_list = ""
+        semester = "fa19"
+        first_name = "Test"
+        last_name = "Tester"
+        date_of_birth = "Nov 20 2021"
+        employeeID = 123456789
+        step_rate = "step 1"
+        I9_completed = "Nov 20 2021"
+        I9_greater_than_3_years = 1
+        background_passed = "Y"
+        cv_resume = 2021
+        masters = "Yes"
+        CTL_notified = "Nov 20 2021"
+        address = "Test address"
+        city = "Test city"
+        state = "Test state"
+        zip = 123456
+        primary_email = "test@test.com"
+        primary_phone = "555-555-55555555555"
+
+        request = [a_f_eaf_c_crs_list, semester, first_name, last_name, date_of_birth, employeeID, step_rate, I9_completed, I9_greater_than_3_years, background_passed,
+            cv_resume, masters, CTL_notified, address, city, state, zip, primary_email, primary_phone]
+
+        # response = crud_add_rows(request)
+        # #if adding failed, should have response code of 406 which means a mistake was made
+        # self.assertEqual(response.status_code, 406)
+
+     # similar to add, but one input is incorrect
+    def test_invalid_input_zip(self):
+        c = Client()
+        c.login(username='testuser', password='12345')
+
+        response = c.get('/add/')
+        #checking to see if response went to proper page
+        self.assertEqual(response.status_code, 200)
+
+        #create a test data entry to be entered into database
+        #use implemetation of adding to database
+        #check to see if that entry is in database
+        #assert true if so else assert false
+        a_f_eaf_c_crs_list = ""
+        semester = "fa19"
+        first_name = "Test"
+        last_name = "Tester"
+        date_of_birth = "2021/18/101"
+        employeeID = 123456789
+        step_rate = "step 1"
+        I9_completed = "2021/18/10"
+        I9_greater_than_3_years = 1
+        background_passed = "Y"
+        cv_resume = 2021
+        masters = "Yes"
+        CTL_notified = "2021/18/10"
+        address = "Test address"
+        city = "Test city"
+        state = "Test state"
+        zip = 1
+        primary_email = "test@test.com"
+        primary_phone = "555-555-5555"
+
+        request = [a_f_eaf_c_crs_list, semester, first_name, last_name, date_of_birth, employeeID, step_rate, I9_completed, I9_greater_than_3_years, background_passed,
+            cv_resume, masters, CTL_notified, address, city, state, zip, primary_email, primary_phone]
+
+        # response = crud_add_rows(request)
+        # #if adding failed, should have response code of 406 which means a mistake was made
+        # self.assertEqual(response.status_code, 406)
 
     def test_delete(self):
         c = Client()
@@ -140,4 +260,12 @@ class ViewModelTests(TestCase):
 
         #request = []    
         #response = crud_read(response)
-        
+
+    def test_edit(self):
+        c = Client()
+        c.login(username='testuser', password='12345')
+        response = c.get('/search/')
+        #checking to see if response went to proper page
+        self.assertEqual(response.status_code, 200)
+
+    
