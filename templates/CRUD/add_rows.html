@@ -1,4 +1,9 @@
 {% extends "menu.html" %} {% block main %}
+<!-- Defines the 'Add' section of the page. Below, each row on the page
+is seperated into an appropriately named div, which is then styled
+on the Materalize stylesheet under the following filepath:
+AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
+
 <div>
 
   <h4>Add a record</h4>
@@ -168,6 +173,8 @@
     $(".modal-trigger").on("click", function () {
       $(".dropdown-trigger").dropdown("close");
     });
+
+    // re add modal button to dropdown upon changing the options in the select dropdown
     $(".addClass").on("contentChanged", function () {
       $(this).formSelect();
       $("select.addClass")
@@ -181,7 +188,7 @@
     });
   }
     
-
+  // gets the value in the class modal, and adds it to the dropdown list
   function saveFunction() {
     var newValue = document.getElementById("class_name").value;
     var $newOpt = $("<option>").attr("value", newValue).text(newValue);

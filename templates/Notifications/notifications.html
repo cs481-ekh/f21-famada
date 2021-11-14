@@ -1,7 +1,12 @@
 {% extends "menu.html" %} 
 {% block main %}
+<!-- This is the html for the 'Notifications' page on the website. -->
 <div>
  <p>
+     <!-- Get all notifications from the notification database.
+    The notifications variable comes from Notififcations/views.py,
+    which pulls all the notifications from the database
+    and passes it in as a variable. -->
     {% for field in notifications %}
         <div>
             {{ field.message }}
