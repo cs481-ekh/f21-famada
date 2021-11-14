@@ -131,3 +131,15 @@ main {
   margin-right: 5px;
   color: whitesmoke;
 }
+
+// *************** NOTIFICATION STYLES ****************
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating)  {
+  color: $secondary-color;
+}
+.card .card-content {
+  padding-top: 12px;
+  i {
+    color: $secondary-color;
+  }
+}
