@@ -117,7 +117,6 @@
           "?"
       );
     nodeToDelete = [node];
-    console.log(nodeToDelete);
     deleteID = recordID;
 
     modal.open();
@@ -137,7 +136,6 @@
       // on error
       error: function (response) {
         // alert the error if any error occured
-        console.log(response.responseJSON.errors);
       },
     });
 
@@ -163,10 +161,6 @@
   });
 
   ///////////////////////////////////////////////
-    // define table vars
-
-    var grid = "";
-    var gridOptions = "";
  
 
     function buildTable(column, row) {
@@ -177,6 +171,10 @@
         columnDefs: column,
         components: {
           deleteRenderer: DeleteRenderer,
+          intEditor: IntEditor,
+          phoneEditor: PhoneEditor,
+          emailEditor: EmailEditor,
+          dateEditor: getDatePicker(),
         },
         defaultColDef: {
           sortable: true,
@@ -189,12 +187,7 @@
         rowSelection: "single",
         domLayout: "autoHeight",
         animateRows: true,
-        components: {
-          intEditor: IntEditor,
-          phoneEditor: PhoneEditor,
-          emailEditor: EmailEditor,
-          dateEditor: getDatePicker(),
-        },
+
       };
       // setup the grid after the page has finished loading
       const gridDiv = document.querySelector("#myGrid");
@@ -228,7 +221,6 @@
         url: "{% url 'search' %}",
         // on success
         success: function (response) {
-          console.log(response);
           var column = [];
           var row = [];
           var a_f_eaf_c_crs_choices = [];
@@ -299,7 +291,6 @@
         error: function (response) {
           // alert the error if any error occured
           alert(response.responseJSON.errors);
-          console.log(response.responseJSON.errors);
         },
       });
 
