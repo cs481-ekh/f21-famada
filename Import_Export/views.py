@@ -17,7 +17,6 @@ from CRUD.models import AdjunctFacultyMember, Classes
 def upload_file(request):
     if request.method == 'POST':
         print("posted!!!")
-        print(request.FILES)
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             print("Valid form")
@@ -60,7 +59,7 @@ def user_import():
                     step_rate=get_step_rate(row[5]),
                     I9_completed=i9_completed(row[6]),
                     I9_greater_than_3_years=i9_days_left(row[6]),
-                    background_passed=get_I9_Pass_Fail(row[8]),
+                    background_passed=row[8],
                     cv_resume=row[9] if row[9].isdigit() else "0000",
                     masters=has_Masters(row[10]),
                     CTL_notified=ctl_notified(row[11]),
@@ -69,7 +68,7 @@ def user_import():
                     state=get_state(row[14]),
                     zip=get_zip(row[14]),
                     primary_email=row[15],
-                    secondary_email=row[16] if len(row[16]) != 0 else "None@gmail.com",
+                    secondary_email=row[16],
                     primary_phone=get_phone_number(row[17]),
                     secondary_phone=get_phone_number(row[18]),
                     special_conditions_and_comments=row[19],
@@ -125,7 +124,6 @@ def get_phone_number(s):
 
 
 def get_city(s):
-    print(s)
     lst = s.split(", ")
     return lst[0]
 
@@ -147,37 +145,25 @@ def get_zip(s):
 
 
 def has_Masters(s):
-    print(s)
-    if len(s) == 0 or s == "NA": return "No"
-    return "Yes"  # TODO: make this more accurate
-
-
-def get_I9_Pass_Fail(s):
-    print(s)
-    i9 = {"P": "pass", "NA": "NA", "F": "fail"}
-    return i9.get(s, "NA")
-
+    if len(s) == 0 or "NA" in s: return "N"
+    return "Y"
 
 def get_step_rate(s):
-    print(s)
-    steps = {"1": "step 1", "2": "step 2", "3": "step 3"}
-    return steps.get(s, "faculty")  # TODO: check this
+    steps = {"1": "1", "2": "2", "3": "3"}
+    return steps.get(s, "f")
 
 
 def get_first_name(s):
-    print(s)
     if len(s) == 0 or "NA" in s: return "NA"
     lst = s.split(",")
     return lst[1]
 
 
 def get_last_name(s):
-    print(s)
     if len(s) == 0 or "NA" in s: return "NA"
     lst = s.split(",")
     return lst[0]
 
 
 def contains_num(s):
-    print(s)
     return any(i.isdigit() for i in s)
