@@ -171,7 +171,7 @@ def crud_add_rows(request):
 
             return redirect('add_rows')
         else:
-            print("Form wasnt valid")
+            print(form.errors.as_data())
             return render(request, 'CRUD/add_rows.html', {'form': form, 'error': "unable to add", 'classes': uniqClasses})
     if request.method == 'GET':
         form = AdjunctForm()
