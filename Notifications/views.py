@@ -12,6 +12,8 @@ from .forms import NotificationForm
 @login_required
 def user_notifications(request):
     data = Notification.objects.all()
+    # gets all notifications from database as stores in a variable that can
+    # be used in html as notifications
     notif_info = {
         "notifications": data
     }

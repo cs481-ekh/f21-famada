@@ -2,9 +2,11 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import AdjunctFacultyMember
+
+from .models import AdjunctFacultyMember, Classes
 from Notifications.models import Notification
 from .forms import AdjunctForm
+from django_cryptography.fields import *
 
 
 
@@ -32,6 +34,7 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
 
 # List of adjunct Fields For crud_read view
 adjunctFields = {
@@ -91,7 +94,7 @@ option2Fields = {
 }
 
 
-#Redirects to Search and View page in menu bar
+# Redirects to Search and View page in menu bar
 @login_required
 def crud_read(request):
     unreadNotifications = len(Notification.objects.all().filter(isRead=False))
@@ -135,31 +138,63 @@ def crud_read(request):
             # return render(request, 'CRUD/read_view.html',
             #               {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,
             #                'option2Fields': option2Fields, 'tableHeaders': tableHeaders})
+
             return JsonResponse({'results': list(results), 'fields': list(adjunctFields), 'option1Fields': list(option1Fields),
                            'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders, 'sr_choices': list(AdjunctFacultyMember.sr_choices), 'bg_choices': list(AdjunctFacultyMember.bg_choices), 'masters_choices': list(AdjunctFacultyMember.masters_choices), 'a_f_eaf_c_crs_choices': list(AdjunctFacultyMember.a_f_eaf_c_crs_choices), 'unreadNotifications': unreadNotifications}, status=200)
+
 
 
         return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields, 'unreadNotifications': unreadNotifications})
         
 
-#Redirects to Search and Edit page in menu bar
+
+# Redirects to Search and Edit page in menu bar
 @login_required
 def crud_search_edit(request):
     if request.method == 'GET':
-            return render(request, 'CRUD/edit_view.html')
+        return render(request, 'CRUD/edit_view.html')
 
-#Redirects to add rows page in menu bar
+
+# Redirects to add rows page in menu bar
 @login_required
 def crud_add_rows(request):
-    form = AdjunctForm()
+    uniqClasses = set()
+
+    for c in list(Classes.objects.all().values("adj_class")):
+        values = c.values()
+        for value in values:
+            uniqClasses.add(value)
+
+    if request.method == 'POST':
+        form = AdjunctForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            adj = form.save()
+            classes = request.POST.getlist('option2')
+            for c in classes:
+                newClass = Classes(adjunct_faculty_member=adj, adj_class=c)
+                newClass.save()
+
+            return redirect('add_rows')
+        else:
+            print(form.errors.as_data())
+            return render(request, 'CRUD/add_rows.html', {'form': form, 'error': "unable to add", 'classes': uniqClasses})
     if request.method == 'GET':
-            return render(request, 'CRUD/add_rows.html', {'form': form})
+        form = AdjunctForm()
+        return render(request, 'CRUD/add_rows.html', {'form': form, 'uniqClasses': uniqClasses})
 
 
-#Redirects to import page in menu bar
+# Redirects to import page in menu bar
 @login_required
 def user_import(request):
     if request.method == 'GET':
-            return render(request, 'Import_Export/import.html')
+        return render(request, 'Import_Export/import.html')
 
+
+
+# Redirects to Notifications page in menu bar
+@login_required
+def user_notifications(request):
+    if request.method == 'GET':
+        return render(request, 'Notifications/notifications.html')
 
