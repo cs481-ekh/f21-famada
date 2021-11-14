@@ -2,8 +2,9 @@ import csv
 import os
 import datetime
 
-from datetime import date
-from django.shortcuts import render
+from datetime import datetime
+from datetime import timedelta
+from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import UploadFileForm
@@ -20,10 +21,9 @@ def upload_file(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             print("Valid form")
-            print(os.listdir())
             handle_uploaded_file(request.FILES['file'])
             user_import()
-            return HttpResponseRedirect('/success/url/')
+            return redirect('import')
     else:
         return render(request, 'Import_Export/import.html', {'form': UploadFileForm()})
 
@@ -42,114 +42,142 @@ def user_import():
         try:
             first_row = True
             for row in reader:
+                if not row: break
+
                 if first_row:
                     first_row = False
                     continue
-                i9_days_left(row[7])
-                # print(row)
-                # adj = AdjunctFacultyMember.objects.create(
-                #     a_f_eaf_c_crs_list=row[1],
-                #     semester=row[2] if contains_num(row[2]) else "--",
-                #     first_name=get_first_name(row[3]),
-                #     last_name=get_last_name(row[3]),
-                #     date_of_birth="2021-10-25",  # FIXME: will csv have DOB?
-                #     employeeID=row[4],
-                #     step_rate=get_step_rate([5]),
-                #     I9_completed=row[6],
-                #     I9_greater_than_3_years=i9_days_left(row[7]),
-                #     background_passed=get_I9_Pass_Fail(row[8]),
-                #     cv_resume=row[9] if row[9].isdigit() else "0000",
-                #     masters=has_Masters(row[10]),
-                #     CTL_notified=row[11],  # TODO: Add date parser
-                #     address=row[13],
-                #     city=get_city(row[14]),
-                #     state=get_state(row[14]),
-                #     zip=get_zip(row[14]),
-                #     primary_email=row[15],
-                #     secondary_email=row[16] if len(row[16]) != 0 else None,
-                #     primary_phone=get_phone_number(row[17]),
-                #     secondary_phone=get_phone_number(row[18]),
-                #     special_conditions_and_comments=row[19]
-                # )
-                #
-                # for c in get_classes(row[12]):
-                #     Classes.objects.create(
-                #         adjunct_faculty_member=adj,
-                #         adj_class=c
-                #     )
-        #  Always delete the sensitive data file
+
+                if AdjunctFacultyMember.objects.filter(employeeID=row[4]).exists(): continue
+
+                adj = AdjunctFacultyMember.objects.get_or_create(
+                    a_f_eaf_c_crs_list=row[1],
+                    semester=row[2] if contains_num(row[2]) else "--",
+                    first_name=get_first_name(row[3]),
+                    last_name=get_last_name(row[3]),
+                    date_of_birth="2021-10-25",  # FIXME: will csv have DOB?
+                    employeeID=row[4],
+                    step_rate=get_step_rate(row[5]),
+                    I9_completed=i9_completed(row[6]),
+                    I9_greater_than_3_years=i9_days_left(row[6]),
+                    background_passed=get_I9_Pass_Fail(row[8]),
+                    cv_resume=row[9] if row[9].isdigit() else "0000",
+                    masters=has_Masters(row[10]),
+                    CTL_notified=ctl_notified(row[11]),
+                    address=row[13],
+                    city=get_city(row[14]),
+                    state=get_state(row[14]),
+                    zip=get_zip(row[14]),
+                    primary_email=row[15],
+                    secondary_email=row[16] if len(row[16]) != 0 else "None@gmail.com",
+                    primary_phone=get_phone_number(row[17]),
+                    secondary_phone=get_phone_number(row[18]),
+                    special_conditions_and_comments=row[19],
+                    archived=False
+                )
+
+                for c in get_classes(row[12]):
+                    Classes.objects.create(
+                        adjunct_faculty_member=adj,
+                        adj_class=c
+                    )
+                # if not first_row:
+                #     break
         finally:
+            # Always delete the sensitive data file
             f.close()
             os.remove('AdjunctFacultyManagement/static/file.csv')
 
 
-def i9_days_left(s):  # TODO: add valid greater than based on I9 completed
-    print(s)
-
+def parse_date_time(s):
     try:
-        user_date = datetime.datetime.strptime(s, "%m/%d/%Y").date()
-        today = datetime.datetime.now().date()
-        delta = today-user_date
-        print("Delta: ", delta.days, "\n")
-        print(user_date)
-        days = datetime.timedelta(days=1095)
-        ret = user_date + days
-        print(ret)
-    except ValueError:
-        return None
+        sList = s.split("/")
+        s = sList[0] + "/" + sList[1] + "/20" + sList[2]
+        return datetime.strptime(s, "%m/%d/%Y")
+    except:
+        return datetime.strptime("01/01/2000", "%m/%d/%Y")
 
-    return 0
+
+def i9_completed(s):
+    return parse_date_time(s).date()
+
+
+def ctl_notified(s):
+    return parse_date_time(s).date()
+
+
+def i9_days_left(s):
+    parsedDate = parse_date_time(s)
+    ret = parsedDate + timedelta(days=1095)
+    return ret.date()
 
 
 def get_classes(s):  # TODO: Separate classes
     return []
 
 
-def get_phone_number(s):  # TODO: Make sure this works properly
-    return filter(lambda x: x.isdigit(), s)
+def get_phone_number(s):
+    lst = list(filter(lambda x: x.isdigit(), s))
+    str = ""
+    for l in lst: str += l
+
+    return str
 
 
 def get_city(s):
+    print(s)
     lst = s.split(", ")
     return lst[0]
 
 
 def get_state(s):
+    if len(s) == 0 or "NA" in s: return "NA"
     lst = s.split(", ")
+    if len(lst) < 2: return "NA"
     lst = lst[1].split(" ")
     return lst[0]
 
 
 def get_zip(s):
+    if len(s) == 0 or "NA" in s: return 00000
     lst = s.split(", ")
+    if len(lst) < 2: return 00000
     lst = lst[1].split(" ")
     return lst[1]
 
 
 def has_Masters(s):
+    print(s)
     if len(s) == 0 or s == "NA": return "No"
     return "Yes"  # TODO: make this more accurate
 
 
 def get_I9_Pass_Fail(s):
+    print(s)
     i9 = {"P": "pass", "NA": "NA", "F": "fail"}
-    return i9.get(s, default="NA")
+    return i9.get(s, "NA")
 
 
 def get_step_rate(s):
+    print(s)
     steps = {"1": "step 1", "2": "step 2", "3": "step 3"}
-    return steps.get(s, default="faculty")
+    return steps.get(s, "faculty")  # TODO: check this
 
 
 def get_first_name(s):
+    print(s)
+    if len(s) == 0 or "NA" in s: return "NA"
     lst = s.split(",")
     return lst[1]
 
 
 def get_last_name(s):
+    print(s)
+    if len(s) == 0 or "NA" in s: return "NA"
     lst = s.split(",")
     return lst[0]
 
 
 def contains_num(s):
+    print(s)
     return any(i.isdigit() for i in s)
