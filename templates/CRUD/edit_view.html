@@ -1,3 +1,61 @@
 {% extends "menu.html" %} {% block main %}
-    Made it to edit_view.html
+<!-- create dropdown -->
+<div class="add_form_row" id="classes_row">
+    <label>Classes:</label>
+    <div class="input-field" id="search-view-columns">
+      <select multiple name="option2" id="option2" class="addClass">
+        <option value="" disabled selected>Choose your option</option>
+        {% for value in uniqClasses %}
+        <option>{{value}}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <!-- Creates the modal button-->
+  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+
+  <!-- Creates and defines the pop up modal window-->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <label for="class_name">Class Name</label>
+      <input
+        placeholder="Placeholder"
+        id="class_name"
+        type="text"
+        class="validate"
+        ref="class_ref"
+      />
+    </div>
+    <div class="modal-footer">
+      <a
+        href="#!"
+        class="modal-close waves-effect waves-green btn-flat"
+        onclick="saveFunction();"
+        value="save"
+        id="save"
+        >Add Class</a
+      >
+    </div>
+  </div>
+
+
+  <script>
+      window.onload = function () {
+
+        $('.addClass').formSelect();
+        $('.addClass').on('contentChanged', function() {
+            $(this).formSelect();
+        });
+
+    }
+
+    function saveFunction() {
+            var newValue = document.getElementById("class_name").value;
+            var $newOpt = $("<option>").attr("value", newValue).text(newValue);
+            $("#option2").append($newOpt);
+            $("#option2").trigger('contentChanged');
+    }
+      
+  </script>
 {% endblock %}
