@@ -55,7 +55,6 @@ def delete_view(request):
 
     return render(request, "Notifications")
 
-
 @login_required
 def isRead(request):
     context = {}
