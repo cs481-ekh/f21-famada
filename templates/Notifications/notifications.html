@@ -1,19 +1,41 @@
 {% extends "menu.html" %} 
 {% block main %}
+<!-- This is the html for the 'Notifications' page on the website. -->
 <div>
- <p>
+
+     <!-- Get all notifications from the notification database.
+    The notifications variable comes from Notififcations/views.py,
+    which pulls all the notifications from the database
+    and passes it in as a variable. -->
     {% for field in notifications %}
+    <div class="row">
+       
+        <div class="card">
+
+          <div class="card-content">
+            {% if not field.isRead %}
+            <i class="small material-icons" >new_releases</i>
+      {% endif %}
+            <span class="card-title">{{ field.date }}</span>
+            <p>{{ field.message }}</p>
+          </div>
+          <div class="card-action">
+            {% if not field.isRead %}
+              <a href="#">Mark as read</a>
+              {% endif %}
+              <a href="#">Delete note</a>
+            </div>
+        </div>
+      
+    </div>
         <div>
-            {{ field.message }}
-            {{ field.date }}
-            {{ field.isRead }}
+            
         </div>
     {% endfor %}
 
-    {% if notifications.fields|length == 0 %}
+    {% if notifications|length == 0 %}
         <p>No notifications! </p>
     {% endif %}
-</p>
  
 </div>
 {% endblock %}
