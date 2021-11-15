@@ -6,8 +6,8 @@ from django.http import JsonResponse
 from .models import AdjunctFacultyMember, Classes
 from Notifications.models import Notification
 from .forms import AdjunctForm
+from django.views.decorators.csrf import csrf_exempt
 from django_cryptography.fields import *
-
 
 
 # Create your views here.
@@ -95,6 +95,7 @@ option2Fields = {
 
 # Redirects to Search and View page in menu bar
 @login_required
+@csrf_exempt
 def crud_read(request):
     unreadNotifications = len(Notification.objects.all().filter(isRead=False))
     if request.method == 'GET':
@@ -108,12 +109,17 @@ def crud_read(request):
 
             # Get selected options from option 2 list
             option2 = request.GET.getlist('option2')
+            if "Select All" in option2:
+                option2.remove("Select All")
             tableHeaders = {}
             for option in option2:
                 tableHeaders[option] = adjunctFields[option]
 
                 # Get corresponding model names for table headers
-            retFieldsList = tableHeaders.values()
+                retFieldsList = list(tableHeaders.values())
+                retFieldsList.append("employeeID")
+                print(retFieldsList)
+
 
             if includeArchives is None:
                 results = AdjunctFacultyMember.objects.all().filter(**searchFilter).filter(archived=False).order_by(
@@ -140,10 +146,14 @@ def crud_read(request):
 
 
         return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields, 'unreadNotifications': unreadNotifications})
-        
+    else:
+        adjunct_ID = request.POST.get('rowID')
+        adjunct = AdjunctFacultyMember.objects.get(employeeID=adjunct_ID)
+        adjunct.delete()
+        return redirect('search')
+#Redirects to Search and Edit page in menu bar
 
 
-# Redirects to Search and Edit page in menu bar
 @login_required
 def crud_search_edit(request):
     if request.method == 'GET':
