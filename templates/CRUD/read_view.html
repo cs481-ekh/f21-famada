@@ -1,5 +1,7 @@
 {% extends "menu.html" %} {% block main %}
-
+<!-- This is the html file for the 'Search and View' tab on the website.
+Styling for it can be found at: 
+AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
 <form id="search-form" method="get">
   <div class="search-fields card">
     <div class="search-form-row">
@@ -30,8 +32,7 @@
 
       <!-- Here the user selects what columns they would like to view on their table -->
       <div class="input-field" id="search-view-columns">
-        <select multiple name="option2">
-          <option value="" disabled selected>Choose your option</option>
+        <select multiple name="option2" class="grid-columns">
           {% for key in option2Fields %}
           <option>{{key}}</option>
           {% endfor %}
@@ -79,7 +80,22 @@
 {% load static %}
 <script
   type="text/javascript"
-  src="{% static 'js/bin/deleteRenderer.js' %}"
+  src="{% static 'js/bin/deleteRenderer.js' %}"></script>
+<script
+  type="text/javascript"
+  src="{% static 'js/bin/intEditor.js' %}"
+></script>
+<script
+  type="text/javascript"
+  src="{% static 'js/bin/dateEditor.js' %}"
+></script>
+<script
+  type="text/javascript"
+  src="{% static 'js/bin/phoneEditor.js' %}"
+></script>
+<script
+  type="text/javascript"
+  src="{% static 'js/bin/emailEditor.js' %}"
 ></script>
 
 <script>
@@ -100,7 +116,6 @@
           "?"
       );
     nodeToDelete = [node];
-    console.log(nodeToDelete);
     deleteID = recordID;
 
     modal.open();
@@ -120,7 +135,6 @@
       // on error
       error: function (response) {
         // alert the error if any error occured
-        console.log(response.responseJSON.errors);
       },
     });
 
@@ -130,7 +144,22 @@
     }
   });
   $(document).ready(function () {
-    // define table vars
+
+
+    /////// TOAST AND NOTIFICATION LOGIC ////////
+    var newNotifications = {{ unreadNotifications }};
+    // toast appears if there are new notifications
+    if(newNotifications > 0) {
+      var toastHTML = '<div class="toast-content"><span>You have ' + newNotifications + ' unread notifications.</span> <a href= "{% url 'notifications'%}">Click here to view</a></div> <a class="toast-action toast-button toast-close" onclick="closeToast()"><i class="material-icons toast-close">close</i></a>';
+      var notificationToast = M.toast({html: toastHTML, displayLength: "Infinity"});
+    }
+
+    // remove toast by clicking the x
+    $(document).on('click', '#toast-container .toast-button', function() {
+      notificationToast.dismiss();
+  });
+
+  ///////////////////////////////////////////////
 
     function buildTable(column, row) {
       if (grid != "") {
@@ -140,23 +169,37 @@
         columnDefs: column,
         components: {
           deleteRenderer: DeleteRenderer,
+          intEditor: IntEditor,
+          phoneEditor: PhoneEditor,
+          emailEditor: EmailEditor,
+          dateEditor: getDatePicker(),
         },
         defaultColDef: {
           sortable: true,
           filter: true,
           resizable: true,
+          editable: true,
         },
         rowData: row,
         enableRangeSelection: true,
         rowSelection: "single",
         domLayout: "autoHeight",
         animateRows: true,
+
       };
       // setup the grid after the page has finished loading
       const gridDiv = document.querySelector("#myGrid");
 
       grid = new agGrid.Grid(gridDiv, gridOptions);
       $(".exportCSV").removeClass("hide");
+    }
+
+    function parse_choices(list) {
+      var newList = []
+      for (l in list) {
+        newList.push(list[l][1]);
+      }
+      return newList
     }
 
     $(".exportCSV").click(function (e) {
@@ -175,11 +218,62 @@
         url: "{% url 'search' %}",
         // on success
         success: function (response) {
-          column = [];
-          row = [];
+          var column = [];
+          var row = [];
+          var a_f_eaf_c_crs_choices = [];
+          var masters_choices = [];
+          var bg_choices = [];
+          var sr_choices = [];
 
+          // get choices for editing the table
+          a_f_eaf_c_crs_choices = parse_choices(response.a_f_eaf_c_crs_choices);
+          masters_choices = parse_choices(response.masters_choices);
+          bg_choices = parse_choices(response.bg_choices);
+          sr_choices = parse_choices(response.sr_choices);
           for (h in response.tableHeaders) {
-            column.push({ headerName: h, field: response.tableHeaders[h] });
+            var c = { headerName: h, field: response.tableHeaders[h] };
+            if (h == "A, F, EAF, C-CRS-LIST") {
+              c["cellEditor"] = "agSelectCellEditor";
+              c["cellEditorParams"] = {
+                values: a_f_eaf_c_crs_choices,
+              };
+            }
+            if (h == "Masters") {
+              c["cellEditor"] = "agSelectCellEditor";
+              c["cellEditorParams"] = {
+                values: masters_choices,
+              };
+            }
+            if (h == "Background Passed") {
+              c["cellEditor"] = "agSelectCellEditor";
+              c["cellEditorParams"] = {
+                values: bg_choices,
+              };
+            }
+            if (h == "Step Rate") {
+              c["cellEditor"] = "agSelectCellEditor";
+              c["cellEditorParams"] = {
+                values: sr_choices,
+              };
+            }
+
+            if (h == "Employee ID" || h == "Zip" || h == "I9 Greater Than 3 Years" || h == "CV/Resume") {
+              c["cellEditor"] = "intEditor";
+            }
+            if (h == "I9 Completed" || h == "CTL Notified" || h == "Date of Birth") {
+              c["cellEditor"] = "dateEditor";
+            }
+            if (h == "Primary Phone" || h == "Secondary Phone") {
+              c["cellEditor"] = "phoneEditor";
+            }
+
+            if (h == "Primary Email" || h == "Secondary Email") {
+              c["cellEditor"] = "emailEditor";
+            }
+
+            // cell editors needed: email, telephone, boolean
+
+            column.push(c);
           }
           column.push({
             headerName: "Delete Row",
@@ -194,7 +288,6 @@
         error: function (response) {
           // alert the error if any error occured
           alert(response.responseJSON.errors);
-          console.log(response.responseJSON.errors);
         },
       });
 
