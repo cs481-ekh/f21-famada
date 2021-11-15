@@ -130,6 +130,7 @@ class ViewModelTests(TestCase):
         # response = crud_add_rows(request)
         # #if adding failed, should have response code of 406 which means a mistake was made
         # self.assertEqual(response.status_code, 406)
+
     
     # similar to add, but one input is incorrect
     def test_invalid_input_date(self):
@@ -251,6 +252,7 @@ class ViewModelTests(TestCase):
         # #if adding failed, should have response code of 406 which means a mistake was made
         # self.assertEqual(response.status_code, 406)
 
+
     def test_delete(self):
         c = Client()
         c.login(username='testuser', password='12345')
@@ -261,6 +263,7 @@ class ViewModelTests(TestCase):
         #request = []    
         #response = crud_read(response)
 
+
     def test_edit(self):
         c = Client()
         c.login(username='testuser', password='12345')
@@ -268,4 +271,4 @@ class ViewModelTests(TestCase):
         #checking to see if response went to proper page
         self.assertEqual(response.status_code, 200)
 
-    
+ 
