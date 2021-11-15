@@ -52,9 +52,8 @@ class AdjunctFacultyMember(models.Model):
     date_of_birth = models.DateField(null=False, blank=False, default=datetime.now)
     employeeID = models.IntegerField(null=False, blank=False, unique=True, primary_key=True)
     step_rate = models.CharField(null=False, blank=False, choices=sr_choices, max_length=10, default='step 1')
-
-    I9_completed = models.DateField(null=False, blank=False)
-    I9_greater_than_3_years = models.IntegerField(null=True, blank=True, default=1)
+    I9_completed = models.DateField(null=False, blank=False, help_text="Please enter a date.")
+    I9_greater_than_3_years = models.DateField(null=False, blank=False, help_text="Please enter a date.")
     background_passed = models.CharField(null=False, blank=False, choices=bg_choices, max_length=2)
     cv_resume = models.IntegerField(help_text="please enter a 4 digit year")
     masters = models.CharField(choices=masters_choices, max_length=3)
