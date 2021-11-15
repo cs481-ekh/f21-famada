@@ -113,7 +113,7 @@ def crud_read(request):
                 option2.remove("Select All")
             tableHeaders = {}
             for option in option2:
-                    tableHeaders[option] = adjunctFields[option]
+                tableHeaders[option] = adjunctFields[option]
 
                 # Get corresponding model names for table headers
                 retFieldsList = list(tableHeaders.values())
@@ -146,8 +146,6 @@ def crud_read(request):
 
 
         return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields, 'unreadNotifications': unreadNotifications})
-        
-
     else:
         adjunct_ID = request.POST.get('rowID')
         adjunct = AdjunctFacultyMember.objects.get(employeeID=adjunct_ID)
