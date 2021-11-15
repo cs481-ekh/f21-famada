@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
 from django.test.client import RequestFactory
 
-from CRUD.views import crud_read, user_logout, crud_add_rows
+from CRUD.views import crud_search_edit, user_logout, crud_add_rows
 
 # Create your tests here.
 
@@ -49,7 +49,7 @@ class ViewModelTests(TestCase):
         response = c.get('/search/')
         #get request from the search method
         request = response.wsgi_request
-        request = crud_read(request)
+        request = crud_search_edit(request)
         self.assertEqual(request.status_code, 200) #if status code is 200, the view worked as intended
 
     def test_add_to_database(self):

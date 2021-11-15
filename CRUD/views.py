@@ -67,6 +67,10 @@ option1Fields = {
     "First Name": "first_name",
     "Last Name": "last_name",
     "Employee ID": "employeeID",
+    "I9 Completed": "I9_completed",
+    "I9 Greater Than 3 Years": "I9_greater_than_3_years",
+    "Masters": "masters",
+    "Background Passed": "background_passed",
 }
 
 # List for option field 2 in read)view
@@ -96,7 +100,7 @@ option2Fields = {
 # Redirects to Search and View page in menu bar
 @login_required
 @csrf_exempt
-def crud_read(request):
+def crud_search_edit(request):
     # get all of the unread notifications
     unread_notifications = len(Notification.objects.all().filter(isRead=False))
 
@@ -105,7 +109,10 @@ def crud_read(request):
         if request.GET.get("option1"):
             # Take in arguments from the GET
             option1 = request.GET.get('option1') + "__icontains"
+
+            print(option1)
             search_string = request.GET.get('searchString')
+            print(search_string)
             search_filter = {option1: search_string}
             include_archives = request.GET.get('archive')
 
@@ -121,6 +128,7 @@ def crud_read(request):
 
             # Get corresponding model names for table headers
             ret_fields_list = list(table_headers.values())
+            print(ret_fields_list)
             ret_fields_list.append("employeeID")
 
             # check if the user wants archived personnel include if so
