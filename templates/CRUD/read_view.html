@@ -1,5 +1,7 @@
 {% extends "menu.html" %} {% block main %}
-
+<!-- This is the html file for the 'Search and View' tab on the website.
+Styling for it can be found at: 
+AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
 <form id="search-form" method="get">
   <div class="search-fields card">
     <div class="search-form-row">
@@ -30,8 +32,7 @@
 
       <!-- Here the user selects what columns they would like to view on their table -->
       <div class="input-field" id="search-view-columns">
-        <select multiple name="option2">
-          <option value="" disabled selected>Choose your option</option>
+        <select multiple name="option2" class="grid-columns">
           {% for key in option2Fields %}
           <option>{{key}}</option>
           {% endfor %}
@@ -148,10 +149,10 @@
 
 
     /////// TOAST AND NOTIFICATION LOGIC ////////
-    var newNotifications = 2;
+    var newNotifications = {{ unreadNotifications }};
     // toast appears if there are new notifications
     if(newNotifications > 0) {
-      var toastHTML = '<div class="toast-content"><span>You have ' + newNotifications + ' unread notifications.</span> <a>Click here to view</a></div> <a class="toast-action toast-button toast-close" onclick="closeToast()"><i class="material-icons toast-close">close</i></a>';
+      var toastHTML = '<div class="toast-content"><span>You have ' + newNotifications + ' unread notifications.</span> <a href= "{% url 'notifications'%}">Click here to view</a></div> <a class="toast-action toast-button toast-close" onclick="closeToast()"><i class="material-icons toast-close">close</i></a>';
       var notificationToast = M.toast({html: toastHTML, displayLength: "Infinity"});
     }
 

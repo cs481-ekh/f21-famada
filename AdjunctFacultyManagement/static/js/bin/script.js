@@ -4,9 +4,16 @@ $(document).ready(function () {
   // $("select").formSelect();
 
   // search and view select columns logic for select all
-  var select_all = $("#search-view-columns").find("li").eq("1");
+   $("select.grid-columns")
+      .siblings("ul")
+      .prepend(
+        '<li id=sm_select_all class="select-all selected" ><span>Select all/none</span></li>'
+      );
+
+  var select_all = $("li.select-all")
   select_all.on("click", function () {
     if (select_all.hasClass("selected")) {
+      $(this).removeClass('selected');
       $(this)
         .siblings()
         .not(".disabled")
@@ -17,7 +24,8 @@ $(document).ready(function () {
         });
     }
 
-    if (!select_all.hasClass("selected")) {
+    else if (!select_all.hasClass("selected")) {
+      $(this).addClass('selected');
       $(this)
         .siblings()
         .not(".disabled")

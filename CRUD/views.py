@@ -2,7 +2,9 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+
 from .models import AdjunctFacultyMember, Classes
+from Notifications.models import Notification
 from .forms import AdjunctForm
 from django.views.decorators.csrf import csrf_exempt
 from django_cryptography.fields import *
@@ -69,7 +71,6 @@ option1Fields = {
 
 # List for option field 2 in read)view
 option2Fields = {
-    "Select All": "all",
     "Semester": "semester",
     "First Name": "first_name",
     "Last Name": "last_name",
@@ -96,6 +97,7 @@ option2Fields = {
 @login_required
 @csrf_exempt
 def crud_read(request):
+    unreadNotifications = len(Notification.objects.all().filter(isRead=False))
     if request.method == 'GET':
         # Check if this is a page load or a search query
         if request.GET.get("option1"):
@@ -113,14 +115,11 @@ def crud_read(request):
             for option in option2:
                     tableHeaders[option] = adjunctFields[option]
 
-            if "Select All" in tableHeaders:
-                tableHeaders = adjunctFields
-                retFieldsList = adjunctFields.values()
-            else:
                 # Get corresponding model names for table headers
                 retFieldsList = list(tableHeaders.values())
                 retFieldsList.append("employeeID")
                 print(retFieldsList)
+
 
             if includeArchives is None:
                 results = AdjunctFacultyMember.objects.all().filter(**searchFilter).filter(archived=False).order_by(
@@ -142,9 +141,12 @@ def crud_read(request):
             #                'option2Fields': option2Fields, 'tableHeaders': tableHeaders})
 
             return JsonResponse({'results': list(results), 'fields': list(adjunctFields), 'option1Fields': list(option1Fields),
-                           'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders, 'sr_choices': list(AdjunctFacultyMember.sr_choices), 'bg_choices': list(AdjunctFacultyMember.bg_choices), 'masters_choices': list(AdjunctFacultyMember.masters_choices), 'a_f_eaf_c_crs_choices': list(AdjunctFacultyMember.a_f_eaf_c_crs_choices)}, status=200)
+                           'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders, 'sr_choices': list(AdjunctFacultyMember.sr_choices), 'bg_choices': list(AdjunctFacultyMember.bg_choices), 'masters_choices': list(AdjunctFacultyMember.masters_choices), 'a_f_eaf_c_crs_choices': list(AdjunctFacultyMember.a_f_eaf_c_crs_choices), 'unreadNotifications': unreadNotifications}, status=200)
 
-        return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields})
+
+
+        return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields, 'unreadNotifications': unreadNotifications})
+        
 
     else:
         adjunct_ID = request.POST.get('rowID')
@@ -182,7 +184,7 @@ def crud_add_rows(request):
 
             return redirect('add_rows')
         else:
-            print("Form wasnt valid")
+            print(form.errors.as_data())
             return render(request, 'CRUD/add_rows.html', {'form': form, 'error': "unable to add", 'classes': uniqClasses})
     if request.method == 'GET':
         form = AdjunctForm()
