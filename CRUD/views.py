@@ -10,23 +10,23 @@ from django.views.decorators.csrf import csrf_exempt
 from django_cryptography.fields import *
 
 
-# Create your views here.
 def user_login(request):
     # if user is already logged in the redirect to landing page
     if request.user.is_authenticated:
         return redirect('search')
+    # if request is a get return the login page
     if request.method == 'GET':
         return render(request, 'login.html')
     else:
+        # attempt to authenticate the user
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-
+        # if user is non then authentication failed
         if user is None:
+            # return an error
             return render(request, 'login.html', {'error': 'Invalid Credentials'})
         else:
+            # authentication was a success, login the user
             login(request, user)
-            if 'next' in request.POST:
-                # check for case next is logout? else redirect to next
-                return redirect(request.POST.get('next'))
             return redirect('search')
 
 
@@ -97,96 +97,104 @@ option2Fields = {
 @login_required
 @csrf_exempt
 def crud_read(request):
-    unreadNotifications = len(Notification.objects.all().filter(isRead=False))
+    # get all of the unread notifications
+    unread_notifications = len(Notification.objects.all().filter(isRead=False))
+
     if request.method == 'GET':
         # Check if this is a page load or a search query
         if request.GET.get("option1"):
             # Take in arguments from the GET
             option1 = request.GET.get('option1') + "__icontains"
-            searchString = request.GET.get('searchString')
-            searchFilter = {option1: searchString}
-            includeArchives = request.GET.get('archive')
+            search_string = request.GET.get('searchString')
+            search_filter = {option1: search_string}
+            include_archives = request.GET.get('archive')
 
             # Get selected options from option 2 list
             option2 = request.GET.getlist('option2')
             if "Select All" in option2:
                 option2.remove("Select All")
-            tableHeaders = {}
+
+            # create a dictionary of table headers to use in view
+            table_headers = {}
             for option in option2:
-                tableHeaders[option] = adjunctFields[option]
+                table_headers[option] = adjunctFields[option]
 
-                # Get corresponding model names for table headers
-                retFieldsList = list(tableHeaders.values())
-                retFieldsList.append("employeeID")
-                print(retFieldsList)
+            # Get corresponding model names for table headers
+            ret_fields_list = list(table_headers.values())
+            ret_fields_list.append("employeeID")
 
-
-            if includeArchives is None:
-                results = AdjunctFacultyMember.objects.all().filter(**searchFilter).filter(archived=False).order_by(
+            # check if the user wants archived personnel include if so
+            if include_archives is None:
+                results = AdjunctFacultyMember.objects.all().filter(**search_filter).filter(archived=False).order_by(
                     'first_name')
             else:
-                results = AdjunctFacultyMember.objects.all().filter(**searchFilter).order_by('first_name')
+                results = AdjunctFacultyMember.objects.all().filter(**search_filter).order_by('first_name')
 
-            results = results.values(*retFieldsList)
-            
+            results = results.values(*ret_fields_list)
 
             if not results:
-                tableHeaders = {}
-            print(tableHeaders)
-            if not tableHeaders:
-                tableHeaders = adjunctFields
+                table_headers = {}
+            if not table_headers:
+                table_headers = adjunctFields
 
-            # return render(request, 'CRUD/read_view.html',
-            #               {'results': results, 'fields': adjunctFields, 'option1Fields': option1Fields,
-            #                'option2Fields': option2Fields, 'tableHeaders': tableHeaders})
+            return JsonResponse(
+                {'results': list(results), 'fields': list(adjunctFields), 'option1Fields': list(option1Fields),
+                 'option2Fields': list(option2Fields), 'tableHeaders': table_headers,
+                 'sr_choices': list(AdjunctFacultyMember.sr_choices),
+                 'bg_choices': list(AdjunctFacultyMember.bg_choices),
+                 'masters_choices': list(AdjunctFacultyMember.masters_choices),
+                 'a_f_eaf_c_crs_choices': list(AdjunctFacultyMember.a_f_eaf_c_crs_choices),
+                 'unreadNotifications': unread_notifications}, status=200)
 
-            return JsonResponse({'results': list(results), 'fields': list(adjunctFields), 'option1Fields': list(option1Fields),
-                           'option2Fields': list(option2Fields), 'tableHeaders': tableHeaders, 'sr_choices': list(AdjunctFacultyMember.sr_choices), 'bg_choices': list(AdjunctFacultyMember.bg_choices), 'masters_choices': list(AdjunctFacultyMember.masters_choices), 'a_f_eaf_c_crs_choices': list(AdjunctFacultyMember.a_f_eaf_c_crs_choices), 'unreadNotifications': unreadNotifications}, status=200)
-
-
-
-        return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields, 'unreadNotifications': unreadNotifications})
+        # if no option is selected we cant search so we return the default view
+        return render(request, 'CRUD/read_view.html', {'option1Fields': option1Fields, 'option2Fields': option2Fields,
+                                                       'unreadNotifications': unread_notifications})
+    # if its a post we are deleting an adjunct
     else:
         adjunct_ID = request.POST.get('rowID')
         adjunct = AdjunctFacultyMember.objects.get(employeeID=adjunct_ID)
+        # delete the employee
         adjunct.delete()
+        # redirect back to the updated search view
         return redirect('search')
-#Redirects to Search and Edit page in menu bar
-
-
-@login_required
-def crud_search_edit(request):
-    if request.method == 'GET':
-        return render(request, 'CRUD/edit_view.html')
 
 
 # Redirects to add rows page in menu bar
 @login_required
 def crud_add_rows(request):
-    uniqClasses = set()
-
+    # create a unique set of class names
+    uniq_classes = set()
+    # populate the set
     for c in list(Classes.objects.all().values("adj_class")):
         values = c.values()
         for value in values:
-            uniqClasses.add(value)
+            uniq_classes.add(value)
 
+    # if its a post we are creating a new adjunct and their classes
     if request.method == 'POST':
+        # create an instance of the adjunct form
         form = AdjunctForm(request.POST, request.FILES)
-
+        # validate form, if valid save the adjunct and attempt to save their classes
         if form.is_valid():
             adj = form.save()
             classes = request.POST.getlist('option2')
+            # Try to save all of the adjuncts classes. If unable to save continue onto the next class
             for c in classes:
-                newClass = Classes(adjunct_faculty_member=adj, adj_class=c)
-                newClass.save()
-
+                try:
+                    new_class = Classes(adjunct_faculty_member=adj, adj_class=c)
+                    new_class.save()
+                except Exception:
+                    continue
+            # Redirect back to the add view
             return redirect('add_rows')
         else:
-            print(form.errors.as_data())
-            return render(request, 'CRUD/add_rows.html', {'form': form, 'error': "unable to add", 'classes': uniqClasses})
-    if request.method == 'GET':
+            # return an error if unable to add an adjunct
+            return render(request, 'CRUD/add_rows.html',
+                          {'form': form, 'error': "unable to add", 'classes': uniq_classes})
+    # if the request is a GET then return a default adjunct form
+    else:
         form = AdjunctForm()
-        return render(request, 'CRUD/add_rows.html', {'form': form, 'uniqClasses': uniqClasses})
+        return render(request, 'CRUD/add_rows.html', {'form': form, 'uniqClasses': uniq_classes})
 
 
 # Redirects to import page in menu bar
@@ -196,10 +204,8 @@ def user_import(request):
         return render(request, 'Import_Export/import.html')
 
 
-
 # Redirects to Notifications page in menu bar
 @login_required
 def user_notifications(request):
     if request.method == 'GET':
         return render(request, 'Notifications/notifications.html')
-
