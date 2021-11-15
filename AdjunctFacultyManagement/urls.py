@@ -24,7 +24,6 @@ urlpatterns = [
     path('', crud_views.user_login, name='login'),
     path('logout/', crud_views.user_logout, name='logout'),
     path('search/', crud_views.crud_read, name='search'), #Search and View page
-    path('search_edit/', crud_views.crud_search_edit, name='search_edit'), #Search and Edit page
     path('add/', crud_views.crud_add_rows, name='add_rows'), #Add Rows page
     path('import/', impex_views.upload_file, name='import'), #Import files page
     path('notifications/', notif_views.user_notifications, name='notifications'), #Notifications page

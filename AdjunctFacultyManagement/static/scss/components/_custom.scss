@@ -172,6 +172,18 @@ main {
   color: whitesmoke;
 }
 
+.ag-row {
+  font-family: $secondary-font;
+  font-size: 15px;
+
+  input {
+    font-family: $secondary-font;
+  }
+}
+.ag-header-row {
+  font-family: $font-stack;
+  font-size: 15px;
+}
 // *************** NOTIFICATION STYLES ****************
 
 .card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating)  {
