@@ -2,12 +2,11 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-
 from .models import AdjunctFacultyMember, Classes
 from Notifications.models import Notification
 from .forms import AdjunctForm
 from django.views.decorators.csrf import csrf_exempt
-from django_cryptography.fields import *
+
 
 
 def user_login(request):
@@ -166,7 +165,7 @@ def crud_search_edit(request):
         # redirect back to the updated search view
         return redirect('search')
 
-
+      
 # Redirects to add rows page in menu bar
 @login_required
 def crud_add_rows(request):

@@ -76,13 +76,11 @@ AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
   </div>
 </div>
 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% load static %}
 <script
   type="text/javascript"
   src="{% static 'js/bin/deleteRenderer.js' %}"></script>
-
 <script
   type="text/javascript"
   src="{% static 'js/bin/intEditor.js' %}"
@@ -162,7 +160,6 @@ AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
   });
 
   ///////////////////////////////////////////////
- 
 
     function buildTable(column, row) {
       if (grid != "") {
@@ -196,7 +193,6 @@ AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
       grid = new agGrid.Grid(gridDiv, gridOptions);
       $(".exportCSV").removeClass("hide");
     }
-
 
     function parse_choices(list) {
       var newList = []
