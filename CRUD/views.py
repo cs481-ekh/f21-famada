@@ -8,7 +8,6 @@ from .forms import AdjunctForm
 from django.views.decorators.csrf import csrf_exempt
 
 
-
 def user_login(request):
     # if user is already logged in the redirect to landing page
     if request.user.is_authenticated:
@@ -63,13 +62,28 @@ adjunctFields = {
 
 # List for option field 1 in read_view
 option1Fields = {
+    "A, F, EAF, C-CRS-LIST": "a_f_eaf_c_crs_list",
+    "Semester": "semester",
     "First Name": "first_name",
     "Last Name": "last_name",
+    "Date of Birth": "date_of_birth",
     "Employee ID": "employeeID",
+    "Step Rate": "step_rate",
     "I9 Completed": "I9_completed",
     "I9 Greater Than 3 Years": "I9_greater_than_3_years",
-    "Masters": "masters",
     "Background Passed": "background_passed",
+    "CV/Resume": "cv_resume",
+    "Masters": "masters",
+    "CTL Notified": "CTL_notified",
+    "Address": "address",
+    "City": "city",
+    "State": "state",
+    "Zip": "zip",
+    "Primary Email": "primary_email",
+    "Secondary Email": "secondary_email",
+    "Primary Phone": "primary_phone",
+    "Secondary Phone": "secondary_phone",
+    "Special Conditions and Comments": "special_conditions_and_comments"
 }
 
 # List for option field 2 in read)view
@@ -108,10 +122,7 @@ def crud_search_edit(request):
         if request.GET.get("option1"):
             # Take in arguments from the GET
             option1 = request.GET.get('option1') + "__icontains"
-
-            print(option1)
             search_string = request.GET.get('searchString')
-            print(search_string)
             search_filter = {option1: search_string}
             include_archives = request.GET.get('archive')
 
@@ -127,7 +138,6 @@ def crud_search_edit(request):
 
             # Get corresponding model names for table headers
             ret_fields_list = list(table_headers.values())
-            print(ret_fields_list)
             ret_fields_list.append("employeeID")
 
             # check if the user wants archived personnel include if so
@@ -158,14 +168,14 @@ def crud_search_edit(request):
                                                        'unreadNotifications': unread_notifications})
     # if its a post we are deleting an adjunct
     else:
-        adjunct_ID = request.POST.get('rowID')
-        adjunct = AdjunctFacultyMember.objects.get(employeeID=adjunct_ID)
+        adjunct_id = request.POST.get('rowID')
+        adjunct = AdjunctFacultyMember.objects.get(employeeID=adjunct_id)
         # delete the employee
         adjunct.delete()
         # redirect back to the updated search view
         return redirect('search')
 
-      
+
 # Redirects to add rows page in menu bar
 @login_required
 def crud_add_rows(request):

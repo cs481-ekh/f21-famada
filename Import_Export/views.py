@@ -5,50 +5,50 @@ import datetime
 from datetime import datetime
 from datetime import timedelta
 from django.shortcuts import redirect
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import UploadFileForm
 from CRUD.models import AdjunctFacultyMember, Classes
 
 
-# Imaginary function to handle an uploaded file.
-# from somewhere import handle_uploaded_file
-
-def upload_file(request):
+def upload_file(request):  # view to upload a user device file and parse for adjunct faculty
     if request.method == 'POST':
-        print("posted!!!")
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            print("Valid form")
+            # creates a local file copy to read from
             handle_uploaded_file(request.FILES['file'])
+            # call function to parse file and import adjunct
             user_import()
             return redirect('import')
+        else:
+            return render(request, 'Import_Export/import.html', {'form': UploadFileForm(), 'error': "invalid file"})
+    # if request is get then return the upload view
     else:
         return render(request, 'Import_Export/import.html', {'form': UploadFileForm()})
 
 
-def handle_uploaded_file(f):
+def handle_uploaded_file(f):  #creates a local copy of the file passed in by the user
     with open('AdjunctFacultyManagement/static/file.csv', 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
         f.close()
 
 
-# Redirects to import page in menu bar
+# parses the file and attempts to add all adjunct faculty contained in the CSV
 def user_import():
     with open('AdjunctFacultyManagement/static/file.csv') as f:
         reader = csv.reader(f)
+        # try to parse the file. Always delete the file after parsing
         try:
             first_row = True
             for row in reader:
                 if not row: break
-
+                # Skip the header row of the csv
                 if first_row:
                     first_row = False
                     continue
-
+                # if the employeeID exists then skip this row, they have already been added to the database
                 if AdjunctFacultyMember.objects.filter(employeeID=row[4]).exists(): continue
-
+                # parse the current row and attempt to add the faculty member
                 adj = AdjunctFacultyMember.objects.get_or_create(
                     a_f_eaf_c_crs_list=row[1],
                     semester=row[2] if contains_num(row[2]) else "--",
@@ -74,14 +74,12 @@ def user_import():
                     special_conditions_and_comments=row[19],
                     archived=False
                 )
-
+                # add the classes for this faculty member
                 for c in get_classes(row[12]):
                     Classes.objects.create(
                         adjunct_faculty_member=adj,
                         adj_class=c
                     )
-                # if not first_row:
-                #     break
         finally:
             # Always delete the sensitive data file
             f.close()
@@ -90,10 +88,10 @@ def user_import():
 
 def parse_date_time(s):
     try:
-        sList = s.split("/")
-        s = sList[0] + "/" + sList[1] + "/20" + sList[2]
+        s_list = s.split("/")
+        s = s_list[0] + "/" + s_list[1] + "/20" + s_list[2]
         return datetime.strptime(s, "%m/%d/%Y")
-    except:
+    except Exception:
         return datetime.strptime("01/01/2000", "%m/%d/%Y")
 
 
@@ -106,8 +104,8 @@ def ctl_notified(s):
 
 
 def i9_days_left(s):
-    parsedDate = parse_date_time(s)
-    ret = parsedDate + timedelta(days=1095)
+    parsed_date = parse_date_time(s)
+    ret = parsed_date + timedelta(days=1095)
     return ret.date()
 
 
@@ -116,11 +114,10 @@ def get_classes(s):  # TODO: Separate classes
 
 
 def get_phone_number(s):
-    lst = list(filter(lambda x: x.isdigit(), s))
-    str = ""
-    for l in lst: str += l
-
-    return str
+    phone_list = list(filter(lambda x: x.isdigit(), s))
+    phone_str = ""
+    for num in phone_list: phone_str += num
+    return phone_str
 
 
 def get_city(s):
@@ -147,6 +144,7 @@ def get_zip(s):
 def has_Masters(s):
     if len(s) == 0 or "NA" in s: return "N"
     return "Y"
+
 
 def get_step_rate(s):
     steps = {"1": "1", "2": "2", "3": "3"}
