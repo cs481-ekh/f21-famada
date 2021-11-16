@@ -188,6 +188,7 @@ def crud_add_rows(request):
             return redirect('add_rows')
         else:
             # return an error if unable to add an adjunct
+            print("form invalid")
             return render(request, 'CRUD/add_rows.html',
                           {'form': form, 'error': "unable to add", 'classes': uniq_classes})
     # if the request is a GET then return a default adjunct form
