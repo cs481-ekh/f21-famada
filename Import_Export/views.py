@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import UploadFileForm
+from .models import FilesModel
 from CRUD.models import AdjunctFacultyMember, Classes
 
 
@@ -19,29 +20,29 @@ def upload_file(request):
         print("posted!!!")
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            print("Valid form")
-            handle_uploaded_file(request.FILES['file'])
+            form.save()
             user_import()
             return redirect('import')
     else:
         return render(request, 'Import_Export/import.html', {'form': UploadFileForm()})
 
 
-def handle_uploaded_file(f):
-    with open('AdjunctFacultyManagement/static/file.csv', 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-        f.close()
+# def handle_uploaded_file(f):
+#     with open('static/file.csv', 'wb+') as destination:
+#         for chunk in f.chunks():
+#             destination.write(chunk)
+#         f.close()
 
 
 # Redirects to import page in menu bar
 def user_import():
-    with open('AdjunctFacultyManagement/static/file.csv') as f:
+    file_path = "media/"+FilesModel.objects.all().values()[0]['csv']
+    with open(file_path) as f:
         reader = csv.reader(f)
         try:
             first_row = True
             for row in reader:
-                if not row: break
+                if not row or not row[0]: break
 
                 if first_row:
                     first_row = False
@@ -85,7 +86,8 @@ def user_import():
         finally:
             # Always delete the sensitive data file
             f.close()
-            os.remove('AdjunctFacultyManagement/static/file.csv')
+            os.remove(file_path)
+            FilesModel.objects.all().delete()
 
 
 def parse_date_time(s):
