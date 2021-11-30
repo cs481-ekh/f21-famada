@@ -7,13 +7,13 @@ badge for project
 Learm more about Django (backend) here: https://www.djangoproject.com/
 Learn more about Materalize (frontend) here: https://materializecss.com/
 
-To run project (from top-most directory):
-  python manage.py runserver
+To run project (from top-most directory):  
+ * python manage.py runserver
   
-To run tests for the project (from top-most directory):
-  python manage.py test
+To run tests for the project (from top-most directory):  
+ * python manage.py test
   
-To create a new user to login (from top-most directory):
-  python manage.py createsuperuser
+To create a new user to login (from top-most directory):  
+ * python manage.py createsuperuser
   
   and then follow command line prompts to completion.
