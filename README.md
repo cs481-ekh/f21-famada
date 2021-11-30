@@ -4,7 +4,8 @@ BSU CS481 Capstone project template
 badge for project
 [![Django CI](https://github.com/cs481-ekh/f21-famada/actions/workflows/django.yml/badge.svg)](https://github.com/cs481-ekh/f21-famada/actions/workflows/django.yml)
 
-Learm more about Django (backend) here: https://www.djangoproject.com/
+Learm more about Django (backend) here: https://www.djangoproject.com/  
+You will need to download Django to run the project: https://docs.djangoproject.com/en/3.2/topics/install/  
 Learn more about Materalize (frontend) here: https://materializecss.com/
 
 To run project (from top-most directory):  
