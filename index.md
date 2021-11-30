@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Adjunct Faculty Management Tool (Python, Django Framework)
 
 You can use the [editor on GitHub](https://github.com/cs481-ekh/f21-famada/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
