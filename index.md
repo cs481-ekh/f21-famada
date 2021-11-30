@@ -1,5 +1,9 @@
 ## Adjunct Faculty Management Tool (Python, Django Framework)
 
+## Problem Statement
+
+The _SPS_ reached out because their current system for mangaging faculty is done completely manually. This management is done through the use of spreadsheets which is tedious, can result in data entry errors and provides little scalability. _SPS_ hoped that we could develop an application that could be accessed on and off campus that would allow for easy data addition, querying, and manipulation. Along with this _SPS_ saw a need for functionality to import their current database from a CSV and the ability to export their query results to a CSV.
+
 You can use the [editor on GitHub](https://github.com/cs481-ekh/f21-famada/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
