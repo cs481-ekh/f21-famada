@@ -125,23 +125,19 @@ AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
     success = true;
     //add th ajax call there to the api to remove a record. Pass in the delete ID (Employee ID) as a primary key to know what record to remove
     $.ajax({
-      data: {'rowID': deleteID}, // put the ID here in whatever form you need
+      data: {'action': 'delete', 'rowID': deleteID}, // put the ID here in whatever form you need
       type: 'POST', // GET or POST
       url: "{% url 'search' %}", // URL of the post request
       // on success
       success: function (response) {
-        success = true
+        gridOptions.api.applyTransaction({remove: nodeToDelete});
       },
       // on error
       error: function (response) {
+        //TODO: Add error notification
         // alert the error if any error occured
       },
     });
-
-//if post successful remove front-end row and refresh data-- no api call required.
-    if (success) {
-      gridOptions.api.applyTransaction({remove: nodeToDelete});
-    }
   });
   $(document).ready(function () {
 
@@ -185,6 +181,23 @@ AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
         rowSelection: "single",
         domLayout: "autoHeight",
         animateRows: true,
+        onCellValueChanged: function(params)  {
+    console.log('cellValueChanged',params);
+    $.ajax({
+      data: {'action': 'edit', 'rowID': params.data.employeeID, 'columnID': params.colDef.field, 'oldValue': params.oldValue, 'newValue': params.newValue}, // put the ID here in whatever form you need
+      type: 'POST', // GET or POST
+      url: "{% url 'search' %}", // URL of the post request
+      // on success
+      success: function (response) {
+        
+      },
+      // on error
+      error: function (response) {
+        // alert the error if any error occured
+        //TODO: Add error alert
+      },
+    });
+  }
 
       };
       // setup the grid after the page has finished loading

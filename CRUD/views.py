@@ -150,6 +150,7 @@ def crud_read(request):
                                                        'unreadNotifications': unread_notifications})
     # if its a post we are deleting an adjunct
     else:
+        print(request.POST) # print out the edit JSON
         adjunct_ID = request.POST.get('rowID')
         adjunct = AdjunctFacultyMember.objects.get(employeeID=adjunct_ID)
         # delete the employee
