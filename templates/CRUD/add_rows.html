@@ -151,9 +151,39 @@ AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
     >
   </div>
 </div>
+<div>{{form.errors}}</div>
 
 <script>
   window.onload = function () {
+    var success = "{{ success }}";
+
+
+if (success == "True") {
+  var toastHTML =
+    '<div class="toast-content"><span>Success!! Record added.</span></div>';
+  var notificationToast = M.toast({ html: toastHTML, displayLength: 3000 });
+}
+
+if (success == "False") {
+  var err = "{{ errorList }}";
+    err = JSON.parse(err.replace(/(&quot\;)/g,"\""))
+     var err_messages = ""
+
+    for (var field in err){
+      for (var i in err[field]) {
+          console.log(err)
+        
+        
+        err_messages += "<p>Error: " +err[field][i]["message"]  + "</p>"
+
+      }
+    }
+  var toastHTML =
+    '<div class="toast-content">' + err_messages + '</div>';
+  var notificationToast = M.toast({ html: toastHTML, displayLength: 3000 });
+}
+
+
     // Get calender formatting correctly
     $(".datepicker").datepicker({ container: $("main"), format: "yyyy-mm-dd" });
     //masks for telephone numbers
