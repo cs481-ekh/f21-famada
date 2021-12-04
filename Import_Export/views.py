@@ -27,17 +27,11 @@ def upload_file(request):
         return render(request, 'Import_Export/import.html', {'form': UploadFileForm()})
 
 
-# def handle_uploaded_file(f):
-#     with open('static/file.csv', 'wb+') as destination:
-#         for chunk in f.chunks():
-#             destination.write(chunk)
-#         f.close()
-
-
 # Redirects to import page in menu bar
 def user_import():
-    file_path = "media/"+FilesModel.objects.all().values()[0]['csv']
-    with open(file_path) as f:
+    absolute_path = os.path.dirname(os.path.abspath(__file__))
+    file_path = absolute_path.replace("Import_Export", "")+"media/"+FilesModel.objects.all().values()[0]['csv']
+    with open(file_path, "r", encoding="utf-8") as f:
         reader = csv.reader(f)
         try:
             first_row = True
@@ -48,6 +42,7 @@ def user_import():
                     first_row = False
                     continue
 
+                if not row[4]: row[4] = 0
                 if AdjunctFacultyMember.objects.filter(employeeID=row[4]).exists(): continue
 
                 adj = AdjunctFacultyMember.objects.get_or_create(
@@ -55,24 +50,24 @@ def user_import():
                     semester=row[2] if contains_num(row[2]) else "--",
                     first_name=get_first_name(row[3]),
                     last_name=get_last_name(row[3]),
-                    date_of_birth="2021-10-25",  # FIXME: will csv have DOB?
                     employeeID=row[4],
-                    step_rate=get_step_rate(row[5]),
-                    I9_completed=i9_completed(row[6]),
-                    I9_greater_than_3_years=i9_days_left(row[6]),
-                    background_passed=row[8],
-                    cv_resume=row[9] if row[9].isdigit() else "0000",
-                    masters=has_Masters(row[10]),
-                    CTL_notified=ctl_notified(row[11]),
-                    address=row[13],
-                    city=get_city(row[14]),
-                    state=get_state(row[14]),
-                    zip=get_zip(row[14]),
-                    primary_email=row[15],
-                    secondary_email=row[16],
-                    primary_phone=get_phone_number(row[17]),
-                    secondary_phone=get_phone_number(row[18]),
-                    special_conditions_and_comments=row[19],
+                    date_of_birth=parse_date_time([5]).date(),
+                    step_rate=get_step_rate(row[6]),
+                    I9_completed=i9_completed(row[7]),
+                    I9_greater_than_3_years=i9_days_left(row[8]),
+                    background_passed=row[9],
+                    cv_resume=row[10] if row[10].isdigit() else "0000",
+                    masters=has_Masters(row[11]),
+                    CTL_notified=ctl_notified(row[12]),
+                    address=row[14],
+                    city=get_city(row[15]),
+                    state=get_state(row[15]),
+                    zip=get_zip(row[15]),
+                    primary_email=row[16],
+                    secondary_email=row[17],
+                    primary_phone=get_phone_number(row[18]),
+                    secondary_phone=get_phone_number(row[19]),
+                    special_conditions_and_comments=row[20],
                     archived=False
                 )
 
@@ -143,7 +138,7 @@ def get_zip(s):
     lst = s.split(", ")
     if len(lst) < 2: return 00000
     lst = lst[1].split(" ")
-    return lst[1]
+    return lst[1][:4]
 
 
 def has_Masters(s):
