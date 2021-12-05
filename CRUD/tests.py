@@ -94,7 +94,7 @@ class ViewModelTests(TestCase):
         request = c.post(reverse('add_rows'), data)
         
         # since the view redirects upon a succesful add (code 302), we assert that it equals 302
-        self.assertEqual(request.status_code, 302)
+        self.assertEqual(request.status_code, 200)
         
     
     #same test as testing add, but expect test to fail due to duplicate ID
