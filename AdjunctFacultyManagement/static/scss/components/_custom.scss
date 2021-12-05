@@ -161,6 +161,7 @@ main {
 .toast-content {
   display: flex;
   flex-direction: column;
+  max-width: 400px;
   a {
     color: $secondary-color;
     text-decoration: underline;
