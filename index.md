@@ -1,4 +1,4 @@
-## Adjunct Faculty Management Tool (Python, Django Framework)
+# Adjunct Faculty Management Tool (Python, Django Framework)
 
 ## Problem Statement
 
@@ -10,9 +10,10 @@ Deliver a web-based python application that will allow an _SPS_ member to manage
 
 ## Technologies
 
-<img src="https://static.djangoproject.com/img/logos/django-logo-negative.png" alt="djangoLogo" width="200"/> 
+<img src="https://static.djangoproject.com/img/logos/django-logo-negative.png" alt="djangoLogo" width="100"/> 
 Django - a pyhton web framework that utilizes the MVT (Model View Controler) pattern
-<img src="https://res.cloudinary.com/colinstodd-com/image/upload/c_fit/n9qdpfw4kwsjqox0lymi.png" alt="materializeLogo" width="200"/> 
+
+<img src="https://res.cloudinary.com/colinstodd-com/image/upload/c_fit/n9qdpfw4kwsjqox0lymi.png" alt="materializeLogo" width="100"/> 
 Materialize - CSS framework used to create responsive web pages built on googles material design concept
 
 
