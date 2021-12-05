@@ -21,7 +21,7 @@ Deliver a web-based python application that will allow an _SPS_ member to manage
 
 ## Secure Login
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Screen%20Shot%202021-12-05%20at%201.57.22%20PM.png" alt="loginPage" width="100%"/> 
+<img src="https://i.imgur.com/eRVYlQp.jpeg" alt="loginPage" width="100%"/> 
 </p>
 
 ```markdown
@@ -30,7 +30,7 @@ Syntax highlighted code block
 
 ## Site Navigation
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Navigation.png" alt="navigationBar" width="100%"/> 
+<img src="https://i.imgur.com/z4U70AA.png" alt="navigationBar" width="100%"/> 
 </p>
 
 ```markdown
@@ -39,7 +39,16 @@ Syntax highlighted code block
 
 ## Search, View, Edit, Delete
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/SearchAndEdit.png" alt="searchViewEditDelete" width="100%"/> 
+<img src="https://i.imgur.com/BSazMXS.png" alt="searchViewEditDelete" width="100%"/> 
+</p>
+
+```markdown
+Syntax highlighted code block
+```
+
+## Add Record
+<p align="center">
+<img src="https://i.imgur.com/y8Zi5tH.png" alt="addRecord" width="100%"/> 
 </p>
 
 ```markdown
@@ -48,7 +57,7 @@ Syntax highlighted code block
 
 ## Notifications
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Notifications.png" alt="notifications" width="100%"/> 
+<img src="https://i.imgur.com/vZAbqES.png" alt="notifications" width="100%"/> 
 </p>
 
 ```markdown
@@ -57,7 +66,7 @@ Syntax highlighted code block
 
 ## Import
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Import.png" alt="import" width="100%"/> 
+<img src="https://i.imgur.com/mBO4hOg.png" alt="import" width="100%"/> 
 </p>
 
 ```markdown
