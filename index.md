@@ -44,9 +44,7 @@ Syntax highlighted code block
 <img src="https://i.imgur.com/BSazMXS.png" alt="searchViewEditDelete" width="100%"/> 
 </p>
 
-```markdown
-Syntax highlighted code block
-```
+This was by far the most complex page we built. At the top of the page was a search bar that allows users to choose a column a search term for that column, and what columns theey want to view. This information is sent to the backend and the returning records are shown in a table. The table is created using the AG Grid JS library and was chosen becauuse it has functionality very similar to Excel-- which the sponsor was accustomed to using. The with the grid the user is able to search for a field within the table, sort by column, drag and drop columns to a new location, edit the record by double clicking directly on a cell, delete a record, and export the table to a csv.
 
 ## Add Record
 <p align="center">
