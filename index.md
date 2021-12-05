@@ -28,17 +28,17 @@ Materialize - CSS framework used to create responsive web pages built on googles
 
 ## Search, View, Edit, Delete
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Navigation.png" alt="navigationBar" width="500"/> 
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/SearchAndEdit.png" alt="navigationBar" width="500"/> 
 </p>
 
 ## Notifications
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Navigation.png" alt="navigationBar" width="500"/> 
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Notifications.png" alt="navigationBar" width="500"/> 
 </p>
 
 ## Import
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Navigation.png" alt="navigationBar" width="500"/> 
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Import.png" alt="navigationBar" width="500"/> 
 </p>
 ```markdown
 Syntax highlighted code block
