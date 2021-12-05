@@ -55,7 +55,7 @@ The add row page is where a user can add a new entry to the database through a u
 <p align="center">
 <img src="https://i.imgur.com/vZAbqES.png" alt="notifications" width="100%"/> 
 </p>
-Notifications are used a feature implemented to help with keeping the records up to date. The main notification was making sure i9's are within 3 years. but also could be used when semesters change. The notifications are fairly simple in design. They have the date they were issued, a message and then a flag to mark it as read or not. These notifications all show up a notification page. 
+Notifications are used a feature implemented to help with keeping the records up to date. The main notification was making sure i9's are within 3 years. but also could be used when semesters change. The notifications are fairly simple in design. They have the date they were issued, a message, and then a flag to mark it as read or not. These notifications all show up a notification page. 
 
 
 ## Import
