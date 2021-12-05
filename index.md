@@ -24,20 +24,36 @@ Deliver a web-based python application that will allow an _SPS_ member to manage
 <img src="https://github.com/JustinRaver/CS481_Media/blob/main/Screen%20Shot%202021-12-05%20at%201.57.22%20PM.png" alt="loginPage" width="100%"/> 
 </p>
 
+```markdown
+Syntax highlighted code block
+```
+
 ## Site Navigation
 <p align="center">
 <img src="https://github.com/JustinRaver/CS481_Media/blob/main/Navigation.png" alt="navigationBar" width="100%"/> 
 </p>
+
+```markdown
+Syntax highlighted code block
+```
 
 ## Search, View, Edit, Delete
 <p align="center">
 <img src="https://github.com/JustinRaver/CS481_Media/blob/main/SearchAndEdit.png" alt="navigationBar" width="100%"/> 
 </p>
 
+```markdown
+Syntax highlighted code block
+```
+
 ## Notifications
 <p align="center">
 <img src="https://github.com/JustinRaver/CS481_Media/blob/main/Notifications.png" alt="navigationBar" width="100%"/> 
 </p>
+
+```markdown
+Syntax highlighted code block
+```
 
 ## Import
 <p align="center">
@@ -46,18 +62,4 @@ Deliver a web-based python application that will allow an _SPS_ member to manage
 
 ```markdown
 Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
