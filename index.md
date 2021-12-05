@@ -71,6 +71,4 @@ enter an incorrect format (such as 2019 or FAAAAA19) the website will prevent it
 <img src="https://i.imgur.com/mBO4hOg.png" alt="import" width="100%"/> 
 </p>
 
-```markdown
-Syntax highlighted code block
-```
+
