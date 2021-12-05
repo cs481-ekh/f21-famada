@@ -35,18 +35,14 @@ Beyond the login Djangos functionality helps us to prevent other attacks such as
 <img src="https://i.imgur.com/z4U70AA.png" alt="navigationBar" width="100%"/> 
 </p>
 
-```markdown
-Syntax highlighted code block
-```
+
 
 ## Search, View, Edit, Delete
 <p align="center">
 <img src="https://i.imgur.com/BSazMXS.png" alt="searchViewEditDelete" width="100%"/> 
 </p>
 
-```markdown
-Syntax highlighted code block
-```
+
 
 ## Add Record
 <p align="center">
@@ -61,18 +57,14 @@ Each field reinforces certian constraints to keep the data constant. For example
 of a semester abbreviation followed by the last two digits of the current year (FA19 for example). If a user tries to
 enter an incorrect format (such as 2019 or FAAAAA19) the website will prevent it.
   </p>
-```markdown
-Syntax highlighted code block
-```
+
 
 ## Notifications
 <p align="center">
 <img src="https://i.imgur.com/vZAbqES.png" alt="notifications" width="100%"/> 
 </p>
 
-```markdown
-Syntax highlighted code block
-```
+
 
 ## Import
 <p align="center">
