@@ -1,4 +1,5 @@
 # Adjunct Faculty Management Tool (Python, Django Framework)
+## Team Members: Justin Raver, Bethany Hull, Jalen Null, Austen Hale
 
 ## Problem Statement
 
