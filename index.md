@@ -17,9 +17,14 @@ Django - a pyhton web framework that utilizes the MVT (Model View Controler) pat
 Materialize - CSS framework used to create responsive web pages built on googles material design concept
 
 ## Secure Login
+<p align="center">
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Screen%20Shot%202021-12-05%20at%201.57.22%20PM.png" alt="loginPage" width="500"/> 
+</p>
 
-<img src="https://drive.google.com/file/d/1cPfjgjreUJYeEcyy33JM_EzVTLjDJPHs/view?usp=sharing" alt="materializeLogo" width="100"/> 
-
+## Site Navigation
+<p align="center">
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Navigation.png" alt="navigationBar" width="500"/> 
+</p>
 ```markdown
 Syntax highlighted code block
 
