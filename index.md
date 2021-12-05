@@ -35,40 +35,40 @@ Beyond the login Djangos functionality helps us to prevent other attacks such as
 <img src="https://i.imgur.com/z4U70AA.png" alt="navigationBar" width="100%"/> 
 </p>
 
-
+```markdown
+Syntax highlighted code block
+```
 
 ## Search, View, Edit, Delete
 <p align="center">
 <img src="https://i.imgur.com/BSazMXS.png" alt="searchViewEditDelete" width="100%"/> 
 </p>
 
-
+```markdown
+Syntax highlighted code block
+```
 
 ## Add Record
 <p align="center">
 <img src="https://i.imgur.com/y8Zi5tH.png" alt="addRecord" width="100%"/> 
 </p>
 
-<p>
-  The add row page is where a user can add a new entry to the database through a user friendly interface.
-As shown in the screenshot above, fields that may be confusing have a '?' that provides additionial information
-upon mouseover. Date fields, such as date of birth, also bring up an interactive calendar for easily choosing a date.
-Each field reinforces certian constraints to keep the data constant. For example, the semester field follows the format
-of a semester abbreviation followed by the last two digits of the current year (FA19 for example). If a user tries to
-enter an incorrect format (such as 2019 or FAAAAA19) the website will prevent it.
-  </p>
-
+```markdown
+Syntax highlighted code block
+```
 
 ## Notifications
 <p align="center">
 <img src="https://i.imgur.com/vZAbqES.png" alt="notifications" width="100%"/> 
 </p>
 
-
+```markdown
+Syntax highlighted code block
+```
 
 ## Import
 <p align="center">
 <img src="https://i.imgur.com/mBO4hOg.png" alt="import" width="100%"/> 
 </p>
 
-
+The import page has a simple user facing file upload which processes a csv and uploads its data into the adjunct and class database. The backend splits the csv into its relative rows and columns and processes each rows data to create an adjunct faculty member object in the database. This process is difficult due to the many possiblities for each field, phone numbers, dates, and addresses. Along with the difficulties of parsing data we expect there is also the possiblity for NULL fields and fields we dont expect such as text in number fields.
