@@ -36,6 +36,8 @@ Search and View: A user should ideally be able to search by any column available
 
 Import: The import page needs to cleanly let the user know what columns it couldn't import and tell a user how to properly format those columns. The user needs a toast or some type of message when a file has been succssfully imported then redirect to the searchand view page.
 
+Cron Jobs: This is mainly for the i9 greater than 3 years field and notifications. Cron jobs run at specific times and will check for something and make a notification if needed.
+
 Backend: The info is not currently being encrypted. The most the personal info needs to be encrypted.
 
 Production: The website is currently public facing and it needs to have a SSL certificate to be secure and use https.
