@@ -25,7 +25,9 @@ Deliver a web-based python application that will allow an _SPS_ member to manage
 </p>
 
 ```markdown
-Syntax highlighted code block
+As security was an important feature in this application we knew we would need a login so that only authorized users could access the application pages. We implemented this login using Djangos built in functionality. The security features built into the django framework are far and beyond those we would've been able to build in the provided time. They allow us to easily create and manage user accounts and block access to all sensative pages by simply adding the "@login_required" keyword before our view definitions.
+
+Beyond the login Djangos functionality helps us to prevent other attacks such as cross site scripting attacks to maintain the security of all internal data. In the future this application should implement better internal encryption to ensure all data, even if accessed, is unreadable to attackers.
 ```
 
 ## Site Navigation
