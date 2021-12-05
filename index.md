@@ -35,9 +35,7 @@ Beyond the login Djangos functionality helps us to prevent other attacks such as
 <img src="https://i.imgur.com/z4U70AA.png" alt="navigationBar" width="100%"/> 
 </p>
 
-```markdown
-Syntax highlighted code block
-```
+
 
 ## Search, View, Edit, Delete
 <p align="center">
@@ -51,18 +49,14 @@ This was by far the most complex page we built. At the top of the page was a sea
 <img src="https://i.imgur.com/y8Zi5tH.png" alt="addRecord" width="100%"/> 
 </p>
 
-```markdown
-Syntax highlighted code block
-```
+The add row page is where a user can add a new entry to the database through a user friendly interface. As shown in the screenshot above, fields that may be confusing have a '?' that provides additionial information upon mouseover. Date fields, such as date of birth, also bring up an interactive calendar for easily choosing a date. Each field reinforces certian constraints to keep the data constant. For example, the semester field follows the format of a semester abbreviation followed by the last two digits of the current year (FA19 for example). If a user tries to enter an incorrect format (such as 2019 or FAAAAA19) the website will prevent it.
 
 ## Notifications
 <p align="center">
 <img src="https://i.imgur.com/vZAbqES.png" alt="notifications" width="100%"/> 
 </p>
 
-```markdown
-Syntax highlighted code block
-```
+
 
 ## Import
 <p align="center">
