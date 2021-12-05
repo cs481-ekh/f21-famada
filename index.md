@@ -21,27 +21,27 @@ Deliver a web-based python application that will allow an _SPS_ member to manage
 
 ## Secure Login
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Screen%20Shot%202021-12-05%20at%201.57.22%20PM.png" alt="loginPage" width="400"/> 
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Screen%20Shot%202021-12-05%20at%201.57.22%20PM.png" alt="loginPage" width="100%"/> 
 </p>
 
 ## Site Navigation
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Navigation.png" alt="navigationBar" width="400"/> 
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Navigation.png" alt="navigationBar" width="100%"/> 
 </p>
 
 ## Search, View, Edit, Delete
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/SearchAndEdit.png" alt="navigationBar" width="400"/> 
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/SearchAndEdit.png" alt="navigationBar" width="100%"/> 
 </p>
 
 ## Notifications
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Notifications.png" alt="navigationBar" width="400"/> 
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Notifications.png" alt="navigationBar" width="100%"/> 
 </p>
 
 ## Import
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Import.png" alt="navigationBar" width="400"/> 
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Import.png" alt="navigationBar" width="100%"/> 
 </p>
 
 ```markdown
