@@ -39,7 +39,7 @@ Syntax highlighted code block
 
 ## Search, View, Edit, Delete
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/SearchAndEdit.png" alt="navigationBar" width="100%"/> 
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/SearchAndEdit.png" alt="searchViewEditDelete" width="100%"/> 
 </p>
 
 ```markdown
@@ -48,7 +48,7 @@ Syntax highlighted code block
 
 ## Notifications
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Notifications.png" alt="navigationBar" width="100%"/> 
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Notifications.png" alt="notifications" width="100%"/> 
 </p>
 
 ```markdown
@@ -57,7 +57,7 @@ Syntax highlighted code block
 
 ## Import
 <p align="center">
-<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Import.png" alt="navigationBar" width="100%"/> 
+<img src="https://github.com/JustinRaver/CS481_Media/blob/main/Import.png" alt="import" width="100%"/> 
 </p>
 
 ```markdown
