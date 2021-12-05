@@ -21,7 +21,10 @@ To create a new user to login (from top-most directory):
 
 ## Front-end structure
 
-The frontnd uses the materialize library on top of the django templating system and utilizes ag grid for the spreadshet on the search and view page
+The frontend uses the materialize library on top of the django templating system and utilizes ag grid for the spreadshet on the search and view page. One of the most difficult and messy parts of the front end is that django is supposed to eeliminate much of the javascript that is used and th developer is supposed to rely on django templates for fucnctionality instead. Howeveer we needed to make ajax calls back to the serrver to get info and ag grid is a javascript based library. Therefore there is a fair amount on inline javascript tags in the html pages. There is probably a better way to structure that. 
+
+All the materialize files are found in AdjunctFacultyManagement/static. there is a _custom.scss that contains any custom scss. Other than that the only scss files that were changed were _variables.scss and _colors.scss. All the compiled js files are found in AdjunctFacultyManagement/static/js/bin. script.js was the catch-all file for custom js scripting. Most of the otheere files are for usee by ag grid except the materialize files which are labeled accordingly.
+
 
 ## Work that we were unable to complete:
 
