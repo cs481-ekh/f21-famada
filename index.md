@@ -9,12 +9,15 @@ The _SPS_ reached out because their current system for mangaging faculty is done
 Deliver a web-based python application that will allow an _SPS_ member to manage their data. This application should contain a secure database for all user data and users should be able to securely access it from on or off campus. This data should be easily added to, queried, read, edited, and deleted. In order to do this we will create pages for adding a new faculty member, viewing, editing, and deleting the data. In order to facilitate the transition from the current system to this application we will create a CSV import page to inport the current _SPS_ data into the system database. Finally, we will create a basic notification system to facilitate the on-going management of the system data.
 
 ## Technologies
-
-<img src="https://static.djangoproject.com/img/logos/django-logo-negative.png" alt="djangoLogo" width="100"/> 
-Django - a pyhton web framework that utilizes the MVT (Model View Controler) pattern
-
-<img src="https://res.cloudinary.com/colinstodd-com/image/upload/c_fit/n9qdpfw4kwsjqox0lymi.png" alt="materializeLogo" width="100"/> 
-Materialize - CSS framework used to create responsive web pages built on googles material design concept
+<table >
+  <tr>
+    <th><img src="https://static.djangoproject.com/img/logos/django-logo-negative.png" alt="djangoLogo" width="100"/> </th>
+    <td> Django - a Python web framework that utilizes the MVT (Model View Controler) pattern </td>
+     <th><img src="https://res.cloudinary.com/colinstodd-com/image/upload/c_fit/n9qdpfw4kwsjqox0lymi.png" alt="materializeLogo" width="100"/> </th>
+    <td> Materialize - CSS framework used to create responsive web pages built on googles material design concept
+ </td>
+  </tr>
+</table>
 
 ## Secure Login
 <p align="center">
@@ -40,6 +43,7 @@ Materialize - CSS framework used to create responsive web pages built on googles
 <p align="center">
 <img src="https://github.com/JustinRaver/CS481_Media/blob/main/Import.png" alt="navigationBar" width="500"/> 
 </p>
+
 ```markdown
 Syntax highlighted code block
 
