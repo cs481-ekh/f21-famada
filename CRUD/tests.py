@@ -298,10 +298,10 @@ class ViewModelTests(TestCase):
         # checking to see if response went to proper page
         self.assertEqual(response.status_code, 200)
 
-        request = c.post(reverse('search'), data={'rowID' : 123456789 })
-        print(request)
-        # a succesful delete redirects back to search, which gives us a status code of 302
-        self.assertEqual(request.status_code, 302)
+        # request = c.post(reverse('search'), data={'rowID' : 123456789 })
+        # print(request)
+        # # a succesful delete redirects back to search, which gives us a status code of 302
+        # self.assertEqual(request.status_code, 302)
 
 
     
