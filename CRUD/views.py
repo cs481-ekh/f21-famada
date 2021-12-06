@@ -64,9 +64,27 @@ adjunctFields = {
 
 # List for option field 1 in read_view
 option1Fields = {
+    "A, F, EAF, C-CRS-LIST": "a_f_eaf_c_crs_list",
+    "Semester": "semester",
     "First Name": "first_name",
     "Last Name": "last_name",
+    "Date of Birth": "date_of_birth",
     "Employee ID": "employeeID",
+    "Step Rate": "step_rate",
+    "I9 Completed": "I9_completed",
+    "I9 Greater Than 3 Years": "I9_greater_than_3_years",
+    "Background Passed": "background_passed",
+    "CV/Resume": "cv_resume",
+    "Masters": "masters",
+    "CTL Notified": "CTL_notified",
+    "Address": "address",
+    "City": "city",
+    "State": "state",
+    "Zip": "zip",
+    "Primary Email": "primary_email",
+    "Secondary Email": "secondary_email",
+    "Primary Phone": "primary_phone",
+    "Secondary Phone": "secondary_phone",
 }
 
 # List for option field 2 in read_view
@@ -190,12 +208,14 @@ def crud_add_rows(request):
                 except Exception:
                     continue
             # Redirect back to the add view
-            return redirect('add_rows')
+            form = AdjunctForm()
+            return render(request, 'CRUD/add_rows.html',
+                          {'success': True, 'form': form})
         else:
             # return an error if unable to add an adjunct
             print("form invalid")
             return render(request, 'CRUD/add_rows.html',
-                          {'form': form, 'error': "unable to add", 'classes': uniq_classes})
+                          {'form': form, 'success': False, 'error': "unable to add", 'errorList':form.errors.as_json(), 'classes': uniq_classes})
     # if the request is a GET then return a default adjunct form
     else:
         form = AdjunctForm()

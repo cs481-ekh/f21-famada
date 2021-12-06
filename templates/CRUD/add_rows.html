@@ -5,9 +5,11 @@ on the Materalize stylesheet under the following filepath:
 AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
 
 <div>
-
   <h4>Add a record</h4>
-  <h6 class="add_form_subtitle">Enter the following fields to add a record to the faculty adjunct management database</h6>
+  <h6 class="add_form_subtitle">
+    Enter the following fields to add a record to the faculty adjunct management
+    database
+  </h6>
   <div class="divider"></div>
   <form
     method="post"
@@ -101,13 +103,11 @@ AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
       </div>
     </div>
 
-
     <div class="add_form_row" id="comments_row">
       <div>
         <label for="id_semester"
-        >{{ form.special_conditions_and_comments.label }}:
-        </label
-      >{{form.special_conditions_and_comments}}
+          >{{ form.special_conditions_and_comments.label }}: </label
+        >{{form.special_conditions_and_comments}}
       </div>
     </div>
     <div class="add_form_row" id="archived_row">
@@ -151,9 +151,32 @@ AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
     >
   </div>
 </div>
+<div>{{form.errors}}</div>
 
 <script>
   window.onload = function () {
+    var success = "{{ success }}";
+
+    if (success == "True") {
+      var toastHTML =
+        '<div class="toast-content"><span>Success!! Record added.</span></div>';
+      var notificationToast = M.toast({ html: toastHTML, displayLength: 3000 });
+    }
+
+    if (success == "False") {
+      var err = "{{ errorList }}";
+      err = JSON.parse(err.replace(/(&quot\;)/g, '"'));
+      var err_messages = "";
+
+      for (var field in err) {
+        for (var i in err[field]) {
+          err_messages += "<p>Error: " + err[field][i]["message"] + "</p>";
+        }
+      }
+      var toastHTML = '<div class="toast-content">' + err_messages + "</div>";
+      var notificationToast = M.toast({ html: toastHTML, displayLength: 3000 });
+    }
+
     // Get calender formatting correctly
     $(".datepicker").datepicker({ container: $("main"), format: "yyyy-mm-dd" });
     //masks for telephone numbers
@@ -182,12 +205,12 @@ AdjunctFacultyManagement/Static/scss/components/_custom.scss -->
         .prepend(
           '<li id=sm_select_all class="modal-trigger" href="#modal1"><span>Add new class...</span></li>'
         );
-        $(".modal-trigger").on("click", function () {
-      $(".dropdown-trigger").dropdown("close");
+      $(".modal-trigger").on("click", function () {
+        $(".dropdown-trigger").dropdown("close");
+      });
     });
-    });
-  }
-    
+  };
+
   // gets the value in the class modal, and adds it to the dropdown list
   function saveFunction() {
     var newValue = document.getElementById("class_name").value;

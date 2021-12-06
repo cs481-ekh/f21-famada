@@ -1,36 +1,44 @@
-{% extends "base.html" %} 
-
-{% block content %}
-{% load static %} 
-    <div class="login-form">
-        <img src="{% static 'assets/bsu-white.png' %}" alt="Boise State University" class="logo">
-        <h4 class="login-title white-text">SPS Faculty Adjunct Management</h4>
-        <div class="card form-container">
-          <form action="" method="POST" class="card-content">
-            {% csrf_token %}
-              <div class="input-field">
-                <input name="username" id="username" type="text" />
-                <label for="username">Username</label>
-              </div>
-              <div class="input-field">
-                <input name="password" id="password" type="password" class="validate" />
-                <label for="password">Password</label>
-              </div>
-      
-            <div class="submit">
-              <input
-                type="submit"
-                value="Submit"
-                class="btn waves-effect waves-light"
-              />
-            </div>
-          </form>
-          {% if error %}
-      <div class="alert alert-danger" role="alert">
-          {{ error }}
+{% extends "base.html" %} {% block content %} {% load static %}
+<div class="login-form">
+  <img
+    src="{% static 'assets/bsu-white.png' %}"
+    alt="Boise State University"
+    class="logo"
+  />
+  <h4 class="login-title white-text">SPS Faculty Adjunct Management</h4>
+  <div class="card form-container">
+    <form action="" method="POST" class="card-content">
+      {% csrf_token %}
+      <div class="input-field">
+        <input name="username" id="username" type="text" />
+        <label for="username">Username</label>
       </div>
-    {% endif %}
-        </div>
-      </div> 
-       
-      {% endblock%}
+      <div class="input-field">
+        <input name="password" id="password" type="password" class="validate" />
+        <label for="password">Password</label>
+      </div>
+
+      <div class="submit">
+        <input
+          type="submit"
+          value="Submit"
+          class="btn waves-effect waves-light"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Code to show notification error if the user's login is invalid -->
+<script>
+  $(document).ready(function () {
+    var err = "{{ error }}";
+
+    if (err == "Invalid Credentials") {
+      var toastHTML =
+        '<div class="toast-content"><span>Error: Invalid credentials. Please check your username and password and try again.</span></div>';
+      var notificationToast = M.toast({ html: toastHTML, displayLength: 3000 });
+    }
+  });
+</script>
+{% endblock%}
