@@ -63,9 +63,27 @@ adjunctFields = {
 
 # List for option field 1 in read_view
 option1Fields = {
+    "A, F, EAF, C-CRS-LIST": "a_f_eaf_c_crs_list",
+    "Semester": "semester",
     "First Name": "first_name",
     "Last Name": "last_name",
+    "Date of Birth": "date_of_birth",
     "Employee ID": "employeeID",
+    "Step Rate": "step_rate",
+    "I9 Completed": "I9_completed",
+    "I9 Greater Than 3 Years": "I9_greater_than_3_years",
+    "Background Passed": "background_passed",
+    "CV/Resume": "cv_resume",
+    "Masters": "masters",
+    "CTL Notified": "CTL_notified",
+    "Address": "address",
+    "City": "city",
+    "State": "state",
+    "Zip": "zip",
+    "Primary Email": "primary_email",
+    "Secondary Email": "secondary_email",
+    "Primary Phone": "primary_phone",
+    "Secondary Phone": "secondary_phone",
 }
 
 # List for option field 2 in read)view
