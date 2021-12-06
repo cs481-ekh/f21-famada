@@ -26,7 +26,7 @@ The frontend uses the materialize library on top of the django templating system
 All the materialize files are found in AdjunctFacultyManagement/static. there is a _custom.scss that contains any custom scss. Other than that the only scss files that were changed were _variables.scss and _colors.scss. All the compiled js files are found in AdjunctFacultyManagement/static/js/bin. script.js was the catch-all file for custom js scripting. Most of the otheere files are for usee by ag grid except the materialize files which are labeled accordingly.
 
 
-## Work that we were unable to complete:
+## Work that we were unable to complete and stretch goals from the sponsor:
 
 Notifications: There is a basic frontend structure and database for these. However we were unable to get notifications for when I9 expires into the DB using a cron job. There may be another approach that may work. It would also be useful to create an interface where the user could create their own notifications based on changing table data and dates.
 
@@ -41,6 +41,12 @@ Cron Jobs: This is mainly for the i9 greater than 3 years field and notification
 Backend: The info is not currently being encrypted. The most the personal info needs to be encrypted.
 
 Production: The website is currently public facing and it needs to have a SSL certificate to be secure and use https.
+
+Help page: The user would like a "user manual" type document as well as a help page or feature included within the application itself. He have included a basic .pdf template that can be further refined and added to.
+
+Add users: Since the application will have a number of users in the department over the years it is best to have some type of admin functionality to allow the deparrtment to add and manage users.
+
+
 
 
 
