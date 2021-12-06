@@ -59,6 +59,7 @@ adjunctFields = {
     "Primary Phone": "primary_phone",
     "Secondary Phone": "secondary_phone",
     "Special Conditions and Comments": "special_conditions_and_comments",
+    "Archived" : "archived"
 }
 
 # List for option field 1 in read_view
@@ -86,11 +87,13 @@ option1Fields = {
     "Secondary Phone": "secondary_phone",
 }
 
-# List for option field 2 in read)view
+# List for option field 2 in read_view
 option2Fields = {
+    "A, F, EAF, C-CRS-LIST" : "a_f_eaf_c_crs_list",
     "Semester": "semester",
     "First Name": "first_name",
     "Last Name": "last_name",
+    "Date of Birth": "date_of_birth",
     "Employee ID": "employeeID",
     "Step Rate": "step_rate",
     "I9 Completed": "I9_completed",
@@ -106,7 +109,9 @@ option2Fields = {
     "Primary Email": "primary_email",
     "Secondary Email": "secondary_email",
     "Primary Phone": "primary_phone",
-    "Secondary Phone": "secondary_phone"
+    "Secondary Phone": "secondary_phone",
+    "Special Conditions and Comments": "special_conditions_and_comments",
+    "Archived" : "archived"
 }
 
 
